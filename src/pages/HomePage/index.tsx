@@ -1,10 +1,10 @@
 import { useEffect } from "react"
 import supabase from "../../api/supabase"
+import ProfilePicture from "../../components/ProfileImage"
 
 const HomePage = () => {
 
     const fetchGroups = async () => {
-
         const { error, data } = await supabase.from('groups').select('*') 
 
         if (error) {
@@ -13,13 +13,13 @@ const HomePage = () => {
         }
 
         console.log(data)
-
     }
 
     useEffect(() => { fetchGroups() }, [])
 
     return (
-        <h1>Home Page</h1>
+        <ProfilePicture
+        />
     )
 
 }
