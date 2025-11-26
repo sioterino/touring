@@ -1,0 +1,20 @@
+.hyperlink a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 8px 16px;
+    border-radius: 4px;
+
+    transition: all .15s ease-in-out;
+}
+
+.hyperlink a:hover {
+    background-color: blue;
+    color: white;
+}
+
+.hyperlink a:active {
+    background-color: rgb(53, 8, 151);
+    color: white;
+}

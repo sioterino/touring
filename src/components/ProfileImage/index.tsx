@@ -20,7 +20,7 @@ const ProfilePicture = ({ name = 'Unnamed Artist', colors = ['#0561bc', '#00bfff
     return (
         <span
             style={{
-                background: `linear-gradient(45deg, ${colors[0]}, ${colors[1]})`,
+                background: `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`,
                 width: size,
                 height: size,
                 fontSize: font,
