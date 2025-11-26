@@ -32,3 +32,10 @@
 :global(:root.dark) .hyperlink.active a:hover {
     background-color: var(--primary-dark);
 }
+
+
+@media (max-width: 900px) {
+    .hyperlink a {
+        padding-right: 171px;
+    }
+}

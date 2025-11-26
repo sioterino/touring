@@ -28,3 +28,7 @@
 .theme .themeIcon:active {
     background-color: var(--primary-dark);
 }
+
+.theme .hideLabel {
+    display: none;
+}

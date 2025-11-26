@@ -7,6 +7,8 @@ function App() {
 
   const [theme, setTheme] = useState<"light" | "dark">("light")
 
+  const MEDIA_QEURY = 900
+
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark")
   }, [theme])
@@ -14,7 +16,7 @@ function App() {
   return (
     <HashRouter>
       <Routes>
-        <Route element={ <Layout theme={theme} setTheme={setTheme} /> }>
+        <Route element={ <Layout theme={theme} setTheme={setTheme} mediaQuery={MEDIA_QEURY} /> }>
           <Route path='/' element={ <HomePage /> } />
           <Route path='/all' element={ <h1>ALL</h1> } />
           <Route path='*' element={ <h1>404 NOT FOUND</h1> } />

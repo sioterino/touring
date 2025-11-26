@@ -12,6 +12,12 @@
 
     height: 100vh;
     padding: 12px;
+
+    
+    position: relative;
+    transform: translateX(0);
+    transition: transform 250ms ease-in-out;
+    z-index: 20;
 }
 
 .logo {
@@ -39,3 +45,37 @@
     padding: 24px 8px 8px 8px;
     border-top: 1px solid var(--card-border-color);
 }
+
+.closeIcon {
+    margin-left: auto;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    box-sizing: content-box;
+}
+
+.closeIcon:hover {
+    background-color: var(--primary);
+    color: var(--font-color-opp);
+}
+
+.closeIcon:active {
+    background-color: var(--primary-dark);
+}
+
+.mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1000;
+
+  transform: translateX(0);
+  transition: transform .2s ease-in-out;
+}
+
+.closed {
+  transform: translateX(-100%);
+}
+
+@media (max-width: 900px) { .logo { padding-inline: 8px; } }

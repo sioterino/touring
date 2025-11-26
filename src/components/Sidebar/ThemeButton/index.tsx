@@ -4,9 +4,10 @@ import styles from './styles.module.css'
 interface Props {
   theme: 'light' | 'dark'
   setTheme: (value: 'light' | 'dark') => void
+  hideLabel?: boolean
 }
 
-const ThemeButton = ({ theme, setTheme }: Props) => {
+const ThemeButton = ({ theme, setTheme, hideLabel = false }: Props) => {
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light")
@@ -14,7 +15,7 @@ const ThemeButton = ({ theme, setTheme }: Props) => {
 
   return (
     <div className={styles.theme}>
-      <p>Theme</p>
+      <p className={hideLabel ? styles.hideLabel : ''}>Theme</p>
       {theme === "light" ?
         <Moon className={styles.themeIcon} onClick={toggleTheme} /> :
         <Sun className={styles.themeIcon} onClick={toggleTheme} />
