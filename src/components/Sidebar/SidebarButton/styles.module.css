@@ -1,0 +1,41 @@
+.hyperlink a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 8px 100px 9px 8px;
+    border-radius: 4px;
+
+    font-size: 16px;
+
+    transition: all .15s ease-in-out;
+
+    user-select: none;
+}
+
+.hyperlink a:hover,
+.hyperlink.active a {
+    background-color: var(--primary);
+    color: var(--font-color-opp);
+}
+
+.hyperlink a:active,
+.hyperlink.active a:hover {
+    background-color: var(--primary-dark);
+}
+
+:global(:root.dark) .hyperlink a:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+:global(:root.dark) .hyperlink.active a:hover {
+    background-color: var(--primary-dark);
+}
+
+
+@media (max-width: 900px) {
+    .hyperlink a {
+        padding-right: 171px;
+    }
+}
