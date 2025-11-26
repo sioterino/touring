@@ -10,3 +10,20 @@
 
     z-index: 5;
 }
+
+.pageContent {
+  flex: 1;
+  padding: 16px;
+  overflow: auto;
+}
+
+@media (min-width: 768px) {
+  .pageContent {
+    padding: 32px;
+  }
+}
+
+.pageContainer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}

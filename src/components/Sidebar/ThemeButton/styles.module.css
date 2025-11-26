@@ -21,12 +21,17 @@
 }
 
 .theme .themeIcon:hover {
-    background-color: var(--primary);
-    color: var(--font-color-opp);
+    background-color: var(--dark);
+    color: var(--text);
 }
 
 .theme .themeIcon:active {
-    background-color: var(--primary-dark);
+    background-color: var(--primary);
+    color: var(--text-opp);
+}
+
+:global(:root.dark) .theme .themeIcon:active {
+    color: var(--text);
 }
 
 .theme .hideLabel {

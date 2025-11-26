@@ -1,0 +1,16 @@
+.tag {
+    text-transform: capitalize;
+
+    padding: 2px 8px 3px;
+    border-radius: 4px;
+
+    user-select: none;
+}
+
+.tag.hollow {
+    border: 1px solid var(--dark);
+}
+
+.tag.filled {
+    background-color: var(--dark);
+}

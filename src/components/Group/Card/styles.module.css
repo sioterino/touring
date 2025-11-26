@@ -1,0 +1,39 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    background-color: var(--light);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: var(--box-shadow);
+
+    border: 1px solid var(--dark);
+
+    width: 280px;
+}
+
+:global(:root.dark) .card {
+    background: var(--gradient);
+}
+
+:global(:root.dark) .card:hover {
+    background: var(--gradient-hover);
+    border-top: 1px solid var(--highlight);
+}
+
+.card:hover {
+    box-shadow: var(--box-shadow-hover);
+    border-top: 1px solid var(--highlight);
+}
+
+.card .header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.card .tags {
+    display: flex;
+    gap: 8px;
+}

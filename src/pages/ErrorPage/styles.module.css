@@ -1,0 +1,67 @@
+.wrapper {
+  width: 100%;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background: var(--light);
+  border: 1px solid var(--dark);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn .4s ease;
+}
+
+.msg {
+  font-family: monospace;
+  background-color: var(--default);
+  padding: 4px;
+  border-radius: 2px;
+  color: #e04f4f;
+  font-size: 14px;
+  margin-top: 16px;
+  margin-bottom: 31px;
+  font-weight: 500;
+}
+
+.retryBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  align-self: center;
+  width: min-content;
+
+  padding: 12px 32px 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  border: none;
+  background: var(--text);
+  color: var(--text-opp);
+  font-size: 14px;
+}
+
+.retryBtn:hover {
+  opacity: 80%;
+}
+
+.retryBtn:active {
+  opacity: 60%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
