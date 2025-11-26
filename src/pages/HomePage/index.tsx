@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState } from "react"
 import supabase from "../../api/supabase"
 import ProfilePicture from "../../components/ProfileImage"
-import Sidebar from "../../components/Sidebar"
 
 interface Group {
     id: number
@@ -32,8 +32,7 @@ const HomePage = () => {
 
     return (
         <div>
-            <Sidebar />
-            {/* { groups.map((group, key) => (<ProfilePicture key={key} name={group.name} />)) } */}
+            { groups.map((group, key) => (<ProfilePicture key={key} name={group.name} />)) }
         </div>
     )
 
