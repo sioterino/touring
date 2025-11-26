@@ -1,5 +1,5 @@
 import styles from './styles.module.css'
-import { useLocation } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from '../Sidebar'
 import Topbar from '../Sidebar/Topbar'
 import { useEffect, useState } from 'react'
@@ -39,6 +39,12 @@ const Layout = ({ theme, setTheme, mediaQuery }: Props) => {
       />
 
       {isMobile && <Topbar theme={theme} setTheme={setTheme} onMenuClick={open} />}
+
+        <main className={styles.pageContent}>
+          <div className={styles.pageContainer}>
+            <Outlet />
+          </div>
+        </main>
 
       {isMobile && openSidebar && <div className={styles.overlay} onClick={close} />}
     </div>

@@ -13,26 +13,26 @@
     user-select: none;
 }
 
-.hyperlink a:hover,
-.hyperlink.active a {
-    background-color: var(--primary);
-    color: var(--font-color-opp);
+.hyperlink a:hover {
+    background-color: var(--default);
 }
 
-.hyperlink a:active,
+.hyperlink a:active {
+    background-color: var(--dark);
+}
+
+.hyperlink.active a {
+    background-color: var(--primary);
+    color: var(--text-opp);
+}
+
 .hyperlink.active a:hover {
     background-color: var(--primary-dark);
 }
 
-:global(:root.dark) .hyperlink a:hover {
-  background-color: #000;
-  color: #fff;
+:global(:root.dark) .hyperlink.active a {
+    color: var(--text);
 }
-
-:global(:root.dark) .hyperlink.active a:hover {
-    background-color: var(--primary-dark);
-}
-
 
 @media (max-width: 900px) {
     .hyperlink a {

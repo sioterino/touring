@@ -9,8 +9,8 @@
 
     padding-inline: 16px;
 
-    background-color: var(--card-bg-color);
-    border-bottom: 1px solid var(--card-border-color);
+    background-color: var(--light);
+    border-bottom: 1px solid var(--dark);
 }
 
 .logo {
@@ -34,7 +34,7 @@
 
 .topbar .menuIcon:hover {
     background-color: var(--primary);
-    color: var(--font-color-opp);
+    color: var(--text-opp);
 }
 
 .topbar .menuIcon:active {

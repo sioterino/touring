@@ -23,13 +23,13 @@ const Sidebar = ({ path = [''], theme, setTheme, closeSidebar, isMobile, open }:
                 {isMobile && <X className={styles.closeIcon} onClick={closeSidebar} />}
             </div>
 
-            <div className={styles.hyperlinks}>
+            <ul className={styles.hyperlinks}>
                 <SidebarButton active={path.includes('')} label='Dashboard' path='/' icon={<LayoutDashboard />} />
                 <SidebarButton active={path.includes('groups')} label='Groups' path='/groups' icon={<Users />} />
                 <SidebarButton active={path.includes('tours')} label='Tours' path='/tours' icon={<Calendar />} />
                 <SidebarButton active={path.includes('companies')} label='Companies' path='/companies' icon={<Building2 />} />
                 <SidebarButton active={path.includes('venues')} label='Venues' path='/venues' icon={<MapPin />} />
-            </div>
+            </ul>
 
             <div className={styles.footer}>
                 <ThemeButton theme={theme} setTheme={setTheme} />

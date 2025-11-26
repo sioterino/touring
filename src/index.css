@@ -1,28 +1,33 @@
 :root {
-  /* COLORS */
+  --dark: hsl(0, 0%, 90%);
+  --default: hsl(0, 0%, 95%);
+  --light: hsl(0, 0%, 100%);
 
-  --backgroud-color: #F8F8F8;
+  --text: hsl(0, 0%, 5%);
+  --text-opp: hsl(0, 0%, 95%);
+  --text-muted: hsl(0, 0%, 60%);
 
-  --card-bg-color: #fff;
-  --card-border-color: #e5e5e5;
+  --gradient: linear-gradient(0deg, var(--default) 95%, var(--light));
+  --gradient-hover: linear-gradient(0deg, var(--default), var(--light));
+  --highlight: hsl(0, 0%, 100%);
+
+  --box-shadow: 0px 3px 6px hsla(0, 0%, 0%, .07);
+  --box-shadow-hover: 0px 6px 9px hsla(0, 0%, 0%, .14);
 
   --primary: #0000ff;
   --primary-dark: #350897;
   --primary-light: #4088e8;
 
-  --font-color: #575757;
-  --font-color-opp: #fff;
-  --font-color-hover: #000;
+  --max-width: 1280px;
+  --min-width: 320px;
 
-  /* OTHERS */
-
-  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: var(--font-color);
-  background-color: var(--backgroud-color);
+  color: var(--text);
+  background-color: var(--default);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -31,17 +36,16 @@
 }
 
 :root.dark {
-  --backgroud-color: #000;
+  --dark: hsl(0, 0%, 15%);
+  --default: hsl(0, 0%, 10%);
+  --light: hsl(0, 0%, 0%);
 
-  --card-bg-color: #000;
-  --card-border-color: #272727;
+  --text: hsl(0, 0%, 95%);
+  --text-opp: hsl(0, 0%, 5%);
 
-  --primary: #4088e8;
-  --primary-dark: #2c37ce;
-
-  --font-color: #ffffff99;
-  --font-color-opp: #fff;
-  --font-color-hover: #000;
+  --gradient: linear-gradient(0deg, var(--default) 95%, var(--dark));
+  --gradient-hover: linear-gradient(0deg, var(--default), var(--dark));
+  --highlight: hsl(0, 0%, 30%);
 }
 
 * {
@@ -53,10 +57,19 @@
   transition: all .15s ease-in-out;
 }
 
+#root {
+  width: 100%;
+}
+
+#root > div {
+  display: flex;
+  flex-direction: row;
+}
+
 a {
   font-weight: 500;
   text-decoration: inherit;
-  color: var(--font-color);
+  color: var(--text);
 }
 
 body {
