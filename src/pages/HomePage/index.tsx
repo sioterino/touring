@@ -1,8 +1,20 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import supabase from "../../api/supabase"
 import ProfilePicture from "../../components/ProfileImage"
 
+interface Group {
+    id: number
+    name: string
+    debut: string | Date
+    company: number
+    gender: string
+    generation: number
+    colors: string[]
+}
+
 const HomePage = () => {
+
+    const [ groups, setGroups ] = useState<Group[]>([])
 
     const fetchGroups = async () => {
         const { error, data } = await supabase.from('groups').select('*') 
@@ -12,14 +24,15 @@ const HomePage = () => {
             return
         }
 
-        console.log(data)
+        setGroups(data)
     }
 
     useEffect(() => { fetchGroups() }, [])
 
     return (
-        <ProfilePicture
-        />
+        <div>
+            { groups.map((group, key) => (<ProfilePicture key={key} name={group.name} />)) }
+        </div>
     )
 
 }
