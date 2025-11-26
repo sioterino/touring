@@ -45,6 +45,37 @@
     color: var(--text-muted);
     padding: 24px 8px 8px 8px;
     border-top: 1px solid var(--dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer .info p {
+    font-size: 12px;
+}
+
+.socials {
+    display: flex;
+    gap: 4px;
+}
+
+.footer .info .socialsButton {
+    padding: 8px;
+    border-radius: 4px;
+    box-sizing: content-box;
+}
+
+.footer .info .socialsButton:hover {
+    background-color: var(--dark);
+}
+
+.footer .info .socialsButton:active {
+    background-color: var(--primary);
+    color: var(--text-opp);
+}
+
+:global(:root.dark) .footer .info .socialsButton:active {
+    color: var(--text);
 }
 
 .closeIcon {
