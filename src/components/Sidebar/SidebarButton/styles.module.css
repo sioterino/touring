@@ -3,18 +3,32 @@
     align-items: center;
     gap: 12px;
 
-    padding: 8px 16px;
+    padding: 8px 100px 9px 8px;
     border-radius: 4px;
 
+    font-size: 16px;
+
     transition: all .15s ease-in-out;
+
+    user-select: none;
 }
 
-.hyperlink a:hover {
-    background-color: blue;
-    color: white;
+.hyperlink a:hover,
+.hyperlink.active a {
+    background-color: var(--primary);
+    color: var(--font-color-opp);
 }
 
-.hyperlink a:active {
-    background-color: rgb(53, 8, 151);
-    color: white;
+.hyperlink a:active,
+.hyperlink.active a:hover {
+    background-color: var(--primary-dark);
+}
+
+:global(:root.dark) .hyperlink a:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+:global(:root.dark) .hyperlink.active a:hover {
+    background-color: var(--primary-dark);
 }

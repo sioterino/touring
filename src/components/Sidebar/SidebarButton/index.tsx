@@ -6,16 +6,16 @@ interface Props {
     label: string
     path: string
     icon: React.ReactNode
+    active?: boolean
 }
 
-const SidebarButton = ({ label, path, icon }: Props) => {
+const SidebarButton = ({ label, path, icon, active = false }: Props) => {
 
-    return <li className={styles.hyperlink}>
-        <Link to={path}>
-            {icon}
-            {label}
-        </Link>
-    </li>
+    return (
+        <li className={`${styles.hyperlink} ${active ? styles.active : ''}`}>
+            <Link to={path}>{ icon }{ label }</Link>
+        </li>
+    )
 
 }
 
