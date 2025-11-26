@@ -1,0 +1,42 @@
+.topbar {
+    position: absolute;
+    top: 0%;
+    width: 100vw;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-inline: 16px;
+
+    background-color: var(--card-bg-color);
+    border-bottom: 1px solid var(--card-border-color);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.topbar .menuIcon {
+    cursor: pointer;
+
+    box-sizing: content-box;
+    padding: 6px 6px 7px 6px;
+
+    border-radius: 4px;
+}
+
+.topbar .menuIcon:hover {
+    background-color: var(--primary);
+    color: var(--font-color-opp);
+}
+
+.topbar .menuIcon:active {
+    background-color: var(--primary-dark);
+}
