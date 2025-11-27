@@ -1,8 +1,14 @@
 import { useEffect } from 'react'
 import useGroups from '../../hooks/GroupHook'
 import { useParams } from 'react-router-dom';
-import Heading from '../../components/Heading';
-// import styles from './styles.module.css'
+import styles from './styles.module.css'
+import Tag from '../../components/Tag';
+import ProfileImage from '../../components/ProfileImage';
+import GoBack from '../../components/GoBack';
+import IconCard from '../../components/Cards/IconCard';
+import { Calendar, CircleDollarSign, Percent, Ticket, Users } from 'lucide-react';
+import TourCard from '../../components/Cards/ToursCard';
+import { formatNumber, formatPercentage, formatUSD } from '../../components/utils/NumberUtils';
 
 const ArtistPage = () => {
 
@@ -23,10 +29,72 @@ const ArtistPage = () => {
         default: gen = `${group.generation}th  Gen`
     }
 
-    const gender = group.gender.charAt(0).toUpperCase() + group.gender.slice(1)
+    const mock = {
+        att: 420870, box: 120750600, reported: 90, total: 120, sold: 0.9285
+    }
+
+    const mockTour = {
+        name:'SYNK: Hyper Line', level:'world', continents:['Asia', 'Europa', 'North America', 'South America', 'Oceania'], start:'2018-06-28', end:'2019-11-02', shows:34, attendance:480560, box:80574723,
+    }
 
     return (
-        <Heading title={group.name} desc={`${gen} ${gender} K-Pop Group`} />
+        <div className={styles.artist}>
+
+
+            <div>
+                <GoBack text='Back to groups' path='/groups' />
+                <div className={styles.heading}>
+                    <div className={styles.pfp}>
+                        <ProfileImage name={group.name} colors={group.colors} size={70} font={24} />
+                    </div>
+                    <div className={styles.desc}>
+                        <h1>{group.name}</h1>
+                        <div className={styles.tags}>
+                            <Tag text={group.gender} type='filled' />
+                            <Tag text={gen} />
+                            <Tag text={group.company.name} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.general}>
+                <IconCard heading='Avg Ticket Price' icon={ <Ticket /> } text={formatUSD(mock.box / mock.att)} />
+                <IconCard heading='Box Score' icon={ <CircleDollarSign /> } text={formatUSD(mock.box)} />
+                <IconCard heading='Avg Box Score' icon={ <CircleDollarSign /> } text={formatUSD(mock.box / mock.reported)} />
+                <IconCard heading='Net Attendance' icon={ <Users /> } text={formatNumber(mock.att)} />
+                <IconCard heading='Avg Sold %' icon={ <Percent /> } text={formatPercentage(mock.sold)} />
+                <IconCard heading='Reported Shows' icon={ <Calendar /> } text={`${mock.reported}/${mock.total}`} />
+            </div>
+
+            <div className={styles.tours}>
+                <h2>Tours</h2>
+                <div className={styles.tourCards}>
+                    <div className={styles.slider}>
+                        {
+                            Array.from({ length: 4 }).map((_, i) => (
+                                <TourCard
+                                    key={i}
+                                    name={mockTour.name}
+                                    level={mockTour.level}
+                                    continents={mockTour.continents}
+                                    start={mockTour.start}
+                                    end={mockTour.end}
+                                    shows={mockTour.shows}
+                                    attendance={mockTour.attendance}
+                                    box={mockTour.box}
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.recent}>
+
+            </div>
+
+        </div>
     )
 
 }

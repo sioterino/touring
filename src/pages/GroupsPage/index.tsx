@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import GroupCard from '../../components/Group/Card'
+import GroupCard from '../../components/Cards/GroupCard'
 import Heading from '../../components/Heading'
 import type { Group } from '../../types/models'
 import styles from './styles.module.css'
