@@ -1,0 +1,55 @@
+.showCards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    background-color: var(--light);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: var(--box-shadow);
+
+    border: 1px solid var(--dark);
+    animation: slideIn .5s ease-in-out forwards;
+}
+
+.showCards .header h3 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+:global(:root.dark) .showCards {
+    background: var(--gradient);
+}
+
+:global(:root.dark) .showCards:hover {
+    background: var(--gradient-hover);
+    border-top: 1px solid var(--highlight);
+}
+
+.showCards:hover {
+    box-shadow: var(--box-shadow-hover);
+    border-top: 1px solid var(--highlight);
+}
+
+.showCards .header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.showCards .tags {
+    display: flex;
+    gap: 8px;
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

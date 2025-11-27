@@ -9,6 +9,7 @@ import IconCard from '../../components/Cards/IconCard';
 import { Calendar, CircleDollarSign, Percent, Ticket, Users } from 'lucide-react';
 import TourCard from '../../components/Cards/ToursCard';
 import { formatNumber, formatPercentage, formatUSD } from '../../components/utils/NumberUtils';
+import ShowCards from '../../components/Cards/ShowCard';
 
 const ArtistPage = () => {
 
@@ -23,9 +24,9 @@ const ArtistPage = () => {
 
     let gen
     switch(group.generation) {
-        case 1: gen = 'st Gen'; break;
-        case 2: gen = 'nd Gen'; break;
-        case 3: gen = 'rd Gen'; break;
+        case 1: gen = '1st Gen'; break;
+        case 2: gen = '2nd Gen'; break;
+        case 3: gen = '3rd Gen'; break;
         default: gen = `${group.generation}th  Gen`
     }
 
@@ -37,15 +38,18 @@ const ArtistPage = () => {
         name:'SYNK: Hyper Line', level:'world', continents:['Asia', 'Europa', 'North America', 'South America', 'Oceania'], start:'2018-06-28', end:'2019-11-02', shows:34, attendance:480560, box:80574723,
     }
 
+    const mockShow = {
+        tour: 'SYNK: Hyper Line', dates: ['2019-12-25', '2019-12-26'], venue: 'Tokyo Dome', continent: 'Asia', country: 'Japan', city: 'Tokyo', attendance: 93000, box: 7400000, sold: 1,
+    }
+
     return (
         <div className={styles.artist}>
-
 
             <div>
                 <GoBack text='Back to groups' path='/groups' />
                 <div className={styles.heading}>
                     <div className={styles.pfp}>
-                        <ProfileImage name={group.name} colors={group.colors} size={70} font={24} />
+                        <ProfileImage name={group.name} colors={group.colors} size={90} font={32} />
                     </div>
                     <div className={styles.desc}>
                         <h1>{group.name}</h1>
@@ -92,7 +96,26 @@ const ArtistPage = () => {
             </div>
 
             <div className={styles.recent}>
-
+                <h2>Recent Shows</h2>
+                <p className={styles.hint}>Most recent reported shows</p>
+                <div className={styles.shows}>
+                    {
+                        Array.from({length: 5}).map((_, i) => (
+                            <ShowCards
+                                key={i}
+                                tour={mockShow.tour}
+                                dates={mockShow.dates}
+                                venue={mockShow.venue}
+                                continent={mockShow.continent}
+                                country={mockShow.country}
+                                city={mockShow.city}
+                                box={formatUSD(mockShow.box)}
+                                attendance={formatNumber(mockShow.attendance)}
+                                sold={formatPercentage(mockShow.sold)}
+                            />
+                        ))
+                    }
+                </div>
             </div>
 
         </div>
