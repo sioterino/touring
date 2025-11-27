@@ -11,7 +11,7 @@ interface Props {
 const GroupCard = ({ group }: Props) => {
 
     return (
-        <Link to={`/groups/${group.id}`} className={styles.card}>
+        <Link to={`/groups/${group.id}`} className={styles.card} >
             <div className={styles.header} >
                 <ProfileImage name={group.name} colors={group.colors} />
                 <h3>{group.name}</h3>
