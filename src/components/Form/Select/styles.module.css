@@ -1,0 +1,46 @@
+.container {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    width: 100%;
+}
+
+.select {
+    outline: none;
+    font-size: none;
+    border: 1px solid var(--dark);
+    background-color: var(--light);
+    color: var(--text);
+    padding: 11px 45px 11px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: var(--text-muted);
+}
+
+.select:hover {
+    box-shadow: var(--hover-shadow);
+}
+
+.select:focus {
+    border: 1px solid var(--primary);
+    box-shadow: var(--primary-shadow);
+    color: var(--text);
+}
+
+.container .arrow {
+    position: absolute;
+    transform: translateY(-50%) rotate(-180deg);
+    top: 50%;
+    right: 12px;
+    color: var(--text-muted);
+}
+
+.container:focus-within .arrow {
+    color: var(--primary);
+    transform: translateY(-50%) rotate(0deg);
+}

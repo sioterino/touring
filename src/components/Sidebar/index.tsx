@@ -1,6 +1,6 @@
 import styles from './styles.module.css'
 import SidebarButton from './SidebarButton'
-import { LayoutDashboard, Users, Calendar, Building2, MapPin, Ticket, X } from 'lucide-react'
+import { LayoutDashboard, Users, Calendar, Building2, MapPin, Ticket, X, Github, HeartPlus } from 'lucide-react'
 import ThemeButton from './ThemeButton'
 
 interface Props {
@@ -15,6 +15,14 @@ interface Props {
 const Sidebar = ({ path = [''], theme, setTheme, closeSidebar, isMobile, open }: Props) => {
     const className = [ styles.sidebar, isMobile ? styles.mobile : '', isMobile && !open ? styles.closed : '', ].join(' ')
 
+    const buttons = [
+        {name: 'Dashboard', path: '/', include: '', icon: <LayoutDashboard />},
+        {name: 'Groups', path: '/groups', include: 'groups', icon: <Users />},
+        {name: 'Tours', path: '/tours', include: 'tours', icon: <Calendar />},
+        {name: 'Companies', path: '/companies', include: 'companies', icon: <Building2 />},
+        {name: 'Venues', path: '/venues', include: 'venues', icon: <MapPin />},
+    ]
+
     return (
         <aside className={className}>
             <div className={styles.logo}>
@@ -24,18 +32,37 @@ const Sidebar = ({ path = [''], theme, setTheme, closeSidebar, isMobile, open }:
             </div>
 
             <ul className={styles.hyperlinks}>
-                <SidebarButton active={path.includes('')} label='Dashboard' path='/' icon={<LayoutDashboard />} />
-                <SidebarButton active={path.includes('groups')} label='Groups' path='/groups' icon={<Users />} />
-                <SidebarButton active={path.includes('tours')} label='Tours' path='/tours' icon={<Calendar />} />
-                <SidebarButton active={path.includes('companies')} label='Companies' path='/companies' icon={<Building2 />} />
-                <SidebarButton active={path.includes('venues')} label='Venues' path='/venues' icon={<MapPin />} />
+                {
+                    buttons.map( (btn, key) => {
+                    return (
+                        <SidebarButton
+                            key={key}
+                            active={path.includes(btn.include)}
+                            label={btn.name}
+                            path={btn.path}
+                            icon={btn.icon}
+                            onClick={isMobile ? closeSidebar : undefined}
+                        />
+                    )
+                } )
+                }
             </ul>
 
             <div className={styles.footer}>
                 <ThemeButton theme={theme} setTheme={setTheme} />
                 <div className={styles.info}>
-                    <p>K-Pop Touring Data</p>
-                    <p>Analytics Dashboard</p>
+                    <div>
+                        <p>K-Pop Touring Data</p>
+                        <p>Analytics Dashboard</p>
+                    </div>
+                    <div className={styles.socials}>
+                        <a href="http://www.github.com/sioterino/touring" target="_blank" rel="noopener noreferrer">
+                            <Github className={styles.socialsButton} />
+                        </a>
+                        <a href="http://www.github.com/sioterino/touring" target="_blank" rel="noopener noreferrer">
+                            <HeartPlus className={styles.socialsButton} />
+                        </a>
+                    </div>
                 </div>
             </div>
         </aside>

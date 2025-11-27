@@ -9,8 +9,12 @@
     box-shadow: var(--box-shadow);
 
     border: 1px solid var(--dark);
+}
 
-    width: 280px;
+.card .header h3 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 :global(:root.dark) .card {

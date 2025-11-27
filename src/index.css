@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+
 :root {
   --dark: hsl(0, 0%, 90%);
   --default: hsl(0, 0%, 95%);
@@ -18,10 +21,13 @@
   --primary-dark: #350897;
   --primary-light: #4088e8;
 
+  --primary-shadow: 0 0 0 3px hsla(240, 100%, 50%, .1);
+  --hover-shadow: 0 0 0 2px hsla(0, 0%, 0%, .05);
+
   --max-width: 1280px;
   --min-width: 320px;
 
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Open Sans", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -43,6 +49,7 @@
   --text: hsl(0, 0%, 95%);
   --text-opp: hsl(0, 0%, 5%);
 
+  --hover-shadow: 0 0 0 2px hsla(0, 0%, 100%, 0.05);
   --gradient: linear-gradient(0deg, var(--default) 95%, var(--dark));
   --gradient-hover: linear-gradient(0deg, var(--default), var(--dark));
   --highlight: hsl(0, 0%, 30%);
