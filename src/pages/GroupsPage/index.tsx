@@ -5,6 +5,7 @@ import useGroups from '../../hooks/GroupHook'
 import type { Group } from '../../types/models'
 import styles from './styles.module.css'
 import ErrorPage from '../ErrorPage'
+import Form from '../../components/Form'
 
 const GroupsPage = () => {
 
@@ -16,7 +17,8 @@ const GroupsPage = () => {
     if (loading) return (
         <div className={styles.container}>
             <Heading title='Groups' desc='Browse and filter K-pop groups' />
-            <p>Showing 16 out of 16 groups</p>
+            <Form />
+            <p className={styles.info}>Showing 16 out of 16 groups</p>
 
             <div className={styles.cards}>
             {Array.from({ length: 16 }).map((_, i) => (
@@ -38,10 +40,14 @@ const GroupsPage = () => {
 
     if (apiError.isError) return <ErrorPage message={apiError.message || 'test'} />;
 
+
+
     return (
         <div className={styles.container}>
             <Heading title='Groups' desc='Browse and filter K-pop groups' />
-            <p>Showing {groups.length} out of {groups.length} groups</p>
+            <Form />
+
+            <p className={styles.info}>Showing {groups.length} out of {groups.length} groups</p>
             <div className={styles.cards}>
                 { groups.map((gp: Group, key: number) => <GroupCard group={gp} key={key} /> ) }
             </div>

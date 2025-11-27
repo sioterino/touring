@@ -20,7 +20,11 @@ const useGroups = () => {
 
     const getAllGroups = async () => {
         setLoading(true)
-        const { data, error } = await supabase.from('groups').select('*, company:companies(name)');
+        const { data, error } = await supabase
+            .from('groups')
+            .select('*, company:companies(name)')
+            .order('name', { ascending: true })
+
 
         if (error) {
             setLoading(false)
