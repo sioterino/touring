@@ -16,6 +16,12 @@ interface Company {
     id: number
     name: string
     colors?: string[]
+    parent_company: Company | ParentCompany[] | null
+}
+
+interface ParentCompany {
+    id: number
+    name: string
 }
 
 export type { Group, Gender, Generation, Company }

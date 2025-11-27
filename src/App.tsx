@@ -7,8 +7,9 @@ import ArtistPage from './pages/ArtistPage'
 import ErrorPage from './pages/ErrorPage'
 import Heading from './components/Heading'
 import DashboardPage from './pages/DashboardPage'
+import { GroupsProvider } from './context/GroupsContext'
 
-function App() {
+const AppRoutes = () => {
 
   const [theme, setTheme] = useState<"light" | "dark">("light")
 
@@ -18,7 +19,6 @@ function App() {
     document.documentElement.classList.toggle("dark", theme === "dark")
   }, [theme])
 
-  
   return (
     <HashRouter>
       <Routes>
@@ -36,6 +36,16 @@ function App() {
       <Toaster richColors closeButton position="top-right" theme={theme} />
     </HashRouter>
   )
+}
+
+const App = () => {
+
+  return (
+    <GroupsProvider>
+      <AppRoutes />
+    </GroupsProvider>
+  )
+
 }
 
 export default App

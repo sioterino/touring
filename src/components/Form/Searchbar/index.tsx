@@ -4,9 +4,11 @@ import { Search, X } from 'lucide-react'
 
 interface Props {
     placeholder?: string
+    disable?: boolean
+    handleChange: (value: string, method: string) => Promise<void>
 }
 
-const Searchbar = ({ placeholder = 'Pesquisar...' }: Props) => {
+const Searchbar = ({ placeholder = 'Seatch...', disable = false, handleChange }: Props) => {
 
     const [ showDelete, setShowDelete ] = useState(false)
     const [ value, setValue ] = useState('')
@@ -15,10 +17,10 @@ const Searchbar = ({ placeholder = 'Pesquisar...' }: Props) => {
         e.preventDefault()
 
         if (! showDelete) setShowDelete(true)
+            
         const target = e.target as HTMLInputElement
         setValue(target.value)
-
-        console.log(value)
+        handleChange(target.value, 'search')
     }
 
     const clearInput = () => {
@@ -39,6 +41,7 @@ const Searchbar = ({ placeholder = 'Pesquisar...' }: Props) => {
                 value={value}
                 onChange={e => handleInputChange(e)}
                 placeholder={placeholder}
+                disabled={disable}
             />
 
             { showDelete && <X className={styles.closeButton} onClick={() => clearInput()} /> }

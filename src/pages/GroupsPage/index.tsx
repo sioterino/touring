@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 import GroupCard from '../../components/Group/Card'
 import Heading from '../../components/Heading'
-import useGroups from '../../hooks/GroupHook'
 import type { Group } from '../../types/models'
 import styles from './styles.module.css'
 import ErrorPage from '../ErrorPage'
-import Form from '../../components/Form'
+import GroupsForm from '../../components/Form/GroupsForm'
+import { useGroupsContext } from '../../context/GroupsContext'
 
 const GroupsPage = () => {
 
-    const { groups, getAllGroups, loading, apiError } = useGroups()
+    const { groups, length, companies, genders, generations, getAllGroups, getGroupsByValue, loading, apiError } = useGroupsContext()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => { getAllGroups() }, [])
@@ -17,7 +17,7 @@ const GroupsPage = () => {
     if (loading) return (
         <div className={styles.container}>
             <Heading title='Groups' desc='Browse and filter K-pop groups' />
-            <Form />
+            <GroupsForm loading={loading} handleChange={getGroupsByValue} />
             <p className={styles.info}>Showing 16 out of 16 groups</p>
 
             <div className={styles.cards}>
@@ -45,9 +45,13 @@ const GroupsPage = () => {
     return (
         <div className={styles.container}>
             <Heading title='Groups' desc='Browse and filter K-pop groups' />
-            <Form />
+            <GroupsForm
+                loading={loading}
+                options={[genders, generations, companies]}
+                handleChange={getGroupsByValue}
+            />
 
-            <p className={styles.info}>Showing {groups.length} out of {groups.length} groups</p>
+            <p className={styles.info}>Showing {groups.length} out of {length} groups</p>
             <div className={styles.cards}>
                 { groups.map((gp: Group, key: number) => <GroupCard group={gp} key={key} /> ) }
             </div>
