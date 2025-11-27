@@ -2,13 +2,13 @@ import styles from './styles.module.css'
 import Heading from '../../components/Heading'
 import EmptyArray from '../../components/EmptyArray'
 
-const CompaniesPage = () => {
+const VenuesPage = () => {
 
     return (
         <div className={styles.container}>
-            <Heading title='Companies' desc='Browse K-pop entertainment companies and their artists' />
+            <Heading title='Venues' desc='Explore venues and see which artists performed there' />
 
-            <p className={styles.info}>Showing 0 out of 0 companies</p>
+            <p className={styles.info}>Showing 0 out of 0 venues</p>
             <div className={styles.cards}>
                 <EmptyArray />
             </div>
@@ -17,4 +17,4 @@ const CompaniesPage = () => {
 
 }
 
-export default CompaniesPage
+export default VenuesPage

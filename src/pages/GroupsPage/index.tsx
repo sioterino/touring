@@ -6,6 +6,7 @@ import styles from './styles.module.css'
 import ErrorPage from '../ErrorPage'
 import GroupsForm from '../../components/Form/GroupsForm'
 import { useGroupsContext } from '../../context/GroupsContext'
+import EmptyArray from '../../components/EmptyArray'
 
 const GroupsPage = () => {
 
@@ -53,7 +54,10 @@ const GroupsPage = () => {
 
             <p className={styles.info}>Showing {groups.length} out of {length} groups</p>
             <div className={styles.cards}>
-                { groups.map((gp: Group, key: number) => <GroupCard group={gp} key={key} /> ) }
+                { groups.length === 0 ?
+                    <EmptyArray title='Hmm… nothing matched' desc="We couldn't find any items that match your search or filter criteria. Maybe try different options?" /> :
+                    groups.map((gp: Group, key: number) => <GroupCard group={gp} key={key} /> )
+                }
             </div>
         </div>
     )

@@ -73,6 +73,12 @@
   flex-direction: row;
 }
 
+@media (max-width: 900px) {
+  #root {
+    min-height: 100vh;
+  }
+}
+
 a {
   font-weight: 500;
   text-decoration: inherit;
