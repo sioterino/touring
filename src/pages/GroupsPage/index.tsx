@@ -22,7 +22,7 @@ const GroupsPage = () => {
 
             <div className={styles.cards}>
             {Array.from({ length: 16 }).map((_, i) => (
-                <div className={styles.skeletonCard} key={i}>
+                <div className={styles.skeletonCard} key={i} >
                     <div className={styles.skelHeader}>
                         <div className={styles.skelPfp}></div>
                         <div className={styles.skelHeader}></div>
