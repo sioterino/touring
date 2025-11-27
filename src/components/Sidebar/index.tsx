@@ -59,7 +59,7 @@ const Sidebar = ({ path = [''], theme, setTheme, closeSidebar, isMobile, open }:
                         <a href="http://www.github.com/sioterino/touring" target="_blank" rel="noopener noreferrer">
                             <Github className={styles.socialsButton} />
                         </a>
-                        <a href="http://www.github.com/sioterino/touring" target="_blank" rel="noopener noreferrer">
+                        <a href="http://www.ko-fi.com/sioterino" target="_blank" rel="noopener noreferrer">
                             <HeartPlus className={styles.socialsButton} />
                         </a>
                     </div>
