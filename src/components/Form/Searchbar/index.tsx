@@ -26,6 +26,7 @@ const Searchbar = ({ placeholder = 'Seatch...', disable = false, handleChange }:
     const clearInput = () => {
         setValue('')
         setShowDelete(false)
+        handleChange('', 'search')
     }
 
     return (
