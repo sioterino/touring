@@ -1,0 +1,81 @@
+.tourCard {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    background-color: var(--light);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: var(--box-shadow);
+
+    max-width: 380px;
+
+    border: 1px solid var(--dark);
+    animation: slideIn .5s ease-in-out forwards;
+}
+
+:global(:root.dark) .tourCard {
+    background: var(--gradient);
+}
+
+:global(:root.dark) .tourCard:hover {
+    background: var(--gradient-hover);
+    border-top: 1px solid var(--highlight);
+}
+
+.tourCard .header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tourCard .header h3 {
+    font-size: 18px;
+}
+
+.tourCard:hover {
+    box-shadow: var(--box-shadow-hover);
+    border-top: 1px solid var(--highlight);
+}
+
+.tags {
+    display: flex;
+    gap: 8px;
+}
+
+.tourCard table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tourCard td {
+  padding: 6px 0;
+  border: none;
+}
+
+.tourCard td:first-child {
+  font-weight: 600;
+  width: 100px
+}
+
+.tourCard tr:nth-child(odd) {
+  background-color: transparent;
+}
+
+.tourCard tr:nth-child(even) {
+  background-color: var(--default);
+}
+
+
+
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

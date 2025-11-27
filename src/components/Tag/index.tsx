@@ -3,7 +3,7 @@ import styles from './styles.module.css'
 interface Props {
     text: string
     clickable?: boolean
-    type?: string
+    type?: 'hollow' | 'filled'
 }
 
 const Tag = ({ text, type = 'hollow', clickable = false }: Props) => {
