@@ -33,7 +33,12 @@
 
 .tours {
     display: grid;
-    gap: 16px;
+    gap: 8px;
+}
+
+.tours .hint {
+  color: var(--text-muted);
+  margin-bottom: 16px;
 }
 
 .tourCards {
@@ -47,7 +52,7 @@
 
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 32px 16px;
+  padding-bottom: 32px;
 
   scrollbar-color: transparent transparent;
 }

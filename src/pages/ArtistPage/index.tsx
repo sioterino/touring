@@ -69,6 +69,7 @@ const ArtistPage = () => {
 
             <div className={styles.tours}>
                 <h2>Tours</h2>
+                <p className={styles.hint}>Slide left two see all tours available</p>
                 <div className={styles.tourCards}>
                     <div className={styles.slider}>
                         {
