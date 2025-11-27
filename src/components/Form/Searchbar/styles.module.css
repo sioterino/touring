@@ -1,0 +1,55 @@
+.container {
+    position: relative;
+    width: fit-content;
+    width: 100%;
+}
+
+.searchbar {
+    font-size: 16px;
+    border: 1px solid var(--dark);
+    padding: 12px 48px;
+    color: var(--text);
+    border-radius: 4px;
+
+    background-color: var(--light);
+    width: 100%;
+}
+
+.searchbar::placeholder {
+    color: var(--text-muted);
+    font-size: 16px;
+}
+
+.searchbar:hover {
+    box-shadow: var(--hover-shadow);
+}
+
+.searchbar:focus {
+    border: 1px solid var(--primary);
+    box-shadow: var(--primary-shadow);
+}
+
+.closeButton,
+.searchglass {
+    position: absolute;
+    
+    color: var(--text-muted);
+    transform: translateY(-50%);
+
+    top: 50%;
+}
+
+.container:focus-within .closeButton,
+.container:focus-within .searchglass {
+    color: var(--primary);
+}
+
+.searchglass {
+    left: 12px;
+    height: 20px;
+}
+
+.closeButton {
+    right: 12px;
+    cursor: pointer;
+}

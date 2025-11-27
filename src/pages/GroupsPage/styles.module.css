@@ -11,6 +11,10 @@
     gap: 24px;
 }
 
+.info {
+  color: var(--text-muted);
+}
+
 .skeletonCard {
   background: var(--light);
   border: 1px solid var(--dark);
