@@ -8,4 +8,13 @@ const compareValues = (value1: string, value2: string) => {
     return sanitizeString(value1).includes(value2) || value1.includes(value2)
 }
 
-export { sanitizeString, compareValues }
+const parseGen = (gen: number): string => {
+    switch(gen) {
+        case 1: return '1st Gen'
+        case 2: return '2nd Gen'
+        case 3: return '3rd Gen'
+        default: return `${gen}th  Gen`
+    }
+}
+
+export { sanitizeString, compareValues, parseGen }

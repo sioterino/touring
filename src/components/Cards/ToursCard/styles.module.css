@@ -8,7 +8,7 @@
     padding: 24px;
     box-shadow: var(--box-shadow);
 
-    max-width: 480px;
+    width: 345px;
 
     border: 1px solid var(--dark);
     animation: slideIn .5s ease-in-out forwards;
@@ -41,6 +41,8 @@
 .tags {
     display: flex;
     gap: 8px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .tourCard table {

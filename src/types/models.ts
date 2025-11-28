@@ -24,4 +24,52 @@ interface ParentCompany {
     name: string
 }
 
-export type { Group, Gender, Generation, Company }
+interface Tour {
+    id: number
+    name: string
+    begin: string
+    end: string
+    group: Group
+    tour: string
+}
+
+interface Continent {
+    id: number
+    name: string
+}
+
+interface Country {
+    id: number
+    name: string
+    continent: Continent
+}
+
+interface City {
+    id: number
+    name: string
+    country: Country
+}
+
+interface Venue {
+    id: number
+    name: string
+    city: City
+}
+
+interface Show {
+    id: number
+    group: Group
+    tour: Tour
+    day_1: string
+    day_2?: string
+    day_3?: string
+    day_4?: string
+    day_5?: string
+    venue: Venue
+    nights: number
+    attendance: number | null
+    sold_percentage: number | null
+    box_score: number | null
+}
+
+export type { Group, Gender, Generation, Company, Tour, Continent, Country, City, Venue, Show }
