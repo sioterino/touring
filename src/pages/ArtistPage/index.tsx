@@ -10,6 +10,7 @@ import { Calendar, CircleDollarSign, Percent, Ticket, Users } from 'lucide-react
 import TourCard from '../../components/Cards/ToursCard';
 import { formatNumber, formatPercentage, formatUSD } from '../../components/utils/NumberUtils';
 import ShowCards from '../../components/Cards/ShowCard';
+import Slide from '../../components/Slide';
 
 const ArtistPage = () => {
 
@@ -71,29 +72,25 @@ const ArtistPage = () => {
                 <IconCard heading='Reported Shows' icon={ <Calendar /> } text={`${mock.reported}/${mock.total}`} />
             </div>
 
-            <div className={styles.tours}>
-                <h2>Tours</h2>
-                <p className={styles.hint}>Slide left two see all tours available</p>
-                <div className={styles.tourCards}>
-                    <div className={styles.slider}>
-                        {
-                            Array.from({ length: 4 }).map((_, i) => (
-                                <TourCard
-                                    key={i}
-                                    name={mockTour.name}
-                                    level={mockTour.level}
-                                    continents={mockTour.continents}
-                                    start={mockTour.start}
-                                    end={mockTour.end}
-                                    shows={mockTour.shows}
-                                    attendance={mockTour.attendance}
-                                    box={mockTour.box}
-                                />
-                            ))
-                        }
-                    </div>
-                </div>
-            </div>
+            <Slide
+                heading='Tours'
+                hint
+                children={
+                    Array.from({ length: 4 }).map((_, i) => (
+                        <TourCard
+                            key={i}
+                            name={mockTour.name}
+                            level={mockTour.level}
+                            continents={mockTour.continents}
+                            start={mockTour.start}
+                            end={mockTour.end}
+                            shows={mockTour.shows}
+                            attendance={mockTour.attendance}
+                            box={mockTour.box}
+                        />
+                    ))
+                }
+            />
 
             <div className={styles.recent}>
                 <h2>Recent Shows</h2>

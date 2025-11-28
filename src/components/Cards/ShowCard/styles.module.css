@@ -61,13 +61,25 @@
     opacity: 80%;
 }
 
-@media (max-width: 387px) {
+@media (max-width: 365px) {
     .showCards {
         gap: 24px;
     }
     
     .report {
         align-items: flex-start;
+        width: 100%;
+        border-top: 1px solid var(--dark);
+        padding-top: 16px;
+    }
+    
+    .report p {
+        padding: 4px 16px;
+        width: 100%;
+    }
+
+    .report p:nth-child(even) {
+        background-color: var(--default);
     }
 }
 
