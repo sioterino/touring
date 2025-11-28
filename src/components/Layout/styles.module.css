@@ -18,6 +18,12 @@
   margin-top: 56px;
 }
 
+@media (min-width: 900px) {
+  .pageContent {
+    margin-left: 253.859px;
+  }
+}
+
 @media (min-width: 768px) {
   .pageContent {
     padding: 32px;
