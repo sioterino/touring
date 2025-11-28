@@ -39,7 +39,7 @@ const ArtistPage = () => {
     }
 
     const mockShow = {
-        tour: 'SYNK: Hyper Line', dates: ['2019-12-25', '2019-12-26'], venue: 'Tokyo Dome', continent: 'Asia', country: 'Japan', city: 'Tokyo', attendance: 93000, box: 7400000, sold: 1,
+        tour: 'SYNK: Hyper Line', dates: ['2019-12-25', '2019-12-26'], venue: 'Tokyo Dome', continent: 'Asia', country: 'Japan', city: 'Tokyo', attendance: 93000, box: 7400000, sold: .9765, shows: 2
     }
 
     return (
@@ -109,9 +109,10 @@ const ArtistPage = () => {
                                 continent={mockShow.continent}
                                 country={mockShow.country}
                                 city={mockShow.city}
-                                box={formatUSD(mockShow.box)}
-                                attendance={formatNumber(mockShow.attendance)}
-                                sold={formatPercentage(mockShow.sold)}
+                                box={mockShow.box}
+                                attendance={mockShow.attendance}
+                                sold={mockShow.sold}
+                                shows={mockShow.shows}
                             />
                         ))
                     }
