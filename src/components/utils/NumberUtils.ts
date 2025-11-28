@@ -1,5 +1,5 @@
 const formatNumber = (num: number): string => {
-  return num.toLocaleString("en-US").replaceAll(',', ' ')
+  return Math.ceil(num).toLocaleString("en-US").replaceAll(',', ' ')
 }
 
 const formatUSD = (num: number): string => {

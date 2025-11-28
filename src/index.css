@@ -17,7 +17,7 @@
   --scrollbar: hsla(0, 0%, 0%, 0.3);
 
   --box-shadow: 0px 3px 6px hsla(0, 0%, 0%, .07);
-  --box-shadow-hover: 0px 6px 9px hsla(0, 0%, 0%, .14);
+  --box-shadow-hover: 0px 6px 9px hsla(0, 0%, 0%, .09);
 
   --primary: #0000ff;
   --primary-dark: #350897;
@@ -70,17 +70,13 @@
 
 #root {
   width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 #root > div {
   display: flex;
   flex-direction: row;
-}
-
-@media (max-width: 900px) {
-  #root {
-    min-height: 100vh;
-  }
 }
 
 a {

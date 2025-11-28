@@ -28,7 +28,7 @@ const useGroups = () => {
 
         const { data, error } = await supabase
             .from('groups')
-            .select('*, company:companies(id, name, parent_company:parent_company(id, name, colors, parent_company))')
+            .select('*, company:companies(id, name, parent_company:parent_company(*))')
             .order('name', { ascending: true })
 
 
@@ -64,14 +64,14 @@ const useGroups = () => {
         setLoading(true)
         const { data, error } = await supabase
             .from('groups')
-            .select('*, company:companies(id, name, parent_company:parent_company(id, name, colors, parent_company))')
+            .select('*, company:companies(id, name, parent_company:parent_company(*))')
             .eq('id', id).single()
 
         if (error) {
             setLoading(false)
             setApiError({ isError: true, message: error.message })
             console.error("[GroupHook] Error fetching the group's data: ", error)
-            toast.error("There was an error while loading the group's data...")
+            toast.error("There was an error while trying to load the group's data...")
             return
         }
 

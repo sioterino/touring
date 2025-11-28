@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import useGroups from '../../hooks/GroupHook'
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.css'
 import Tag from '../../components/Tag';
@@ -9,49 +8,43 @@ import IconCard from '../../components/Cards/IconCard';
 import { Calendar, CircleDollarSign, Percent, Ticket, Users } from 'lucide-react';
 import TourCard from '../../components/Cards/ToursCard';
 import { formatNumber, formatPercentage, formatUSD } from '../../components/utils/NumberUtils';
+import ShowCards from '../../components/Cards/ShowCard';
+import Slide from '../../components/Slide';
+import useShows from '../../hooks/ShowHook';
+import ErrorPage from '../ErrorPage';
+import EmptyArray from '../../components/EmptyArray';
+import type { Show } from '../../types/models';
+import { parseGen } from '../../components/utils/StringUtils';
 
 const ArtistPage = () => {
 
     const { id } = useParams();
-    const { group, getGroupById, loading, apiError } = useGroups()
+    const { group, tours, shows, getAllShowsByGroupId, loading, apiError } = useShows()
 
+    useEffect(() => {
+        getAllShowsByGroupId(Number(id))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => { getGroupById(Number(id)) }, [])
+    }, [])
 
-    if (loading) return null
-    if (apiError.isError) return <p>error</p>
+    if (apiError.isError) return <ErrorPage message={apiError.message} />
 
-    let gen
-    switch(group.generation) {
-        case 1: gen = 'st Gen'; break;
-        case 2: gen = 'nd Gen'; break;
-        case 3: gen = 'rd Gen'; break;
-        default: gen = `${group.generation}th  Gen`
-    }
-
-    const mock = {
-        att: 420870, box: 120750600, reported: 90, total: 120, sold: 0.9285
-    }
-
-    const mockTour = {
-        name:'SYNK: Hyper Line', level:'world', continents:['Asia', 'Europa', 'North America', 'South America', 'Oceania'], start:'2018-06-28', end:'2019-11-02', shows:34, attendance:480560, box:80574723,
-    }
+    if (loading || group === null)
+        return <EmptyArray title='Loading...' desc='Sorry, we are trying to fetch data. This might take a while.' />
 
     return (
         <div className={styles.artist}>
-
-
             <div>
                 <GoBack text='Back to groups' path='/groups' />
                 <div className={styles.heading}>
                     <div className={styles.pfp}>
-                        <ProfileImage name={group.name} colors={group.colors} size={70} font={24} />
+                        <ProfileImage name={group.name} colors={group.colors} size={90} font={32} />
                     </div>
                     <div className={styles.desc}>
                         <h1>{group.name}</h1>
                         <div className={styles.tags}>
                             <Tag text={group.gender} type='filled' />
-                            <Tag text={gen} />
+                            <Tag text={parseGen(group.generation)} />
+                            { group.company.parent_company && <Tag text={Array.isArray(group.company.parent_company) ? group.company.parent_company[0].name : group.company.parent_company.name} /> }
                             <Tag text={group.company.name} />
                         </div>
                     </div>
@@ -59,39 +52,71 @@ const ArtistPage = () => {
             </div>
 
             <div className={styles.general}>
-                <IconCard heading='Avg Ticket Price' icon={ <Ticket /> } text={formatUSD(mock.box / mock.att)} />
-                <IconCard heading='Box Score' icon={ <CircleDollarSign /> } text={formatUSD(mock.box)} />
-                <IconCard heading='Avg Box Score' icon={ <CircleDollarSign /> } text={formatUSD(mock.box / mock.reported)} />
-                <IconCard heading='Net Attendance' icon={ <Users /> } text={formatNumber(mock.att)} />
-                <IconCard heading='Avg Sold %' icon={ <Percent /> } text={formatPercentage(mock.sold)} />
-                <IconCard heading='Reported Shows' icon={ <Calendar /> } text={`${mock.reported}/${mock.total}`} />
+                <IconCard heading='Avg Ticket Price' icon={ <Ticket /> } text={formatUSD(group.avg_ticket)} />
+                <IconCard heading='Box Score' icon={ <CircleDollarSign /> } text={formatUSD(group.box_score)} />
+                <IconCard heading='Avg Box Score' icon={ <CircleDollarSign /> } text={formatUSD(group.avg_box)} />
+                <IconCard heading='Net Attendance' icon={ <Users /> } text={formatNumber(group.net_att)} />
+                <IconCard heading='Avg Sold %' icon={ <Percent /> } text={formatPercentage(group.avg_sold) === '0.00%' ? 'Not Reported' : formatPercentage(group.avg_sold)} />
+                <IconCard heading='Reported Shows' icon={ <Calendar /> } text={`${group.reported_nights}/${group.total_nights}`} />
             </div>
 
-            <div className={styles.tours}>
-                <h2>Tours</h2>
-                <div className={styles.tourCards}>
-                    <div className={styles.slider}>
-                        {
-                            Array.from({ length: 4 }).map((_, i) => (
-                                <TourCard
-                                    key={i}
-                                    name={mockTour.name}
-                                    level={mockTour.level}
-                                    continents={mockTour.continents}
-                                    start={mockTour.start}
-                                    end={mockTour.end}
-                                    shows={mockTour.shows}
-                                    attendance={mockTour.attendance}
-                                    box={mockTour.box}
-                                />
-                            ))
-                        }
-                    </div>
-                </div>
-            </div>
+            <Slide
+                heading='Tours'
+                hint
+                children={
+                    tours
+                    .filter(t => t.box_score !== 0)
+                    .sort((a, b) => {
+                        return new Date(b.begin).getTime() - new Date(a.begin).getTime()
+                    })
+                    .map((t, key) => (
+                        <TourCard
+                            key={key}
+                            id={t.id}
+                            name={t.name}
+                            level={t.tour}
+                            continents={t.continents}
+                            start={t.begin}
+                            end={t.end}
+                            reported={t.reported_nights}
+                            total={t.total_nights}
+                            attendance={t.attendance}
+                            box={t.box_score}
+                            sold={t.sum_sold / t.sum_venues}
+                            price={t.sum_price / t.sum_venues}
+                        />
+                    ))
+                }
+            />
 
             <div className={styles.recent}>
-
+                <h2>Recent Shows</h2>
+                <p className={styles.hint}>Most recent reported shows</p>
+                <div className={styles.shows}>
+                    {
+                        shows
+                            .filter(s => s.box_score !== null)
+                            .sort((a, b) => {
+                                return new Date(b.day_1).getTime() - new Date(a.day_1).getTime()
+                            })
+                            .slice(0, 5)
+                            .map((s: Show, key) => (
+                            <ShowCards
+                                key={key}
+                                tour={s.tour.name}
+                                dates={[ s.day_1, s.day_2, s.day_3, s.day_4, s.day_5 ].filter(Boolean) as string[]}
+                                venue={s.venue.name}
+                                continent={s.venue.city.country.continent.name}
+                                country={s.venue.city.country.name}
+                                city={s.venue.city.name}
+                                box={s.box_score!}
+                                attendance={s.attendance!}
+                                sold={s.sold_percentage!}
+                                shows={s.nights}
+                            />
+                        ))
+                    }
+                </div>
             </div>
 
         </div>
