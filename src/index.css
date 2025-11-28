@@ -70,17 +70,13 @@
 
 #root {
   width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 #root > div {
   display: flex;
   flex-direction: row;
-}
-
-@media (max-width: 900px) {
-  #root {
-    min-height: 100vh;
-  }
 }
 
 a {

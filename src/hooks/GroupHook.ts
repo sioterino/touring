@@ -28,7 +28,7 @@ const useGroups = () => {
 
         const { data, error } = await supabase
             .from('groups')
-            .select('*, company:companies(id, name, parent_company:parent_company(id, name, colors, parent_company))')
+            .select('*, company:companies(id, name, parent_company:parent_company(*))')
             .order('name', { ascending: true })
 
 
@@ -64,7 +64,7 @@ const useGroups = () => {
         setLoading(true)
         const { data, error } = await supabase
             .from('groups')
-            .select('*, company:companies(id, name, parent_company:parent_company(id, name, colors, parent_company))')
+            .select('*, company:companies(id, name, parent_company:parent_company(*))')
             .eq('id', id).single()
 
         if (error) {

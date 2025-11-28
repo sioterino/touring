@@ -26,14 +26,13 @@ const ArtistPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    if (apiError.isError) return <ErrorPage message={apiError.message} />
+
     if (loading || group === null)
         return <EmptyArray title='Loading...' desc='Sorry, we are trying to fetch data. This might take a while.' />
 
-    if (apiError.isError) return <ErrorPage message={apiError.message} />
-
     return (
         <div className={styles.artist}>
-
             <div>
                 <GoBack text='Back to groups' path='/groups' />
                 <div className={styles.heading}>
@@ -57,7 +56,7 @@ const ArtistPage = () => {
                 <IconCard heading='Box Score' icon={ <CircleDollarSign /> } text={formatUSD(group.box_score)} />
                 <IconCard heading='Avg Box Score' icon={ <CircleDollarSign /> } text={formatUSD(group.avg_box)} />
                 <IconCard heading='Net Attendance' icon={ <Users /> } text={formatNumber(group.net_att)} />
-                <IconCard heading='Avg Sold %' icon={ <Percent /> } text={formatPercentage(group.avg_sold)} />
+                <IconCard heading='Avg Sold %' icon={ <Percent /> } text={formatPercentage(group.avg_sold) === '0.00%' ? 'Not Reported' : formatPercentage(group.avg_sold)} />
                 <IconCard heading='Reported Shows' icon={ <Calendar /> } text={`${group.reported_nights}/${group.total_nights}`} />
             </div>
 
@@ -73,6 +72,7 @@ const ArtistPage = () => {
                     .map((t, key) => (
                         <TourCard
                             key={key}
+                            id={t.id}
                             name={t.name}
                             level={t.tour}
                             continents={t.continents}

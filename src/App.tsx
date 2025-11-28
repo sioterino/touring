@@ -10,6 +10,7 @@ import { GroupsProvider } from './context/GroupsContext'
 import CompaniesPage from './pages/CompaniesPage'
 import VenuesPage from './pages/VenuesPage'
 import ToursPage from './pages/ToursPage'
+import ConcertPage from './pages/ConcertPage'
 
 const AppRoutes = () => {
 
@@ -31,6 +32,7 @@ const AppRoutes = () => {
           <Route path='/venues' element={ <VenuesPage /> } />
           <Route path='/companies' element={ <CompaniesPage /> } />
           <Route path='/groups/:id' element={ <ArtistPage /> } />
+          <Route path='/tours/:id' element={ <ConcertPage /> } />
           <Route path='*' element={ <ErrorPage message='Status 404 Page Not Found' /> } />
         </Route>
       </Routes>
