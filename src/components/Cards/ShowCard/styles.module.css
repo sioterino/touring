@@ -1,3 +1,4 @@
+.skelCard,
 .showCards {
     display: flex;
     justify-content: space-between;
@@ -9,7 +10,10 @@
     box-shadow: var(--box-shadow);
 
     border: 1px solid var(--dark);
-    animation: slideIn .5s ease-in-out forwards;
+}
+
+.showCards {
+    animation: slideIn .15s ease-in-out forwards;
 }
 
 .showCards .header h3 {
@@ -32,22 +36,22 @@
     border-top: 1px solid var(--highlight);
 }
 
-.showCards .info {
+.info {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-.showCards .tags {
+.tags {
     display: flex;
     gap: 8px;
 }
 
-.showCards .showDate {
+.showDate {
     color: var(--text-muted);
 }
 
-.showCards .venue {
+.venue {
     display: flex;
     gap: 4px;
     align-items: center;
@@ -86,10 +90,70 @@
 @keyframes slideIn {
   0% {
     opacity: 0;
-    transform: translateY(20%);
+    /* transform: translateY(20%); */
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    /* transform: translateY(0); */
   }
+}
+
+.skelCard {
+  animation: pulse 1.4s infinite ease-in-out;
+}
+
+.skelCard span {
+    display: inline-block; 
+    background-color: var(--dark);
+    border-radius: 4px;
+}
+
+.skelHeading {
+    height: 23px;
+    width: 180px;
+}
+
+.skelDate {
+    height: 19px;
+    width: 150px;
+}
+
+.skelIcon {
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+}
+
+.skelVenue {
+    height: 19px;
+    width: 90px;
+}
+
+.skelBox,
+.skelAtt,
+.skelTicket,
+.skelNights {
+    height: 19px;
+}
+
+.skelBox {
+    width: 70px;
+}
+
+.skelAtt {
+    width: 90px;
+}
+
+.skelTicket {
+    width: 110px;
+}
+
+.skelNights {
+    width: 40px;
+}
+
+@keyframes pulse {
+  0% { opacity: .6; }
+  50% { opacity: 1; }
+  100% { opacity: .6; }
 }

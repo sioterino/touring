@@ -5,6 +5,7 @@ import { formatNumber, formatPercentage, formatUSD } from '../../utils/NumberUti
 import styles from './styles.module.css'
 
 interface Props {
+    loading?: boolean
     id: number
     name: string
     level: string
@@ -19,11 +20,30 @@ interface Props {
     price: number
 }
 
-const TourCard = ({ id, name, level, continents, start, end, total, reported, attendance, box, sold, price }: Props) => {
+const TourCard = ({ loading, id, name, level, continents, start, end, total, reported, attendance, box, sold, price }: Props) => {
+
+    if (loading) return (
+        <div className={styles.skelCard}>
+            <div className={styles.header}>
+                <span className={styles.skelHeading}></span>
+                <div className={styles.tags}>{Array.from({ length: 3 }).map((_, i) => <Tag key={i} text='' type='loading' /> ) }</div>
+            </div>
+
+            <table>
+                <tbody>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                </tbody>
+            </table>
+        </div>
+    )
 
     return (
-        <Link to={`/tours/${id}`} className={styles.tourCard}>
-            
+        <Link to={`/tours/${id}`} className={styles.tourCard}> 
             <div className={styles.header}>
                 <h3>{name}</h3>
                 <div className={styles.tags}>

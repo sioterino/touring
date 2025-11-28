@@ -37,8 +37,8 @@ const ArtistPage = () => {
                         <span className={styles.skelPfp}></span>
                         <span className={styles.desc}>
                             <span className={styles.skelHeading}></span>
-                            <div className={styles.tags}>
-                                { Array.from({ length: 3 }).map((_, i) => <Tag key={i} type='loading' text='        ' /> ) }
+                            <div className={styles.skelTags}>
+                                { Array.from({ length: 3 }).map((_, i) => <Tag key={i} type='loading' text='' /> ) }
                             </div>
                         </span>
                     </span>
@@ -47,9 +47,37 @@ const ArtistPage = () => {
                 <div className={styles.general}>
                     { Array.from({ length: 6 }).map((_, i) => <IconCard key={i} loading />) }
                 </div>
+
+                <Slide
+                    heading='Tours'
+                    hint
+                    children={
+                        Array.from({ length: 4 }).map((_, i) => (
+                            <TourCard
+                                loading key={i} id={0} name={''} level={''} continents={[]} start={''}
+                                end={''} reported={0} total={0} attendance={0} box={0} sold={0} price={0}
+                            />
+                        ))
+                    }
+                />
+
+                <div className={styles.recent}>
+                    <h2>Recent Shows</h2>
+                    <p className={styles.hint}>Most recent reported shows</p>
+                    <div className={styles.shows}>
+                        {
+                            Array.from({ length: 5 }).map((_, i) => (
+                                <ShowCards
+                                    loading key={i} tour={''} dates={[]} venue={''} continent={''}
+                                    country={''} city={''} box={0} attendance={0} sold={0} shows={0}
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+
             </div>
     )
-    // return <EmptyArray title='Loading...' desc='Sorry, we are trying to fetch data. This might take a while.' />
 
     return (
         <div className={styles.artist}>

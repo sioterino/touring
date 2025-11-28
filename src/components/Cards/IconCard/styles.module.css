@@ -9,7 +9,7 @@
     box-shadow: var(--box-shadow);
 
     border: 1px solid var(--dark);
-    animation: slideIn .5s ease-in-out forwards;
+    animation: slideIn .15s ease-in-out forwards;
 }
 
 :global(:root.dark) .iconCard {
@@ -45,11 +45,11 @@
 @keyframes slideIn {
   0% {
     opacity: 0;
-    transform: translateY(20%);
+    /* transform: translateY(20%); */
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    /* transform: translateY(0); */
   }
 }
 
@@ -59,7 +59,7 @@
   justify-content: space-between;
   gap: 14px;
   
-  padding: 16px;
+  padding: 24px;
   height: 132px;
 
   background-color: var(--light);

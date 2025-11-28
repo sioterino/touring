@@ -16,6 +16,7 @@
   padding: 16px;
   overflow: auto;
   margin-top: 56px;
+  margin-bottom: 240px;
 }
 
 @media (min-width: 901px) {

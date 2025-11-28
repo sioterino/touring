@@ -8,10 +8,10 @@
     padding: 24px;
     box-shadow: var(--box-shadow);
 
-    width: 345px;
+    min-width: 345px;
 
     border: 1px solid var(--dark);
-    animation: slideIn .5s ease-in-out forwards;
+    animation: slideIn .15s ease-in-out forwards;
 }
 
 :global(:root.dark) .tourCard {
@@ -45,30 +45,36 @@
     white-space: nowrap;
 }
 
+.skelCard table,
 .tourCard table {
   width: 100%;
   border-collapse: collapse;
 }
 
+.skelCard td,
 .tourCard td {
   padding: 6px 0;
   border: none;
 }
 
+.skelCard td:first-child,
 .tourCard td:first-child {
   font-weight: 600;
   width: 150px;
   padding-inline: 12px;
 }
 
+.skelCard td:last-child,
 .tourCard td:last-child {
   color: var(--text-muted);
 }
 
+.skelCard tr:nth-child(odd),
 .tourCard tr:nth-child(odd) {
   background-color: transparent;
 }
 
+.skelCard tr:nth-child(even),
 .tourCard tr:nth-child(even) {
   background-color: var(--default);
 }
@@ -76,10 +82,47 @@
 @keyframes slideIn {
   0% {
     opacity: 0;
-    transform: translateY(20%);
+    /* transform: translateY(20%); */
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    /* transform: translateY(0); */
   }
+}
+
+.skelCard {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  
+  background: var(--light);
+  border-radius: 12px;
+  border: 1px solid var(--dark);
+  
+  padding: 24px;
+  min-width: 345px;
+  
+  animation: pulse 1.4s infinite ease-in-out;
+}
+
+.skelCard .header {
+  gap: 12px;
+}
+
+.skelHeading {
+  display: inline-block; 
+  width: 150px;
+  height: 27px;
+  border-radius: 4px;
+  background-color: var(--dark);
+}
+
+.skelCard td {
+  height: 31.5px;
+}
+
+@keyframes pulse {
+  0% { opacity: .6; }
+  50% { opacity: 1; }
+  100% { opacity: .6; }
 }

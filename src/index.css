@@ -99,3 +99,24 @@ textarea {
   outline: none;
   offset: none;
 }
+
+html {
+  scrollbar-color: var(--scrollbar) transparent;
+}
+
+html::-webkit-scrollbar {
+  height: 8px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: var(--scrollbar);
+  border-radius: 4px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar);
+}
