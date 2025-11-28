@@ -12,7 +12,6 @@ import ShowCards from '../../components/Cards/ShowCard';
 import Slide from '../../components/Slide';
 import useShows from '../../hooks/ShowHook';
 import ErrorPage from '../ErrorPage';
-import EmptyArray from '../../components/EmptyArray';
 import type { Show } from '../../types/models';
 import { parseGen } from '../../components/utils/StringUtils';
 
@@ -29,7 +28,28 @@ const ArtistPage = () => {
     if (apiError.isError) return <ErrorPage message={apiError.message} />
 
     if (loading || group === null)
-        return <EmptyArray title='Loading...' desc='Sorry, we are trying to fetch data. This might take a while.' />
+        return (
+            <div className={styles.artist}>
+
+                <div>
+                    <GoBack text='Back to groups' path='/groups' />
+                    <span className={styles.heading}>
+                        <span className={styles.skelPfp}></span>
+                        <span className={styles.desc}>
+                            <span className={styles.skelHeading}></span>
+                            <div className={styles.tags}>
+                                { Array.from({ length: 3 }).map((_, i) => <Tag key={i} type='loading' text='        ' /> ) }
+                            </div>
+                        </span>
+                    </span>
+                </div>
+
+                <div className={styles.general}>
+                    { Array.from({ length: 6 }).map((_, i) => <IconCard key={i} loading />) }
+                </div>
+            </div>
+    )
+    // return <EmptyArray title='Loading...' desc='Sorry, we are trying to fetch data. This might take a while.' />
 
     return (
         <div className={styles.artist}>

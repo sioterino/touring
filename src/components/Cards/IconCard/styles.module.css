@@ -52,3 +52,52 @@
     transform: translateY(0);
   }
 }
+
+.skeletonCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  
+  padding: 16px;
+  height: 132px;
+
+  background-color: var(--light);
+  border: 1px solid var(--dark);
+  border-radius: 12px;
+  
+  animation: pulse 1.4s infinite ease-in-out;
+}
+
+.skelHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.skelIcon {
+  width: 24px;
+  height: 24px;
+  background-color: var(--dark);
+  border-radius: 50%;
+}
+
+.skelTxt, 
+.skelData {
+  width: 40%;
+  height: 18px;
+  background-color: var(--dark);
+  border-radius: 6px;
+}
+
+.skelData {
+  height: 32px;
+  width: 60%;
+}
+
+@keyframes pulse {
+  0% { opacity: .6; }
+  50% { opacity: 1; }
+  100% { opacity: .6; }
+}

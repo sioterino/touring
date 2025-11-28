@@ -22,19 +22,7 @@ const GroupsPage = () => {
             <p className={styles.info}>Showing 16 out of 16 groups</p>
 
             <div className={styles.cards}>
-            {Array.from({ length: 16 }).map((_, i) => (
-                <div className={styles.skeletonCard} key={i} >
-                    <div className={styles.skelHeader}>
-                        <div className={styles.skelPfp}></div>
-                        <div className={styles.skelHeader}></div>
-                    </div>
-                    <div className={styles.skelTagRow}>
-                        <div className={styles.skelTag}></div>
-                        <div className={styles.skelTag}></div>
-                        <div className={styles.skelTag}></div>
-                    </div>
-                </div>
-            ))}
+            { Array.from({ length: 16 }).map((_, i) => <GroupCard loading={loading} key={i} /> ) }
             </div>
         </div>
     )

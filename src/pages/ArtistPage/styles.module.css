@@ -45,8 +45,6 @@
     }
 }
 
-
-
 .recent {
   display: flex;
   flex-direction: column;
@@ -57,4 +55,18 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.skelPfp {
+    width: 90px;
+    height: 90px;
+    background-color: var(--dark);
+    border-radius: 50%;
+}
+
+.skelHeading {
+    width: 80px;
+    height: 25px;
+    background-color: var(--dark);
+    border-radius: 4px;
 }
