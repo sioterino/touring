@@ -186,7 +186,7 @@ const useShows = () => {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const filterShowsByRegion = async (value: string, method?: string): Promise<void> => {
+    const filterShowsByRegion = async (value: string, _method?: string): Promise<void> => {
 
         setLoading(true)
 

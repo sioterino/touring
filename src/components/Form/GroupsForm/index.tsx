@@ -7,7 +7,7 @@ interface Props {
     loading?: boolean
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     options?: any[]
-    handleChange: (value: string, method: string) => Promise<void>
+    handleChange: (value: string, method: string | undefined) => Promise<void>
 }
 
 const GroupsForm = ({ loading = false, options, handleChange }: Props) => {

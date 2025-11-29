@@ -8,7 +8,7 @@ interface Props {
     disable?: boolean
     options: { text: string, value: string, group?: string }[]
     value?: string
-    handleChange: (value: string, method?: string) => Promise<void>
+    handleChange: (value: string, method?: string | undefined) => Promise<void>
 }
 
 const Select = ({ placeholder = '', options, disable = false, label, handleChange, value }: Props) => {
