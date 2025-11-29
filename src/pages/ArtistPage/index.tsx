@@ -112,7 +112,7 @@ const ArtistPage = () => {
                     <div className={styles.select}>
                         <Select
                             label='overview'
-                            options={regions.map(r => ({ text: r, value: r }))}
+                            options={regions}
                             handleChange={filterShowsByRegion}
                         />
                     </div>

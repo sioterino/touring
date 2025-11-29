@@ -6,7 +6,7 @@ interface Props {
     label: string
     placeholder?: string
     disable?: boolean
-    options: { text: string, value: string }[]
+    options: { text: string, value: string, group?: string }[]
     handleChange: (value: string, method?: string) => Promise<void>
 }
 
@@ -17,25 +17,52 @@ const Select = ({ placeholder = '', options, disable = false, label, handleChang
         handleChange(target.value, label)
     }
 
+    // Group options by "group"
+    const grouped = options.reduce((acc, opt) => {
+        const group = opt.group || '_nogroup_'
+        if (!acc[group]) acc[group] = []
+        acc[group].push(opt)
+        return acc
+    }, {} as Record<string, typeof options>)
+
     return (
         <div className={styles.container} >
             <ChevronDown className={styles.arrow} />
-            <select name={label} id={label} className={styles.select} disabled={disable} onChange={e => onChange(e)} >
-                {
-                    placeholder && <option value="" disabled selected>
+            <select
+                name={label}
+                id={label}
+                className={styles.select}
+                disabled={disable}
+                onChange={onChange}
+            >
+                {placeholder && (
+                    <option value="" disabled selected>
                         {placeholder}
                     </option>
-                }
+                )}
 
-                {options.map((opt, key) => (
-                    <option key={key} value={opt.value}>
-                        {opt.text}
-                    </option>
+                {Object.entries(grouped).map(([groupName, groupedOptions]) => (
+                    groupName === '_nogroup_' ? (
+                        // Render ungrouped options normally
+                        groupedOptions.map((opt, key) => (
+                            <option key={key} value={opt.value}>
+                                {opt.text}
+                            </option>
+                        ))
+                    ) : (
+                        // Render grouped options inside optgroup
+                        <optgroup key={groupName} label={groupName}>
+                            {groupedOptions.map((opt, key) => (
+                                <option key={key} value={opt.value}>
+                                    {opt.text}
+                                </option>
+                            ))}
+                        </optgroup>
+                    )
                 ))}
             </select>
         </div>
     )
-
 }
 
 export default Select

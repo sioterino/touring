@@ -5,6 +5,12 @@ import supabase from "../api/supabase"
 import { toast } from "sonner"
 import type { GroupsResponseDTO, TourResponseDTO } from "../types/dtos"
 
+interface RegionOption {
+    text: string
+    value: string
+    group: string
+}
+
 const useShows = () => {
 
     const [ shows, setShows  ] = useState<Show[]>([])
@@ -13,7 +19,7 @@ const useShows = () => {
     const [ loading, setLoading ] = useState(false)
     const [ apiError, setApiError ] = useState<ApiError>({ isError: false, message: '' })
 
-    const [ regions, setRegions ] = useState<string[]>([])
+    const [ regions, setRegions ] = useState<RegionOption[]>([])
 
     const buildToursFromShows = (shows: Show[]): TourResponseDTO[] => {
         if (shows.length === 0) return []
@@ -147,7 +153,14 @@ const useShows = () => {
         setShows(data)
         setAllShows(data)
 
-        const aux = new Set<string>().add('Worldwide')
+        await getRegionOptions(data)
+
+        setLoading(false)
+    }
+
+    const getRegionOptions = async (data: Show[]): Promise<void> => {
+        const aux = new Map<string, RegionOption>()
+        aux.set("Worldwide", { text: "Worldwide", value: "Worldwide", group: "_nogroup_" })
         const { data: countries, error: countriesError } = await supabase.from('countries').select('*').in('id', [1, 2, 3])
 
         if (countriesError) {
@@ -162,14 +175,14 @@ const useShows = () => {
 
         data.forEach(s => {
             const country = s.venue.city.country as Country
-            aux.add(country.continent.name)
-            if (targetCountries.includes(country.name))
-                aux.add(country.name)
+
+            aux.set(country.continent.name, { text: country.continent.name, value: country.continent.name, group: "Continent" })
+
+            if (targetCountries.includes(country.name)) 
+                aux.set(country.name, { text: country.name, value: country.name, group: "Country" })            
         })
 
-        setRegions(Array.from(aux))
-
-        setLoading(false)
+        setRegions(Array.from(aux.values()))
     }
 
     const filterShowsByRegion = async (value: string): Promise<void> => {

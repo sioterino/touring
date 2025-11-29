@@ -29,7 +29,9 @@
   --max-width: 1280px;
   --min-width: 320px;
 
-  font-family: "Open Sans", sans-serif;
+  --font:  "Open Sans", sans-serif;
+
+  font-family: var(--font);
   line-height: 1.5;
   font-weight: 400;
 
