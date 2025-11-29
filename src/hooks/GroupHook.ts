@@ -79,7 +79,7 @@ const useGroups = () => {
         setLoading(false)
     }
 
-    const getGroupsByValue = async (value: string, method: string) => {
+    const getGroupsByValue = async (value: string, method?: string) => {
         switch (method) {
 
             case 'search':

@@ -15,7 +15,7 @@ interface GroupsContextValue {
   apiError: ApiError
   getAllGroups: () => Promise<void>
   getGroupById: (id: number) => Promise<void>
-  getGroupsByValue: (value: string, method: string) => Promise<void>
+  getGroupsByValue: (value: string, method: string | undefined) => Promise<void>
 }
 
 const GroupsContext = createContext<GroupsContextValue | undefined>(undefined)
