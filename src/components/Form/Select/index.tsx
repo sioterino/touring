@@ -7,13 +7,15 @@ interface Props {
     placeholder?: string
     disable?: boolean
     options: { text: string, value: string, group?: string }[]
+    value?: string
     handleChange: (value: string, method?: string) => Promise<void>
 }
 
-const Select = ({ placeholder = '', options, disable = false, label, handleChange }: Props) => {
+const Select = ({ placeholder = '', options, disable = false, label, handleChange, value }: Props) => {
 
     const onChange = (e: ChangeEvent) => {
         const target = e.target as HTMLSelectElement
+        
         handleChange(target.value, label)
     }
 
@@ -34,6 +36,7 @@ const Select = ({ placeholder = '', options, disable = false, label, handleChang
                 className={styles.select}
                 disabled={disable}
                 onChange={onChange}
+                value={value}
             >
                 {placeholder && (
                     <option value="" disabled selected>

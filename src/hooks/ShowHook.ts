@@ -193,6 +193,7 @@ const useShows = () => {
         const { data: continentsObj, error: continentError } = await supabase.from('continents').select('*')
 
         if (countryError || continentError) {
+            setLoading(false)
             const msg = countryError ? countryError.message : continentError?.message || 'There was an error while trying to fetch continents from the dataset'
             setApiError({ isError: true, message: msg })
             console.error("[ShowsHook] Error filtering group's concert shows: ", msg)

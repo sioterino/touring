@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.css'
 import Tag from '../../components/Tag';
@@ -21,10 +21,17 @@ const ArtistPage = () => {
     const { id } = useParams();
     const { group, tours, shows, regions, getAllShowsByGroupId, filterShowsByRegion, loading, apiError } = useShows()
 
+    const [selectedRegion, setSelectedRegion] = useState("Worldwide")
+
     useEffect(() => {
         getAllShowsByGroupId(Number(id))
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const handleRegionChange = async (value: string) => {
+        setSelectedRegion(value)
+        await filterShowsByRegion(value)
+    }
 
     if (apiError.isError) return <ErrorPage message={apiError.message} />
 
@@ -47,9 +54,10 @@ const ArtistPage = () => {
                         <div className={styles.select}>
                             <Select
                                 label='overview'
-                                options={[ { text: 'Worldwide', value: 'Worldwide' }, ]}
-                                handleChange={async () => console.log()}
+                                options={regions.length === 0 ? [ { text: 'Worldwide', value: 'Worldwide' }, ] : regions}
+                                handleChange={handleRegionChange}
                                 disable
+                                value={selectedRegion}
                             />
                         </div>
                     </div>
@@ -113,7 +121,8 @@ const ArtistPage = () => {
                         <Select
                             label='overview'
                             options={regions}
-                            handleChange={filterShowsByRegion}
+                            value={selectedRegion}
+                            handleChange={handleRegionChange}
                         />
                     </div>
                 </div>
