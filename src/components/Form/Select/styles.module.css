@@ -26,7 +26,7 @@
     box-shadow: var(--hover-shadow);
 }
 
-.select:focus {
+.select:focus    {
     border: 1px solid var(--primary);
     box-shadow: var(--primary-shadow);
     color: var(--text);
@@ -43,4 +43,22 @@
 .container:focus-within .arrow {
     color: var(--primary);
     transform: translateY(-50%) rotate(0deg);
+}
+
+.select optgroup {
+    font-family: var(--font);
+    font-style: normal;
+    color: var(--text-muted);
+}
+
+.select optgroup option,
+.select option {
+    color: var(--text);
+    background-color: var(--light);
+}
+
+.select optgroup option:checked,
+.select option:checked {
+    color: var(--text-opp);
+    background-color: var(--primary);
 }

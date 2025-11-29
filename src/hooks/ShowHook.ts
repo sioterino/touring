@@ -1,16 +1,25 @@
 import { useMemo, useState } from "react"
-import type { Show } from "../types/models"
+import type { Country, Show } from "../types/models"
 import type { ApiError } from "../types/utils"
 import supabase from "../api/supabase"
 import { toast } from "sonner"
 import type { GroupsResponseDTO, TourResponseDTO } from "../types/dtos"
 
+interface RegionOption {
+    text: string
+    value: string
+    group: string
+}
+
 const useShows = () => {
 
     const [ shows, setShows  ] = useState<Show[]>([])
+    const [ allShows, setAllShows  ] = useState<Show[]>([])
 
     const [ loading, setLoading ] = useState(false)
     const [ apiError, setApiError ] = useState<ApiError>({ isError: false, message: '' })
+
+    const [ regions, setRegions ] = useState<RegionOption[]>([])
 
     const buildToursFromShows = (shows: Show[]): TourResponseDTO[] => {
         if (shows.length === 0) return []
@@ -140,12 +149,78 @@ const useShows = () => {
             toast.error('There was an error while trying to load the concert shows...')
             return
         }
-
+        
         setShows(data)
+        setAllShows(data)
+
+        await getRegionOptions(data)
+
         setLoading(false)
     }
 
-    return { shows, tours, group, getAllShowsByGroupId, loading, apiError }
+    const getRegionOptions = async (data: Show[]): Promise<void> => {
+        const aux = new Map<string, RegionOption>()
+        aux.set("Worldwide", { text: "Worldwide", value: "Worldwide", group: "_nogroup_" })
+        const { data: countries, error: countriesError } = await supabase.from('countries').select('*').in('id', [1, 2, 3])
+
+        if (countriesError) {
+            setLoading(false)
+            setApiError({ isError: true, message: countriesError.message })
+            console.error("[ShowsHook] Error fetching targeted countries: ", countriesError.message)
+            toast.error("There was an error while trying to fetch targeted countries for filtering...")
+            return
+        }
+
+        const targetCountries = countries.map(d => d.name)
+
+        data.forEach(s => {
+            const country = s.venue.city.country as Country
+
+            aux.set(country.continent.name, { text: country.continent.name, value: country.continent.name, group: "Continent" })
+
+            if (targetCountries.includes(country.name)) 
+                aux.set(country.name, { text: country.name, value: country.name, group: "Country" })            
+        })
+
+        setRegions(Array.from(aux.values()))
+    }
+
+    const filterShowsByRegion = async (value: string): Promise<void> => {
+
+        setLoading(true)
+
+        const { data: countriesObj, error: countryError } = await supabase.from('countries').select('*').in('id', [1, 2, 3])
+        const { data: continentsObj, error: continentError } = await supabase.from('continents').select('*')
+
+        if (countryError || continentError) {
+            setLoading(false)
+            const msg = countryError ? countryError.message : continentError?.message || 'There was an error while trying to fetch continents from the dataset'
+            setApiError({ isError: true, message: msg })
+            console.error("[ShowsHook] Error filtering group's concert shows: ", msg)
+            toast.error("There was an error while trying to filter the artist's shows...")
+            return
+        }
+
+        const countries = countriesObj.map(d => d.name)
+        const continents = continentsObj.map(d => d.name)
+
+        if (value === 'Worldwide') setShows(allShows)
+
+        else if (countries.includes(value)) {
+            const filtered = allShows.filter(s => s.venue.city.country.name === value)
+            setShows(filtered)
+        
+        } else if (continents?.includes(value)) {
+            const filtered = allShows.filter(s => s.venue.city.country.continent.name === value)
+            setShows(filtered)
+
+        } else toast.error("There was an error filtering the group's shows...")
+
+        setLoading(false)
+
+    }
+
+    return { shows, tours, group, regions, getAllShowsByGroupId, filterShowsByRegion, loading, apiError }
 
 }
 
