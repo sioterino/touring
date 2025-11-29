@@ -5,6 +5,7 @@ import styles from './styles.module.css'
 import { formatNumber, formatPercentage, formatUSD } from '../../utils/NumberUtils'
 
 interface Props {
+    loading?: boolean
     tour: string,
     dates: string[]
     venue: string
@@ -17,7 +18,30 @@ interface Props {
     shows: number
 }
 
-const ShowCards = ({ tour, dates, venue, continent, country, city, attendance, box, sold, shows }: Props) => {
+const ShowCards = ({ loading, tour, dates, venue, continent, country, city, attendance, box, sold, shows }: Props) => {
+
+    if (loading) return (
+        <div className={styles.skelCard}>
+            <div className={styles.info}>
+                <span className={styles.skelHeading}></span>
+                <span className={styles.skelDate}></span>
+                <div className={styles.venue}>
+                    <span className={styles.skelIcon}></span>
+                    <span className={styles.skelVenue}></span>
+                </div>
+                <div className={styles.tags}>
+                    { Array.from({ length: 3 }).map((_, i) => <Tag key={i} text='' type='loading' />) }
+                </div>
+            </div>
+
+            <div className={styles.report}>
+                <span className={styles.skelTd}></span>
+                <span className={styles.skelTd}></span>
+                <span className={styles.skelTd}></span>
+                <span className={styles.skelTd}></span>
+            </div>
+        </div>      
+    )
 
     return (
         <div className={styles.showCards}>

@@ -17,3 +17,9 @@
 .tag.filled {
     background-color: var(--dark);
 }
+
+.tag.loading {
+    background-color: var(--dark);
+    height: 25px;
+    width: 60px;
+}

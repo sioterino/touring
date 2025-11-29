@@ -1,6 +1,7 @@
+.skelCard,
 .showCards {
     display: flex;
-    justify-content: space-between;
+    justify-content: stretch;
     flex-wrap: wrap;
 
     background-color: var(--light);
@@ -9,7 +10,10 @@
     box-shadow: var(--box-shadow);
 
     border: 1px solid var(--dark);
-    animation: slideIn .5s ease-in-out forwards;
+}
+
+.showCards {
+    animation: slideIn .15s ease-in-out forwards;
 }
 
 .showCards .header h3 {
@@ -32,22 +36,24 @@
     border-top: 1px solid var(--highlight);
 }
 
-.showCards .info {
+.info {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    width: 60%;
 }
 
-.showCards .tags {
+.tags {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
 }
 
-.showCards .showDate {
+.showDate {
     color: var(--text-muted);
 }
 
-.showCards .venue {
+.venue {
     display: flex;
     gap: 4px;
     align-items: center;
@@ -59,37 +65,108 @@
     justify-content: space-evenly;
     align-items: flex-end;
     opacity: 80%;
+    width: calc(40% - 32px);
+    padding-left: 32px;
+    margin-left: 32px;
+    border-left: 1px solid var(--dark);
 }
 
-@media (max-width: 365px) {
-    .showCards {
-        gap: 24px;
-    }
-    
-    .report {
-        align-items: flex-start;
-        width: 100%;
-        border-top: 1px solid var(--dark);
-        padding-top: 16px;
-    }
-    
-    .report p {
-        padding: 4px 16px;
-        width: 100%;
-    }
+.report p { 
+    padding: 4px 16px;
+    width: 100%;
+    text-align: right;
+}
 
-    .report p:nth-child(even) {
-        background-color: var(--default);
-    }
+.report p:nth-child(even) {
+    background-color: var(--default);
 }
 
 @keyframes slideIn {
   0% {
     opacity: 0;
-    transform: translateY(20%);
+    /* transform: translateY(20%); */
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    /* transform: translateY(0); */
   }
+}
+
+.skelCard {
+  animation: pulse 1.4s infinite ease-in-out;
+}
+
+.skelCard span {
+    display: inline-block; 
+    background-color: var(--dark);
+}
+
+.skelHeading {
+    height: 23px;
+    width: 180px;
+    border-radius: 4px;
+}
+
+.skelDate {
+    height: 19px;
+    width: 150px;
+    border-radius: 4px;
+}
+
+.skelIcon {
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+}
+
+.skelVenue {
+    height: 19px;
+    width: 90px;
+    border-radius: 4px;
+}
+
+.skelTd {
+    width: 100%;
+    height: 25%;
+    background-color: var(--dark);
+}
+
+.skelTd:nth-child(odd) {
+    background-color: transparent;
+}
+
+@keyframes pulse {
+  0% { opacity: .6; }
+  50% { opacity: 1; }
+  100% { opacity: .6; }
+}
+
+@media (max-width: 580px) {
+
+    .showCards {
+        flex-direction: column;
+    }
+
+    .info {
+        width: 100%;
+    }
+
+    .report {
+        border-left: none;
+        padding-left: 0px;
+        margin-left: 0px;
+        border-top: 1px solid var(--dark);
+        padding-top: 32px;
+        margin-top: 32px;
+        width: 100%;
+    }
+
+    .report p {
+        text-align: left;
+    }
+
+    .skelTd {
+        height: 32px;
+    }
+
 }

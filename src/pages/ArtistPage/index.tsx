@@ -12,7 +12,6 @@ import ShowCards from '../../components/Cards/ShowCard';
 import Slide from '../../components/Slide';
 import useShows from '../../hooks/ShowHook';
 import ErrorPage from '../ErrorPage';
-import EmptyArray from '../../components/EmptyArray';
 import type { Show } from '../../types/models';
 import { parseGen } from '../../components/utils/StringUtils';
 
@@ -28,8 +27,57 @@ const ArtistPage = () => {
 
     if (apiError.isError) return <ErrorPage message={apiError.message} />
 
-    if (loading || group === null)
-        return <EmptyArray title='Loading...' desc='Sorry, we are trying to fetch data. This might take a while.' />
+    if ( loading || group === null)
+        return (
+            <div className={styles.artist}>
+
+                <div>
+                    <GoBack text='Back to groups' path='/groups' />
+                    <span className={styles.heading}>
+                        <span className={styles.skelPfp}></span>
+                        <span className={styles.desc}>
+                            <span className={styles.skelHeading}></span>
+                            <div className={styles.skelTags}>
+                                { Array.from({ length: 3 }).map((_, i) => <Tag key={i} type='loading' text='' /> ) }
+                            </div>
+                        </span>
+                    </span>
+                </div>
+
+                <div className={styles.general}>
+                    { Array.from({ length: 6 }).map((_, i) => <IconCard key={i} loading />) }
+                </div>
+
+                <Slide
+                    heading='Tours'
+                    hint
+                    children={
+                        Array.from({ length: 4 }).map((_, i) => (
+                            <TourCard
+                                loading key={i} id={0} name={''} level={''} continents={[]} start={''}
+                                end={''} reported={0} total={0} attendance={0} box={0} sold={0} price={0}
+                            />
+                        ))
+                    }
+                />
+
+                <div className={styles.recent}>
+                    <h2>Recent Shows</h2>
+                    <p className={styles.hint}>Most recent reported shows</p>
+                    <div className={styles.shows}>
+                        {
+                            Array.from({ length: 5 }).map((_, i) => (
+                                <ShowCards
+                                    loading key={i} tour={''} dates={[]} venue={''} continent={''}
+                                    country={''} city={''} box={0} attendance={0} sold={0} shows={0}
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+
+            </div>
+    )
 
     return (
         <div className={styles.artist}>
