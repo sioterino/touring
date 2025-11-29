@@ -185,7 +185,8 @@ const useShows = () => {
         setRegions(Array.from(aux.values()))
     }
 
-    const filterShowsByRegion = async (value: string): Promise<void> => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const filterShowsByRegion = async (value: string, method?: string): Promise<void> => {
 
         setLoading(true)
 
