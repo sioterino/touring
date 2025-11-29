@@ -10,33 +10,9 @@
     grid-template-columns: repeat(3, minmax(160px, 1fr));
 }
 
-.artist .heading {
-    grid-column: span 2;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.artist .heading .pfp {
-    width: 90px;
-}
-
-.artist .heading .desc {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
 .artist .select {
     grid-column: span 1;
     align-self: end;
-}
-
-.skelTags,
-.tags {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
 }
 
 .hint {
@@ -44,18 +20,7 @@
   margin-bottom: 16px;
 }
 
-.general {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(3, minmax(180px, 1fr));
-}
-
-
 @media (max-width: 603px) {
-    .general {
-        display: flex;
-        flex-direction: column;
-    }
 
     .top {
         display: flex;
@@ -80,26 +45,6 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-}
-
-.skelPfp {
-    width: 90px;
-    height: 90px;
-    background-color: var(--dark);
-    border-radius: 50%;
-    animation: pulse 1.4s infinite ease-in-out;
-}
-
-.skelHeading {
-    width: 80px;
-    height: 25px;
-    background-color: var(--dark);
-    border-radius: 4px;
-    animation: pulse 1.4s infinite ease-in-out;
-}
-
-.skelTags {
-    animation: pulse 1.4s infinite ease-in-out;
 }
 
 @keyframes pulse {
