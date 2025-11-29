@@ -14,6 +14,7 @@ import useShows from '../../hooks/ShowHook';
 import ErrorPage from '../ErrorPage';
 import type { Show } from '../../types/models';
 import { parseGen } from '../../components/utils/StringUtils';
+import Select from '../../components/Form/Select';
 
 const ArtistPage = () => {
 
@@ -33,15 +34,25 @@ const ArtistPage = () => {
 
                 <div>
                     <GoBack text='Back to groups' path='/groups' />
-                    <span className={styles.heading}>
-                        <span className={styles.skelPfp}></span>
-                        <span className={styles.desc}>
-                            <span className={styles.skelHeading}></span>
-                            <div className={styles.skelTags}>
-                                { Array.from({ length: 3 }).map((_, i) => <Tag key={i} type='loading' text='' /> ) }
-                            </div>
+                    <div className={styles.top}>
+                        <span className={styles.heading}>
+                            <span className={styles.skelPfp}></span>
+                            <span className={styles.desc}>
+                                <span className={styles.skelHeading}></span>
+                                <div className={styles.skelTags}>
+                                    { Array.from({ length: 3 }).map((_, i) => <Tag key={i} type='loading' text='' /> ) }
+                                </div>
+                            </span>
                         </span>
-                    </span>
+                        <div className={styles.select}>
+                            <Select
+                                label='overview'
+                                options={[ { text: 'Worldwide', value: 'all' }, ]}
+                                handleChange={async () => console.log()}
+                                disable
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 <div className={styles.general}>
@@ -83,18 +94,37 @@ const ArtistPage = () => {
         <div className={styles.artist}>
             <div>
                 <GoBack text='Back to groups' path='/groups' />
-                <div className={styles.heading}>
-                    <div className={styles.pfp}>
-                        <ProfileImage name={group.name} colors={group.colors} size={90} font={32} />
-                    </div>
-                    <div className={styles.desc}>
-                        <h1>{group.name}</h1>
-                        <div className={styles.tags}>
-                            <Tag text={group.gender} type='filled' />
-                            <Tag text={parseGen(group.generation)} />
-                            { group.company.parent_company && <Tag text={Array.isArray(group.company.parent_company) ? group.company.parent_company[0].name : group.company.parent_company.name} /> }
-                            <Tag text={group.company.name} />
+                <div className={styles.top}>
+                    <div className={styles.heading}>
+                        <div className={styles.pfp}>
+                            <ProfileImage name={group.name} colors={group.colors} size={90} font={32} />
                         </div>
+                        <div className={styles.desc}>
+                            <h1>{group.name}</h1>
+                            <div className={styles.tags}>
+                                <Tag text={group.gender} type='filled' />
+                                <Tag text={parseGen(group.generation)} />
+                                { group.company.parent_company && <Tag text={Array.isArray(group.company.parent_company) ? group.company.parent_company[0].name : group.company.parent_company.name} /> }
+                                <Tag text={group.company.name} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.select}>
+                        <Select
+                            label='overview'
+                            options={[
+                                { text: 'Worldwide', value: 'all' },
+                                { text: 'Asia', value: 'Asia' },
+                                { text: 'North America', value: 'North America' },
+                                { text: 'South America', value: 'South America' },
+                                { text: 'Europe', value: 'Europe' },
+                                { text: 'Oceania', value: 'Oceania' },
+                                { text: 'South Korea', value: 'South Korea' },
+                                { text: 'Japan', value: 'Japan' },
+                                { text: 'United States', value: 'United States' },
+                            ]}
+                            handleChange={async () => console.log()}
+                        />
                     </div>
                 </div>
             </div>

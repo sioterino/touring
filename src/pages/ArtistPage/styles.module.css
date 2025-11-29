@@ -4,7 +4,14 @@
     gap: 32px;
 }
 
+.top {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: repeat(3, minmax(160px, 1fr));
+}
+
 .artist .heading {
+    grid-column: span 2;
     display: flex;
     align-items: center;
     gap: 16px;
@@ -18,6 +25,11 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+}
+
+.artist .select {
+    grid-column: span 1;
+    align-self: end;
 }
 
 .skelTags,
@@ -43,6 +55,18 @@
     .general {
         display: flex;
         flex-direction: column;
+    }
+
+    .top {
+        display: flex;
+        flex-direction: column;
+
+        border-bottom: 1px solid var(--dark);
+        padding-bottom: 32px;
+    }
+
+    .select {
+        width: 100%;
     }
 }
 
