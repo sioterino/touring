@@ -19,7 +19,7 @@ import Select from '../../components/Form/Select';
 const ArtistPage = () => {
 
     const { id } = useParams();
-    const { group, tours, shows, getAllShowsByGroupId, loading, apiError } = useShows()
+    const { group, tours, shows, regions, getAllShowsByGroupId, filterShowsByRegion, loading, apiError } = useShows()
 
     useEffect(() => {
         getAllShowsByGroupId(Number(id))
@@ -47,7 +47,7 @@ const ArtistPage = () => {
                         <div className={styles.select}>
                             <Select
                                 label='overview'
-                                options={[ { text: 'Worldwide', value: 'all' }, ]}
+                                options={[ { text: 'Worldwide', value: 'Worldwide' }, ]}
                                 handleChange={async () => console.log()}
                                 disable
                             />
@@ -112,18 +112,8 @@ const ArtistPage = () => {
                     <div className={styles.select}>
                         <Select
                             label='overview'
-                            options={[
-                                { text: 'Worldwide', value: 'all' },
-                                { text: 'Asia', value: 'Asia' },
-                                { text: 'North America', value: 'North America' },
-                                { text: 'South America', value: 'South America' },
-                                { text: 'Europe', value: 'Europe' },
-                                { text: 'Oceania', value: 'Oceania' },
-                                { text: 'South Korea', value: 'South Korea' },
-                                { text: 'Japan', value: 'Japan' },
-                                { text: 'United States', value: 'United States' },
-                            ]}
-                            handleChange={async () => console.log()}
+                            options={regions.map(r => ({ text: r, value: r }))}
+                            handleChange={filterShowsByRegion}
                         />
                     </div>
                 </div>
