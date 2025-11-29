@@ -21,8 +21,10 @@ const GroupsPage = () => {
             <GroupsForm loading={loading} handleChange={getGroupsByValue} />
             <p className={styles.info}>Showing 16 out of 16 groups</p>
 
-            <div className={styles.cards}>
-            { Array.from({ length: 16 }).map((_, i) => <GroupCard loading={loading} key={i} /> ) }
+            <div className={styles.gradient}>
+                <div className={styles.cards}>
+                { Array.from({ length: 16 }).map((_, i) => <GroupCard loading={loading} key={i} /> ) }
+                </div>
             </div>
         </div>
     )

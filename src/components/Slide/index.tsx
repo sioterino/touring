@@ -1,6 +1,7 @@
 import styles from './styles.module.css'
 
 interface Props {
+    loading?: boolean
     heading: string
     desc?: string
     hint?: boolean
@@ -8,15 +9,17 @@ interface Props {
     children: React.ReactNode
 }
 
-const Slide = ({ heading, children, className, desc = 'Slide left two see all tours available', hint }: Props) => {
+const Slide = ({ loading, heading, children, className, desc = 'Slide left two see all tours available', hint }: Props) => {
 
     return (
         <div className={`${styles.slider} ${className}`}>
             <h2>{heading}</h2>
             { hint && <p className={styles.hint}>{desc}</p> }
             <div className={styles.sliderContainer}>
-                <div className={styles.cards}>
-                    { children }
+                <div className={ loading ? styles.gradient : '' }>
+                    <div className={styles.cards}>
+                        { children }
+                    </div>
                 </div>
             </div>
         </div>

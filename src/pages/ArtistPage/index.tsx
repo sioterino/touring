@@ -31,7 +31,7 @@ import StatsSection from '../../components/StatsSection';
 
         if (apiError.isError) return <ErrorPage message={apiError.message} />
 
-        if ( loading || group === null)
+        if (loading || group === null)
             return (
                 <div className={styles.artist}>
                     <div>
@@ -50,6 +50,7 @@ import StatsSection from '../../components/StatsSection';
                     <StatsSection loading group={group} />
 
                     <Slide
+                        loading
                         heading='Tours'
                         hint
                         children={
@@ -62,12 +63,14 @@ import StatsSection from '../../components/StatsSection';
                     <div className={styles.recent}>
                         <h2>Recent Shows</h2>
                         <p className={styles.hint}>Most recent reported shows</p>
-                        <div className={styles.shows}>
-                            {
-                                Array.from({ length: 5 }).map((_, i) => (
-                                    <ShowCards loading key={i} tour={''} dates={[]} venue={''} continent={''} country={''} city={''} box={0} attendance={0} sold={0} shows={0} />
-                                ))
-                            }
+                        <div className={styles.gradient}>
+                            <div className={styles.shows}>
+                                {
+                                    Array.from({ length: 5 }).map((_, i) => (
+                                        <ShowCards loading key={i} tour={''} dates={[]} venue={''} continent={''} country={''} city={''} box={0} attendance={0} sold={0} shows={0} />
+                                    ))
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
