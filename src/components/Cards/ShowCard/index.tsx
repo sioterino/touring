@@ -35,10 +35,10 @@ const ShowCards = ({ loading, tour, dates, venue, continent, country, city, atte
             </div>
 
             <div className={styles.report}>
-                <span className={styles.skelBox}></span>
-                <span className={styles.skelAtt}></span>
-                <span className={styles.skelTicket}></span>
-                <span className={styles.skelNights}></span>
+                <span className={styles.skelTd}></span>
+                <span className={styles.skelTd}></span>
+                <span className={styles.skelTd}></span>
+                <span className={styles.skelTd}></span>
             </div>
         </div>      
     )

@@ -9,6 +9,7 @@
     box-shadow: var(--box-shadow);
 
     min-width: 345px;
+    max-width: 345px;
 
     border: 1px solid var(--dark);
     animation: slideIn .15s ease-in-out forwards;
@@ -30,6 +31,9 @@
 }
 
 .tourCard .header h3 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-size: 18px;
 }
 

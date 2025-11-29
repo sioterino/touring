@@ -27,7 +27,7 @@ const ArtistPage = () => {
 
     if (apiError.isError) return <ErrorPage message={apiError.message} />
 
-    if (loading || group === null)
+    if ( loading || group === null)
         return (
             <div className={styles.artist}>
 
