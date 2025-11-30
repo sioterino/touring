@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.top {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: repeat(3, minmax(160px, 1fr));
+}
+
+.container .select {
+    grid-column: span 1;
+    align-self: end;
+}
+
+@media (max-width: 603px) {
+    .top {
+      display: flex;
+      flex-direction: column;
+
+      border-bottom: 1px solid var(--dark);
+      padding-bottom: 32px;
+    }
+
+    .select {
+        width: 100%;
+    }
+}
+
+@keyframes pulse {
+  0% { opacity: .6; }
+  50% { opacity: 1; }
+  100% { opacity: .6; }
+}

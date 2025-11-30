@@ -6,15 +6,15 @@ import { formatNumber, formatPercentage, formatUSD } from '../../../utils/Number
 
 interface Props {
     loading?: boolean
-    tour: string,
+    tour: string
     dates: string[]
     venue: string
     continent: string
     country: string
     city: string
-    attendance: number
-    box: number
-    sold: number
+    attendance: number | null
+    box: number | null
+    sold: number | null
     shows: number
 }
 
@@ -60,9 +60,9 @@ const ShowCards = ({ loading, tour, dates, venue, continent, country, city, atte
             </div>
             <div className={styles.report}>
 
-                <p>{formatUSD(box)}</p>
-                <p>{`${formatNumber(attendance)} (${formatPercentage(sold)})`}</p>
-                <p>{`${formatUSD(box / attendance)} per ticket`}</p>
+                <p>{box ? formatUSD(box) : 'Not Reported'}</p>
+                <p>{attendance && sold ? `${formatNumber(attendance)} (${formatPercentage(sold)})` : 'Not Reported'}</p>
+                <p>{box && attendance ? `${formatUSD(box / attendance)} per ticket` : 'Not Reported'}</p>
                 <p>{shows} {shows === 1 ? 'show' : 'shows'}</p>
 
             </div>

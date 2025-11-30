@@ -44,6 +44,11 @@
   background: var(--scrollbar);
 }
 
+.hint {
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
 .gradient {
   position: relative;
 }

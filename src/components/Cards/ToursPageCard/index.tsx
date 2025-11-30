@@ -39,7 +39,7 @@ const ToursPageCard = ({ loading, tour }: Props) => {
         <Link to={`/tours/${tour.id}`} className={styles.card}>
             <div className={styles.header}>
                 <div className={styles.pfp}>
-                    <ProfileImage name={tour.group.name} colors={tour.group.colors} />
+                    <ProfileImage name={tour.name} colors={tour.group.colors} />
                 </div>
                 <div className={styles.profile}>
                     <h3>{tour.name}</h3>

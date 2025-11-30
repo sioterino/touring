@@ -1,0 +1,108 @@
+.heading {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.heading .pfp {
+    width: 90px;
+}
+
+.heading .desc {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.heading .desc p {
+    color: var(--text-muted);
+}
+
+.tags span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-transform: capitalize;
+    color: var(--text-muted);
+    padding: 4px 8px;
+    border: 1px solid var(--dark);
+    border-radius: 4px;
+    user-select: none;
+
+}
+
+.type {
+    background-color: var(--dark);
+}
+
+.tags span *:first-child {
+    height: 16px;
+    width: 16px;
+}
+
+.tags,
+.dates,
+.skelDates {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap-reverse;
+}
+
+.dates {
+    flex-wrap: none;
+}
+
+.skelInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skelHeading {
+    display: inline-block;
+    width: 180px;
+    height: 25px;
+    background-color: var(--dark);
+    border-radius: 4px;
+    animation: pulse 1.4s infinite ease-in-out;
+}
+
+.skelGroup {
+    display: inline-block;
+    background-color: var(--dark);
+    border-radius: 4px;  
+    animation: pulse 1.4s infinite ease-in-out;
+
+    width: 130px;
+    height: 16px;
+}
+
+.skelPfp {
+    width: 90px;
+    height: 90px;
+    background-color: var(--dark);
+    border-radius: 50%;
+    animation: pulse 1.4s infinite ease-in-out;
+}
+
+.skelTags {
+    animation: pulse 1.4s infinite ease-in-out;
+}
+
+.skelType,
+.skelDates span {
+    display: inline-block;
+    background-color: var(--dark);
+    border-radius: 4px;  
+    animation: pulse 1.4s infinite ease-in-out;
+    height: 28px;
+}
+
+.skelType {
+    width: 100px;
+}
+
+.skelDates span {
+    width: 130px;
+}
