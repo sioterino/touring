@@ -29,7 +29,7 @@ const ConcertPage = () => {
     if (loading) return (
         <div className={styles.container}>
             <div>
-                <GoBack text='Back to groups' path='/groups' />
+                <GoBack text='Back to tours' path='/tours' />
                 <div className={styles.top}>
                     <TourProfile loading tour={tours[0]} />
                     <div className={styles.select}>
@@ -55,7 +55,7 @@ const ConcertPage = () => {
     return (
         <div className={styles.container}>
             <div>
-                <GoBack text='Back to groups' path='/groups' />
+                <GoBack text='Back to tours' path='/tours' />
                 <div className={styles.top}>
                     <TourProfile tour={tours[0]} />
                     <div className={styles.select}>
