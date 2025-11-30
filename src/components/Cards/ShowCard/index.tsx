@@ -1,4 +1,4 @@
-import { Calendar, MapPin, Users } from 'lucide-react'
+import { Calendar, CircleDollarSign, MapPin, Percent, Ticket, Users } from 'lucide-react'
 import Tag from '../../Tag'
 import { formatArrayOfDates } from '../../../utils/DateUtils'
 import styles from './styles.module.css'
@@ -87,27 +87,36 @@ const ShowCards = ({ loading, tour = null, dates, venue, country, city, attendan
 
             <div className={styles.data}>
 
-                <div className={styles.card}>
-                    <p>Attendance</p>
-                    <p>
+                <div className={styles.stat}>
+                    <div className={styles.label}>
                         <Users className={styles.icon} />
-                        <span>{ attendance ? formatNumber(attendance) : 'Not Reported' }</span>
-                    </p>
+                        <span>Attendance</span>
+                    </div>
+                    <p className={styles.value}>{attendance ? formatNumber(attendance) : 'Not Reported'}</p>
                 </div>
 
-                <div className={styles.card}>
-                    <p>Sold</p>
-                    <p>{ sold ? formatPercentage(sold) : 'Not Reported' }</p>
+                <div className={styles.stat}>
+                    <div className={styles.label}>
+                        <Percent className={styles.icon} />
+                        <span>Sold</span>
+                    </div>
+                    <p className={styles.value}>{sold ? formatPercentage(sold) : 'Not Reported'}</p>
                 </div>
 
-                <div className={styles.card}>
-                    <p>Box Score</p>
-                    <p>{ box ? formatUSD(box) : 'Not Reported' }</p>
+                <div className={styles.stat}>
+                    <div className={styles.label}>
+                        <CircleDollarSign className={styles.icon} />
+                        <span>Box Score</span>
+                    </div>
+                    <p className={styles.value}>{box ? formatUSD(box) : 'Not Reported'}</p>
                 </div>
 
-                <div className={styles.card}>
-                    <p>Avg Ticket</p>
-                    <p>{ box && attendance ? formatUSD(box / attendance) : 'Not Reported' }</p>
+                <div className={styles.stat}>
+                    <div className={styles.label}>
+                        <Ticket className={styles.icon} />
+                        <span>Avg Price</span>
+                    </div>
+                    <p className={styles.value}>{attendance && box ? formatUSD(box / attendance) : 'Not Reported'}</p>
                 </div>
 
             </div>

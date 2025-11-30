@@ -12,9 +12,7 @@ const Tag = ({ text, type = 'hollow', capitalize = true }: Props) => {
 
 
     return (
-        <p className={classList}>
-            {text}
-        </p>
+        <p className={classList}>{text}</p>
     )
 
 }

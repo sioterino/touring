@@ -7,14 +7,11 @@
     flex-shrink: 0;
     
     user-select: none;
+    border: 1px solid var(--dark);
 }
 
 .tag.capitalize {
     text-transform: capitalize;
-}
-
-.tag.hollow {
-    border: 1px solid var(--dark);
 }
 
 .tag.filled {
@@ -22,7 +19,6 @@
 }
 
 .tag.loading {
-    background-color: var(--dark);
     height: 25px;
     width: 60px;
 }
