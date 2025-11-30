@@ -18,7 +18,10 @@ const ToursPageCard = ({ loading, tour }: Props) => {
         <div className={styles.skelContent}>
           <div className={styles.skelProfile}>
             <span className={styles.skelHeading}></span>
-            <span className={styles.skelGroup}></span>
+            <div className={styles.skelInfoItem}>
+              <span className={styles.skelIcon}></span>
+              <span className={styles.skelDate}></span>
+            </div>
           </div>
           <div className={styles.skelInfo}>
             <div className={styles.skelInfoItem}>

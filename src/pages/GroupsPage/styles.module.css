@@ -5,6 +5,10 @@
     gap: 24px;
 }
 
+.span {
+  grid-column: 3 span;
+}
+
 @media (max-width: 1420px) {
   .cards {
     grid-template-columns: repeat(2, minmax(280px, 1fr));

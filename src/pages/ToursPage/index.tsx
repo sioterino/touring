@@ -31,7 +31,9 @@ const ToursPage = () => {
                     {
                         !loading ?
                             tours.length !== 0 ? tours.map((tour, key) => (<ToursPageCard key={key} tour={tour} />))
-                            : <EmptyArray title='Hmm… nothing matched' desc="We couldn't find any items that match your search or filter criteria. Maybe try different options?" />
+                            : <div className={styles.span}>
+                                <EmptyArray title='Hmm… nothing matched' desc="We couldn't find any items that match your search or filter criteria. Maybe try different options?" />
+                            </div>
                         : Array.from({ length: 24 }).map((_, i) => <ToursPageCard key={i} loading /> )
                         
                     }

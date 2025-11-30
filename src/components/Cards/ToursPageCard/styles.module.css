@@ -1,5 +1,5 @@
 .card,
-.skeletonCard {
+.skelCard {
   display: flex;
   flex-direction: row;
 
@@ -128,24 +128,23 @@
 }
 
 .skelCard {
+  height: 124px;
   box-shadow: none;
   animation: pulse 1.4s ease-in-out infinite;
 }
 
 .skelImage {
-  width: 140px;
-  min-width: 140px;
-  height: 140px;
+  width: 125px;
+  min-width: 125px;
   background: var(--dark);
 }
 
 .skelContent {
-  flex: 1;
   padding: 16px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 12px;
-  justify-content: center;
 }
 
 .skelProfile {
@@ -158,14 +157,6 @@
   display: block;
   width: 60%;
   height: 20px;
-  background: var(--dark);
-  border-radius: 4px;
-}
-
-.skelGroup {
-  display: block;
-  width: 45%;
-  height: 16px;
   background: var(--dark);
   border-radius: 4px;
 }
@@ -183,16 +174,16 @@
 
 .skelIcon {
   display: block;
-  width: 16px;
-  height: 16px;
+  width: 19px;
+  height: 19px;
   background: var(--dark);
-  border-radius: 4px;
+  border-radius: 50%;
   flex-shrink: 0;
 }
 
 .skelDate {
   display: block;
-  width: 90px;
+  width: 70px;
   height: 16px;
   background: var(--dark);
   border-radius: 4px;
@@ -200,7 +191,7 @@
 
 .skelTour {
   display: block;
-  width: 70px;
+  width: 50px;
   height: 16px;
   background: var(--dark);
   border-radius: 4px;
