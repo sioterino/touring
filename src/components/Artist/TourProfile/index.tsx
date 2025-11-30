@@ -2,7 +2,7 @@ import type { Tour } from '../../../types/models'
 import ProfileImage from '../../ProfileImage'
 import styles from './styles.module.css'
 import type { TourResponseDTO } from '../../../types/dtos'
-import { Calendar, MapPin } from 'lucide-react'
+import { CalendarArrowDown, CalendarArrowUp, MapPin } from 'lucide-react'
 import { formatPrettyDate } from '../../../utils/DateUtils'
 
 interface Props {
@@ -47,8 +47,8 @@ const TourProfile = ({ loading, tour = null}: Props) => {
                 <div className={styles.tags}>
                     <span className={styles.type}><MapPin />{`${tour.tour} tour`}</span>
                     <div className={styles.dates}>
-                        <span><Calendar />{formatPrettyDate(tour.begin)}</span>
-                        <span><Calendar />{formatPrettyDate(tour.end)}</span>
+                        <span><CalendarArrowUp />{formatPrettyDate(tour.begin)}</span>
+                        <span><CalendarArrowDown />{formatPrettyDate(tour.end)}</span>
                     </div>
                 </div>
             </div>

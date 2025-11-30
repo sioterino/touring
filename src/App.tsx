@@ -13,6 +13,7 @@ import ToursPage from './pages/ToursPage'
 import ConcertPage from './pages/ConcertPage'
 import ComparePage from './pages/ComparePage'
 import ScrollToTop from './ScrollToTop'
+import AboutPage from './pages/AboutPage'
 
 const AppRoutes = () => {
 
@@ -37,6 +38,7 @@ const AppRoutes = () => {
           <Route path='/companies' element={ <CompaniesPage /> } />
           <Route path='/venues' element={ <VenuesPage /> } />
           <Route path='/compare' element={ <ComparePage /> } />
+          <Route path='/about' element={ <AboutPage /> } />
 
           <Route path='/groups/:id' element={ <ArtistPage /> } />
           <Route path='/tours/:id' element={ <ConcertPage /> } />
