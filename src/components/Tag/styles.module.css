@@ -1,5 +1,4 @@
 .tag {
-    text-transform: capitalize;
 
     padding: 2px 8px;
     border-radius: 4px;
@@ -8,6 +7,10 @@
     flex-shrink: 0;
     
     user-select: none;
+}
+
+.tag.capitalize {
+    text-transform: capitalize;
 }
 
 .tag.hollow {
