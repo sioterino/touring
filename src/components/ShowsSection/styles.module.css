@@ -5,10 +5,16 @@
 }
 
 .shows {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   margin-top: 16px;
+}
+
+@media (max-width: 1180px) {
+  .shows {
+    grid-template-columns: 1fr;
+  }
 }
 
 .gradient {

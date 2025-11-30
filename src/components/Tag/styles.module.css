@@ -1,17 +1,17 @@
 .tag {
-    text-transform: capitalize;
 
-    padding: 2px 8px;
+    padding: 3px 12px;
     border-radius: 4px;
 
     white-space: nowrap;
     flex-shrink: 0;
     
     user-select: none;
+    border: 1px solid var(--dark);
 }
 
-.tag.hollow {
-    border: 1px solid var(--dark);
+.tag.capitalize {
+    text-transform: capitalize;
 }
 
 .tag.filled {
@@ -19,7 +19,6 @@
 }
 
 .tag.loading {
-    background-color: var(--dark);
     height: 25px;
     width: 60px;
 }

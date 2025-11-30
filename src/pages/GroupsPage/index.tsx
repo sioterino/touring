@@ -33,7 +33,7 @@ const GroupsPage = () => {
                         !loading ?
                             groups.length !== 0 ? groups.map((gp: Group, key: number) => <GroupCard group={gp} key={key} /> )
                             : <EmptyArray title='Hmm… nothing matched' desc="We couldn't find any items that match your search or filter criteria. Maybe try different options?" />
-                        : Array.from({ length: 16 }).map((_, i) => <GroupCard loading key={i} /> )
+                        : Array.from({ length: 24 }).map((_, i) => <GroupCard loading key={i} /> )
                     }
                 </div>
             </div>

@@ -2,19 +2,17 @@ import styles from './styles.module.css'
 
 interface Props {
     text: string
-    clickable?: boolean
+    capitalize?: boolean
     type?: 'hollow' | 'filled' | 'loading'
 }
 
-const Tag = ({ text, type = 'hollow', clickable = false }: Props) => {
+const Tag = ({ text, type = 'hollow', capitalize = true }: Props) => {
     
-    const classList = [ styles.tag, styles[type], clickable && styles.clickable ].filter(Boolean).join(' ')
+    const classList = [ styles.tag, styles[type], capitalize && styles.capitalize ].filter(Boolean).join(' ')
 
 
     return (
-        <p className={classList}>
-            {text}
-        </p>
+        <p className={classList}>{text}</p>
     )
 
 }

@@ -1,173 +1,164 @@
-.skelCard,
-.showCards {
-    display: flex;
-    justify-content: stretch;
-    flex-wrap: wrap;
-
+.skelContainer,
+.container {
     background-color: var(--light);
-    border-radius: 8px;
-    padding: 32px max(20px, 3vw);
     box-shadow: var(--box-shadow);
 
     border: 1px solid var(--dark);
+    border-radius: 8px;
+
+    padding: 32px;
 }
 
-.showCards {
-    animation: slideIn .15s ease-in-out forwards;
+.container:hover {
+    box-shadow: var(--box-shadow-hover);
 }
 
-.showCards .header h3 {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-:global(:root.dark) .showCards {
+:global(:root.dark) .container {
     background: var(--gradient);
 }
 
-:global(:root.dark) .showCards:hover {
+:global(:root.dark) .container:hover {
     background: var(--gradient-hover);
     border-top: 1px solid var(--highlight);
 }
 
-.showCards:hover {
-    box-shadow: var(--box-shadow-hover);
-    border-top: 1px solid var(--highlight);
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
 }
 
-.info {
+.headerRight {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    width: 60%;
+    gap: 8px;
+}
+
+.heading {
+    display: flex;
+    gap: 8px;
+}
+
+.tooltip {
+    color: hsl(210, 100%, 50%);
 }
 
 .tags {
     display: flex;
-    flex-wrap: wrap;
     gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.showDate {
+.showNights {
     color: var(--text-muted);
 }
 
-.venue {
+.venue,
+.date {
     display: flex;
-    gap: 4px;
     align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+
+    padding: 24px 0px 16px;
 }
 
-.report {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-end;
-    opacity: 80%;
-    width: calc(40% - 32px);
-    padding-left: 32px;
-    margin-left: 32px;
-    border-left: 1px solid var(--dark);
+.venue, .venue .icon {
+    gap: 4px;
+    padding: 0px;
+    color: var(--text);
 }
 
-.report p { 
-    padding: 4px 16px;
-    width: 100%;
-    text-align: right;
+.data {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
 }
 
-.report p:nth-child(even) {
-    background-color: var(--default);
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-@keyframes slideIn {
-  0% {
-    opacity: 0;
-    /* transform: translateY(20%); */
-  }
-  100% {
-    opacity: 1;
-    /* transform: translateY(0); */
-  }
+.label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
 }
 
-.skelCard {
-  box-shadow: none;
-  animation: pulse 1.4s infinite ease-in-out;
+.icon {
+  width: 14px;
+  height: 14px;
 }
 
-.skelCard span {
-    display: inline-block; 
-    background-color: var(--dark);
+.value {
+  display: flex;
+  gap: 6px;
+  font-weight: 600;
 }
 
-.skelHeading {
-    height: 23px;
-    width: 180px;
-    border-radius: 4px;
+.skelContainer {
+    box-shadow: none;
+    animation: pulse 1.4s infinite ease-in-out;
 }
-
-.skelDate {
-    height: 19px;
-    width: 150px;
-    border-radius: 4px;
-}
-
-.skelIcon {
-    height: 24px;
-    width: 24px;
-    border-radius: 50%;
-}
-
-.skelVenue {
-    height: 19px;
-    width: 90px;
-    border-radius: 4px;
-}
-
-.skelTd {
-    width: 100%;
-    height: 25%;
-    background-color: var(--dark);
-}
-
-.skelTd:nth-child(odd) {
-    background-color: transparent;
-}
-
 @keyframes pulse {
   0% { opacity: .6; }
   50% { opacity: 1; }
   100% { opacity: .6; }
 }
 
-@media (max-width: 580px) {
+.skelTitle,
+.skelTag,
+.skelLine,
+.skelLineShort {
+    background-color: var(--dark);
+    border-radius: 4px;
+}
 
-    .showCards {
-        flex-direction: column;
-    }
+.skelIcon {
+    background-color: var(--dark);
+    border-radius: 50%;    
+}
 
-    .info {
-        width: 100%;
-    }
+.skelTitle {
+    width: 150px;
+    height: 22px;
+}
 
-    .report {
-        border-left: none;
-        padding-left: 0px;
-        margin-left: 0px;
-        border-top: 1px solid var(--dark);
-        padding-top: 32px;
-        margin-top: 32px;
-        width: 100%;
-    }
+.skelTagRow {
+  display: flex;
+  gap: 8px;
+}
 
-    .report p {
-        text-align: left;
-    }
+.skelTag {
+  width: 60px;
+  height: 20px;
+}
 
-    .skelTd {
-        height: 32px;
-    }
+.skelLine {
+  width: 150px;
+  height: 16px;
+}
 
+.skelLineShort {
+  width: 60px;
+  height: 16px;
+}
+
+.skelIcon {
+  width: 22px;
+  height: 22px;
+}
+
+.cardSkel {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
