@@ -26,7 +26,7 @@ const AppRoutes = () => {
   }, [theme])
 
   return (
-    <HashRouter>
+    <>
       <ScrollToTop />
 
       <Routes>
@@ -49,16 +49,18 @@ const AppRoutes = () => {
       </Routes>
 
       <Toaster richColors closeButton position="top-right" theme={theme} />
-    </HashRouter>
+    </>
   )
 }
 
 const App = () => {
 
   return (
-    <GroupsProvider>
-      <AppRoutes />
-    </GroupsProvider>
+    <HashRouter>
+      <GroupsProvider>
+        <AppRoutes />
+      </GroupsProvider>
+    </HashRouter>
   )
 
 }
