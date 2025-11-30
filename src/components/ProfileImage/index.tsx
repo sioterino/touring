@@ -1,13 +1,14 @@
 import styles from './styles.module.css'
 
 interface Props {
+    className?: string
     name?: string
     colors?: string[]
     size?: number
     font?: number
 }
 
-const ProfilePicture = ({ name = 'Unnamed Artist', colors = ['#0561bc', '#00bfff'], size = 40, font = 14 }: Props) => {
+const ProfilePicture = ({ className, name = 'Unnamed Artist', colors = ['#0561bc', '#00bfff'], size = 40, font = 14 }: Props) => {
 
     const getInitials = (str: string): string => {
 
@@ -25,7 +26,7 @@ const ProfilePicture = ({ name = 'Unnamed Artist', colors = ['#0561bc', '#00bfff
                 height: size,
                 fontSize: font,
             }}
-            className={styles.pfp}
+            className={`${styles.pfp} ${className}`}
         >
             {getInitials(name)}
         </span>

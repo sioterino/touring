@@ -4,6 +4,10 @@
     width: 100%;
 }
 
+.container.disable {
+    opacity: 60%;
+}
+
 .searchbar {
     font-size: 16px;
     border: 1px solid var(--dark);
@@ -27,6 +31,10 @@
 .searchbar:focus {
     border: 1px solid var(--primary);
     box-shadow: var(--primary-shadow);
+}
+
+.searchbar:disabled:hover {
+    box-shadow: none;
 }
 
 .closeButton,

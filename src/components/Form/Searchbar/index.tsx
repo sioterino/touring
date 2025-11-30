@@ -30,7 +30,7 @@ const Searchbar = ({ placeholder = 'Seatch...', disable = false, handleChange }:
     }
 
     return (
-        <div className={styles.container}>
+        <div className={`${styles.container} ${disable && styles.disable}`}>
             <Search className={styles.searchglass} />
 
             <input

@@ -1,15 +1,81 @@
-import EmptyArray from '../../components/EmptyArray'
+import { useParams } from 'react-router-dom'
 import GoBack from '../../components/GoBack'
-import Heading from '../../components/Heading'
 import styles from './styles.module.css'
+import useShows from '../../hooks/ShowHook'
+import ErrorPage from '../ErrorPage'
+import { useEffect, useState } from 'react'
+import ShowsSection from '../../components/ShowsSection'
+import StatsSection from '../../components/StatsSection'
+import Select from '../../components/Form/Select'
+import TourProfile from '../../components/Artist/TourProfile'
 
 const ConcertPage = () => {
 
+    const { id } = useParams();
+    const { shows, tours, regions, getAllShowsByTourId, filterShowsByRegion, loading, apiError } = useShows()
+    
+    const [selectedRegion, setSelectedRegion] = useState("Worldwide")
+
+    const handleRegionChange = async (value: string) => {
+        setSelectedRegion(value)
+        await filterShowsByRegion(value)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => { getAllShowsByTourId(Number(id)) }, [])
+    
+    if (apiError.isError) return <ErrorPage message={apiError.message} />
+
+    if (loading) return (
+        <div className={styles.container}>
+            <div>
+                <GoBack text='Back to groups' path='/groups' />
+                <div className={styles.top}>
+                    <TourProfile loading tour={tours[0]} />
+                    <div className={styles.select}>
+                        <Select
+                            label='overview' handleChange={handleRegionChange} disable value={selectedRegion}
+                            options={regions.length === 0 ? [ { text: 'Worldwide', value: 'Worldwide' }, ] : regions}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <StatsSection loading data={tours[0]} />
+
+            <ShowsSection
+                loading
+                heading='Shows'
+                shows={shows}
+            />
+
+        </div>
+    )
+
     return (
         <div className={styles.container}>
-            <GoBack path='/tours' text='Back to tours' />
-            <Heading title='Touring Page' desc="See all available data of a artist's tour" />
-            <EmptyArray />
+            <div>
+                <GoBack text='Back to groups' path='/groups' />
+                <div className={styles.top}>
+                    <TourProfile tour={tours[0]} />
+                    <div className={styles.select}>
+                        <Select
+                            label='overview'
+                            options={regions}
+                            value={selectedRegion}
+                            handleChange={handleRegionChange}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <StatsSection data={tours[0]} />
+
+            <ShowsSection
+                heading='Shows'
+                shows={shows}
+            />
+
         </div>
     )
 

@@ -15,36 +15,18 @@
     align-self: end;
 }
 
-.hint {
-  color: var(--text-muted);
-  margin-bottom: 16px;
-}
-
 @media (max-width: 603px) {
-
     .top {
-        display: flex;
-        flex-direction: column;
+      display: flex;
+      flex-direction: column;
 
-        border-bottom: 1px solid var(--dark);
-        padding-bottom: 32px;
+      border-bottom: 1px solid var(--dark);
+      padding-bottom: 32px;
     }
 
     .select {
         width: 100%;
     }
-}
-
-.recent {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.recent .shows {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 }
 
 @keyframes pulse {

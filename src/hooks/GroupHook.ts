@@ -4,7 +4,7 @@ import { useState } from "react"
 import type { Gender, Generation, Group } from "../types/models"
 import type { ApiError } from "../types/utils"
 import useCompanies from "./CompanyHook"
-import { compareValues } from "../components/utils/StringUtils"
+import { compareValues } from "../utils/StringUtils"
 
 const useGroups = () => {
 

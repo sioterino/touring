@@ -1,16 +1,22 @@
-.cards {
-    margin-top: 24px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.info {
-  color: var(--text-muted);
+.shows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
 }
 
 .gradient {
   position: relative;
+}
+
+.hint {
+  color: var(--text-muted);
 }
 
 .gradient::before {

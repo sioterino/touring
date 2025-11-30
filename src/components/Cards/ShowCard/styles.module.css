@@ -93,6 +93,7 @@
 }
 
 .skelCard {
+  box-shadow: none;
   animation: pulse 1.4s infinite ease-in-out;
 }
 

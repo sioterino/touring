@@ -3,14 +3,13 @@ import { useParams } from 'react-router-dom';
 import styles from './styles.module.css'
 import GoBack from '../../components/GoBack';
 import TourCard from '../../components/Cards/ToursCard';
-import ShowCards from '../../components/Cards/ShowCard';
 import Slide from '../../components/Slide';
 import useShows from '../../hooks/ShowHook';
 import ErrorPage from '../ErrorPage';
-import type { Show } from '../../types/models';
 import Select from '../../components/Form/Select';
 import ArtistProfile from '../../components/Artist/ArtistProfile';
 import StatsSection from '../../components/StatsSection';
+import ShowsSection from '../../components/ShowsSection';
 
     const ArtistPage = () => {
 
@@ -31,7 +30,7 @@ import StatsSection from '../../components/StatsSection';
 
         if (apiError.isError) return <ErrorPage message={apiError.message} />
 
-        if ( loading || group === null)
+        if (loading || group === null)
             return (
                 <div className={styles.artist}>
                     <div>
@@ -47,9 +46,10 @@ import StatsSection from '../../components/StatsSection';
                         </div>
                     </div>
 
-                    <StatsSection loading group={group} />
+                    <StatsSection loading data={group} />
 
                     <Slide
+                        loading
                         heading='Tours'
                         hint
                         children={
@@ -59,17 +59,12 @@ import StatsSection from '../../components/StatsSection';
                         }
                     />
 
-                    <div className={styles.recent}>
-                        <h2>Recent Shows</h2>
-                        <p className={styles.hint}>Most recent reported shows</p>
-                        <div className={styles.shows}>
-                            {
-                                Array.from({ length: 5 }).map((_, i) => (
-                                    <ShowCards loading key={i} tour={''} dates={[]} venue={''} continent={''} country={''} city={''} box={0} attendance={0} sold={0} shows={0} />
-                                ))
-                            }
-                        </div>
-                    </div>
+                    <ShowsSection
+                        loading
+                        heading='Recent Shows'
+                        desc='Latest updated performances'
+                    />
+
                 </div>
         )
 
@@ -90,7 +85,7 @@ import StatsSection from '../../components/StatsSection';
                     </div>
                 </div>
 
-                <StatsSection group={group} />
+                <StatsSection data={group} />
 
                 <Slide
                     heading='Tours'
@@ -98,9 +93,6 @@ import StatsSection from '../../components/StatsSection';
                     children={
                         tours
                         .filter(t => t.box_score !== 0)
-                        .sort((a, b) => {
-                            return new Date(b.begin).getTime() - new Date(a.begin).getTime()
-                        })
                         .map((t, key) => (
                             <TourCard
                                 key={key}
@@ -121,35 +113,11 @@ import StatsSection from '../../components/StatsSection';
                     }
                 />
 
-                <div className={styles.recent}>
-                    <h2>Recent Shows</h2>
-                    <p className={styles.hint}>Most recent reported shows</p>
-                    <div className={styles.shows}>
-                        {
-                            shows
-                                .filter(s => s.box_score !== null)
-                                .sort((a, b) => {
-                                    return new Date(b.day_1).getTime() - new Date(a.day_1).getTime()
-                                })
-                                .slice(0, 5)
-                                .map((s: Show, key) => (
-                                <ShowCards
-                                    key={key}
-                                    tour={s.tour.name}
-                                    dates={[ s.day_1, s.day_2, s.day_3, s.day_4, s.day_5 ].filter(Boolean) as string[]}
-                                    venue={s.venue.name}
-                                    continent={s.venue.city.country.continent.name}
-                                    country={s.venue.city.country.name}
-                                    city={s.venue.city.name}
-                                    box={s.box_score!}
-                                    attendance={s.attendance!}
-                                    sold={s.sold_percentage!}
-                                    shows={s.nights}
-                                />
-                            ))
-                        }
-                    </div>
-                </div>
+                <ShowsSection
+                    heading='Recent Shows'
+                    desc='Latest updated performances'
+                    shows={ shows.filter(s => s.box_score !== null).slice(0, 5) }
+                />
 
             </div>
         )
