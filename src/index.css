@@ -62,6 +62,10 @@
   --tooltip: hsla(0,0%, 90%, .8);
 }
 
+html {
+  overflow-x: hidden;
+}
+
 * {
   margin: 0px;
   padding: 0px;
