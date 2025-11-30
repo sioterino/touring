@@ -2,6 +2,7 @@
 .card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 32px;
 
   background: var(--light);
@@ -12,9 +13,8 @@
   
   padding: 24px;
   
-  width: 345px;
-  min-width: 345px;
-  max-width: 345px;
+  width: 360px;
+  min-width: 360px;
 }
 
 .card:hover {
@@ -68,6 +68,7 @@
   display: flex;
   gap: 6px;
   font-weight: 600;
+  font-size: 16px;
 }
 
 .loadingCard {
