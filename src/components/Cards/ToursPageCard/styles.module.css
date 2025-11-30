@@ -1,16 +1,25 @@
-.skelCard,
+.card,
+.skelCard {
+  display: flex;
+  flex-direction: row;
+
+  background-color: var(--light);
+  border: 1px solid var(--dark);
+  box-shadow: var(--box-shadow);
+  
+  overflow: hidden;
+  
+  border-radius: 8px;
+  min-width: 0px; 
+}
+
 .card {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    
-    background-color: var(--light);
-    border-radius: 8px;
-    padding: 16px;
-    box-shadow: var(--box-shadow);
-    
-    border: 1px solid var(--dark);
-    animation: slideIn .15s ease-in-out forwards;
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: var(--box-shadow-hover);
+  border-top: 1px solid var(--highlight);
 }
 
 :global(:root.dark) .card {
@@ -22,127 +31,174 @@
     border-top: 1px solid var(--highlight);
 }
 
-.card:hover {
-    box-shadow: var(--box-shadow-hover);
-    border-top: 1px solid var(--highlight);
-}
-
 @keyframes slideIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
 
-.info span,
-.header,
+.imageContainer {
+  position: relative;
+  width: 125px;
+  min-width: 125px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.imageContainer > * {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  min-width: 0px;
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
 .profile {
-    min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0px;
 }
 
-.header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.tourName {
+  font-size: 18px;
+  font-weight: 600;
+  min-width: 0px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.profile {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
+.groupName {
+  display: flex;
+  align-items: center;
+  min-width: 0px;
 
-.pfp {
-    width: 40px;
-    height: 40px;
-}
+  font-size: 14px;
+  color: var(--text-muted);
 
-.card h3,
-.info span:last-child p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.info span:first-child p {
-    min-width: fit-content;
-}
-
-.profile p {
-    color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .info {
-    color: var(--text-muted);
-    display: flex;
-    gap: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  color: var(--text-muted);
+}
+
+.infoItem:first-child {
+    margin-right: 16px;
+}
+
+.infoItem {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: capitalize;
 }
 
 .icon {
-    height: 16px;
-    width: 16px;
-    min-height: 16px;
-    min-width: 16px;
+  color: var(--text-muted);
+  width: 16px;
+  height: 16px;
 }
 
-.info span {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-transform: capitalize;
+.infoItem p {
+  margin-top: 1.5px;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .skelCard {
+  height: 124px;
   box-shadow: none;
-  animation: pulse 1.4s infinite ease-in-out;
+  animation: pulse 1.4s ease-in-out infinite;
 }
 
-.skelPfp,
-.skelHeading,
-.skelGroup,
-.skelDate,
-.skelTour,
-.skelIcon {
-    background-color: var(--dark);
-    border-radius: 4px;
-    height: 19px;
+.skelImage {
+  width: 125px;
+  min-width: 125px;
+  background: var(--dark);
 }
 
-.skelPfp {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
+.skelContent {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.skelCard .profile {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+.skelProfile {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .skelHeading {
-    width: 125px;
+  display: block;
+  width: 60%;
+  height: 20px;
+  background: var(--dark);
+  border-radius: 4px;
 }
 
-.skelGroup {
-    height: 16px;
-    width: 90px;
+.skelInfo {
+  display: flex;
+  gap: 16px;
+}
+
+.skelInfoItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .skelIcon {
-    height: 19px;
-    width: 19px;
-    border-radius: 50%;
+  display: block;
+  width: 19px;
+  height: 19px;
+  background: var(--dark);
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .skelDate {
-    width: 90px;
+  display: block;
+  width: 70px;
+  height: 16px;
+  background: var(--dark);
+  border-radius: 4px;
 }
 
 .skelTour {
-    width: 70px;
+  display: block;
+  width: 50px;
+  height: 16px;
+  background: var(--dark);
+  border-radius: 4px;
 }
 
 @keyframes pulse {
-  0% { opacity: .6; }
+  0% { opacity: 0.6; }
   50% { opacity: 1; }
-  100% { opacity: .6; }
+  100% { opacity: 0.6; }
 }

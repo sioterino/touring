@@ -18,7 +18,7 @@ const GroupsPage = () => {
     if (apiError.isError) return <ErrorPage message={apiError.message} />;
 
     return (
-        <div className={styles.container}>
+        <div className={`${styles.container}`}>
             <Heading title='Groups' desc='Browse and filter K-pop groups' />
             <GroupsForm
                 loading={loading}
@@ -32,7 +32,9 @@ const GroupsPage = () => {
                     { 
                         !loading ?
                             groups.length !== 0 ? groups.map((gp: Group, key: number) => <GroupCard group={gp} key={key} /> )
-                            : <EmptyArray title='Hmm… nothing matched' desc="We couldn't find any items that match your search or filter criteria. Maybe try different options?" />
+                            : <div className={styles.span}>
+                                <EmptyArray title='Hmm… nothing matched' desc="We couldn't find any items that match your search or filter criteria. Maybe try different options?" />
+                            </div>
                         : Array.from({ length: 24 }).map((_, i) => <GroupCard loading key={i} /> )
                     }
                 </div>

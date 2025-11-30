@@ -3,6 +3,8 @@ import ProfileImage from '../../ProfileImage'
 import Tag from '../../Tag'
 import { parseGen } from '../../../utils/StringUtils'
 import styles from './styles.module.css'
+import { formatPrettyDate } from '../../../utils/DateUtils'
+import {  ArrowUp, Building2, CalendarArrowUp, Circle, Mars, Venus } from 'lucide-react'
 
 interface Props {
     loading?: boolean
@@ -29,13 +31,23 @@ const ArtistProfile = ({ loading, group = null}: Props) => {
                 <ProfileImage name={group.name} colors={group.colors} size={90} font={32} />
             </div>
             <div className={styles.desc}>
-                <h1>{group.name}</h1>
+                <h1>{group.name}</h1>          
                 <div className={styles.tags}>
-                    <Tag text={group.gender} type='filled' />
-                    <Tag text={parseGen(group.generation)} />
-                    { group.company.parent_company && <Tag text={Array.isArray(group.company.parent_company) ? group.company.parent_company[0].name : group.company.parent_company.name} /> }
-                    <Tag text={group.company.name} />
+                    <span>
+                        {
+                            group.gender === 'female' ? <Venus />
+                            : group.gender === 'male' ? <Mars />
+                                : <Circle />
+                        }
+                        { group.gender }
+                    </span>
+                    <span><CalendarArrowUp />{formatPrettyDate(group.debut)}</span>
+                    <span><ArrowUp />{parseGen(group.generation)}</span>
+                    { group.company.parent_company && <span><Building2 />{Array.isArray(group.company.parent_company) ? group.company.parent_company[0].name : group.company.parent_company.name}</span> }
+                    <span><Building2 />{group.company.name}</span>
                 </div>
+
+
             </div>
         </div>
     )

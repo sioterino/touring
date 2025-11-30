@@ -13,6 +13,7 @@ import ToursPage from './pages/ToursPage'
 import ConcertPage from './pages/ConcertPage'
 import ComparePage from './pages/ComparePage'
 import ScrollToTop from './ScrollToTop'
+import AboutPage from './pages/AboutPage'
 
 const AppRoutes = () => {
 
@@ -25,7 +26,7 @@ const AppRoutes = () => {
   }, [theme])
 
   return (
-    <HashRouter>
+    <>
       <ScrollToTop />
 
       <Routes>
@@ -37,6 +38,7 @@ const AppRoutes = () => {
           <Route path='/companies' element={ <CompaniesPage /> } />
           <Route path='/venues' element={ <VenuesPage /> } />
           <Route path='/compare' element={ <ComparePage /> } />
+          <Route path='/about' element={ <AboutPage /> } />
 
           <Route path='/groups/:id' element={ <ArtistPage /> } />
           <Route path='/tours/:id' element={ <ConcertPage /> } />
@@ -47,16 +49,18 @@ const AppRoutes = () => {
       </Routes>
 
       <Toaster richColors closeButton position="top-right" theme={theme} />
-    </HashRouter>
+    </>
   )
 }
 
 const App = () => {
 
   return (
-    <GroupsProvider>
-      <AppRoutes />
-    </GroupsProvider>
+    <HashRouter>
+      <GroupsProvider>
+        <AppRoutes />
+      </GroupsProvider>
+    </HashRouter>
   )
 
 }

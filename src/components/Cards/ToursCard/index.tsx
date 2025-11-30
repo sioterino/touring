@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom"
 import { Calendar, Users, Ticket, CircleDollarSign, CalendarArrowDown, CalendarArrowUp } from "lucide-react"
 import styles from "./styles.module.css"
 import Tag from "../../Tag"
 import { formatPrettyDate } from "../../../utils/DateUtils"
 import { formatNumber, formatPercentage, formatUSD } from "../../../utils/NumberUtils"
+import { Link } from "react-router-dom"
 
 interface Props {
   loading?: boolean
@@ -47,7 +47,6 @@ const TourCard = ({ loading, id, name, level, continents, start, end, total, rep
 
   return (
     <Link to={`/tours/${id}`} className={styles.card}>
-      {/* Header */}
       <div className={styles.header}>
         <h3 className={styles.title}>{name}</h3>
 
