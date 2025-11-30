@@ -12,6 +12,7 @@ import VenuesPage from './pages/VenuesPage'
 import ToursPage from './pages/ToursPage'
 import ConcertPage from './pages/ConcertPage'
 import ComparePage from './pages/ComparePage'
+import ScrollToTop from './ScrollToTop'
 
 const AppRoutes = () => {
 
@@ -25,6 +26,8 @@ const AppRoutes = () => {
 
   return (
     <HashRouter>
+      <ScrollToTop />
+
       <Routes>
         <Route element={ <Layout theme={theme} setTheme={setTheme} mediaQuery={MEDIA_QEURY} /> }>
 
