@@ -15,7 +15,7 @@ const GroupsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => { getAllGroups() }, [])
 
-    if (apiError.isError) return <ErrorPage message={apiError.message || 'test'} />;
+    if (apiError.isError) return <ErrorPage message={apiError.message} />;
 
     return (
         <div className={styles.container}>

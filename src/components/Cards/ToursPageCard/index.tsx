@@ -38,7 +38,9 @@ const ToursPageCard = ({ loading, tour }: Props) => {
     return (
         <Link to={`/tours/${tour.id}`} className={styles.card}>
             <div className={styles.header}>
-                <ProfileImage name={tour.group.name} colors={tour.group.colors} />
+                <div className={styles.pfp}>
+                    <ProfileImage name={tour.group.name} colors={tour.group.colors} />
+                </div>
                 <div className={styles.profile}>
                     <h3>{tour.name}</h3>
                     <p>{tour.group.name}</p>
@@ -48,11 +50,11 @@ const ToursPageCard = ({ loading, tour }: Props) => {
             <div className={styles.info}>
                 <span>
                     <Calendar className={styles.icon} />
-                    { formatPrettyDate(tour.begin) }
+                    <p>{ formatPrettyDate(tour.begin) }</p>
                 </span>
                 <span>
                     <MapPin className={styles.icon} />
-                    { tour.tour } Tour
+                    <p>{ tour.tour } Tour</p>
                 </span>
             </div>
         </Link>

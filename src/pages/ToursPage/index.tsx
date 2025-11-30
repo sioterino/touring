@@ -1,33 +1,31 @@
 import styles from './styles.module.css'
 import Heading from '../../components/Heading'
 import ToursForm from '../../components/Form/ToursForm'
-import type { Tour } from '../../types/models'
 import ToursPageCard from '../../components/Cards/ToursPageCard'
 import EmptyArray from '../../components/EmptyArray'
+import useTours from '../../hooks/TourHook'
+import ErrorPage from '../ErrorPage'
+import { useEffect } from 'react'
 
 const ToursPage = () => {
 
-    const mockTour: Tour = {
-        id: 1, name: 'EASY CRAZY HOT', begin: '2025-04-19', end: '2026-02-01', tour: 'world',
-        group: { id: 1, name: 'LE SSERARIM', debut: '2022-05-02', company: { id: 1, name: 'Source Music', parent_company: [{ id: 2, name: 'HYBE' }] }, gender: 'female', generation: 4, colors: ['#0c4d9cff', '#4db1d5ff'] }
-    }
+    const { tours, allTours, types, genders, generations, getAllTours, getToursByValue, loading, apiError } = useTours()
 
-    const tours = []
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => { getAllTours() }, [])
 
-    for (let i = 0; i < 33; i++)
-        tours.push(mockTour)
-
-    const loading = true
+    if (apiError.isError) return <ErrorPage message={apiError.message} />;
 
     return (
         <div className={styles.container}>
             <Heading title='Tours' desc='Browse all K-pop tours and their details' />
             <ToursForm
                 loading={loading}
-                handleChange={async () => console.log('a')}
+                options={[ genders, generations, types ]}
+                handleChange={getToursByValue}
             />
 
-            <p className={styles.info}>Showing 32 out of 32 tours</p>
+            <p className={styles.info}>Showing {tours.length} out of {allTours.length} tours</p>
             <div className={loading ? styles.gradient : ''}>
                 <div className={styles.cards}>
                     {

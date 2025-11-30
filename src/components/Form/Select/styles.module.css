@@ -21,6 +21,8 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     color: var(--text-muted);
+
+    text-transform: capitalize;
 }
 
 .select:hover {
