@@ -1,6 +1,6 @@
 import styles from './styles.module.css'
 import SidebarButton from './SidebarButton'
-import { LayoutDashboard, Users, Calendar, Building2, MapPin, Ticket, X, Github, HeartPlus } from 'lucide-react'
+import { LayoutDashboard, Users, Calendar, Building2, MapPin, Ticket, X, Github, HeartPlus, GitCompare } from 'lucide-react'
 import ThemeButton from './ThemeButton'
 
 interface Props {
@@ -21,6 +21,7 @@ const Sidebar = ({ path = [''], theme, setTheme, closeSidebar, isMobile, open }:
         {name: 'Tours', path: '/tours', include: 'tours', icon: <Calendar />},
         {name: 'Companies', path: '/companies', include: 'companies', icon: <Building2 />},
         {name: 'Venues', path: '/venues', include: 'venues', icon: <MapPin />},
+        {name: 'Compare', path: '/compare', include: 'compare', icon: <GitCompare />},
     ]
 
     return (

@@ -17,7 +17,7 @@ const ToursPage = () => {
     for (let i = 0; i < 33; i++)
         tours.push(mockTour)
 
-    const loading = false
+    const loading = true
 
     return (
         <div className={styles.container}>

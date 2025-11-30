@@ -11,6 +11,7 @@ import CompaniesPage from './pages/CompaniesPage'
 import VenuesPage from './pages/VenuesPage'
 import ToursPage from './pages/ToursPage'
 import ConcertPage from './pages/ConcertPage'
+import ComparePage from './pages/ComparePage'
 
 const AppRoutes = () => {
 
@@ -26,14 +27,19 @@ const AppRoutes = () => {
     <HashRouter>
       <Routes>
         <Route element={ <Layout theme={theme} setTheme={setTheme} mediaQuery={MEDIA_QEURY} /> }>
+
           <Route path='/' element={ <DashboardPage /> } />
           <Route path='/groups' element={ <GroupsPage /> } />
           <Route path='/tours' element={ <ToursPage /> } />
-          <Route path='/venues' element={ <VenuesPage /> } />
           <Route path='/companies' element={ <CompaniesPage /> } />
+          <Route path='/venues' element={ <VenuesPage /> } />
+          <Route path='/compare' element={ <ComparePage /> } />
+
           <Route path='/groups/:id' element={ <ArtistPage /> } />
           <Route path='/tours/:id' element={ <ConcertPage /> } />
+
           <Route path='*' element={ <ErrorPage message='Status 404 Page Not Found' /> } />
+          
         </Route>
       </Routes>
 
