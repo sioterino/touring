@@ -48,7 +48,7 @@ const TourCard = ({ loading, id, name, level, continents, start, end, total, rep
                 <h3>{name}</h3>
                 <div className={styles.tags}>
                     <Tag text={`${level} Tour`} type='filled' />
-                    { continents.slice(0, 2).map((c, i) => (<Tag text={c} key={i} />)) }
+                    { continents.sort().slice(0, 2).map((c, i) => (<Tag text={c} key={i} />)) }
                     { continents.length > 2 && <Tag text='...' /> }
                 </div>
             </div>

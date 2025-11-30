@@ -3,6 +3,7 @@ import type { Group } from '../../../types/models'
 import ProfileImage from '../../ProfileImage'
 import Tag from '../../Tag'
 import styles from './styles.module.css'
+import { parseGen } from '../../../utils/StringUtils'
 
 interface Props {
     group?: Group
@@ -33,7 +34,7 @@ const GroupCard = ({ loading = false, group }: Props) => {
             </div>
             <div className={styles.tags}>
                 <Tag text={group.gender} type='filled' />
-                <Tag text={`Gen ${group.generation.toString()}`} />
+                <Tag text={parseGen(group.generation)} />
                 <Tag text={group.company.name} />
             </div>
         </Link>

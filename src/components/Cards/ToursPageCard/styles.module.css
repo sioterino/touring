@@ -2,7 +2,7 @@
 .card {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
     
     background-color: var(--light);
     border-radius: 8px;
@@ -28,14 +28,8 @@
 }
 
 @keyframes slideIn {
-  0% {
-    opacity: 0;
-    /* transform: translateY(20%); */
-  }
-  100% {
-    opacity: 1;
-    /* transform: translateY(0); */
-  }
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 .info span,
@@ -47,12 +41,13 @@
 .header {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
 }
 
 .profile {
     display: flex;
     flex-direction: column;
+    gap: 2px;
 }
 
 .pfp {
@@ -78,7 +73,7 @@
 .info {
     color: var(--text-muted);
     display: flex;
-    gap: 8px;
+    gap: 16px;
 }
 
 .icon {
@@ -91,7 +86,7 @@
 .info span {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
     text-transform: capitalize;
 }
 
