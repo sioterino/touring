@@ -1,4 +1,4 @@
-.skeletonCard,
+.skelCard,
 .card {
     display: flex;
     flex-direction: column;
@@ -39,11 +39,6 @@
     gap: 12px;
 }
 
-.card .tags {
-    display: flex;
-    gap: 8px;
-}
-
 @keyframes slideIn {
   0% {
     opacity: 0;
@@ -55,42 +50,88 @@
   }
 }
 
-.skeletonCard {
-  box-shadow: none;
-  animation: pulse 1.4s infinite ease-in-out;
-}
-
-.skelHeader {
+.header {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
+.profile {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile p {
+    color: var(--text-muted);
+}
+
+.info {
+    color: var(--text-muted);
+    display: flex;
+    gap: 8px;
+}
+
+.icon {
+    height: 16px;
+    width: 16px;
+}
+
+.info span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-transform: capitalize;
+}
+
+.skelCard {
+  box-shadow: none;
+  animation: pulse 1.4s infinite ease-in-out;
+}
+
+.skelPfp,
+.skelHeading,
+.skelGroup,
+.skelDate,
+.skelTour,
+.skelIcon {
+    background-color: var(--dark);
+    border-radius: 4px;
+    height: 19px;
+}
+
 .skelPfp {
-  width: 40px;
-  height: 40px;
-  background: var(--dark);
-  border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
 }
 
-.skelName {
-  width: 60%;
-  height: 18px;
-  background: var(--dark);
-  border-radius: 6px;
+.skelCard .profile {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
-.skelTagRow {
-  display: flex;
-  gap: 8px;
-  margin-top: auto;
+.skelHeading {
+    width: 125px;
 }
 
-.skelTag {
-  width: 50px;
-  height: 18px;
-  background: var(--dark);
-  border-radius: 4px;
+.skelGroup {
+    height: 16px;
+    width: 90px;
+}
+
+.skelIcon {
+    height: 19px;
+    width: 19px;
+    border-radius: 50%;
+}
+
+.skelDate {
+    width: 90px;
+}
+
+.skelTour {
+    width: 70px;
 }
 
 @keyframes pulse {

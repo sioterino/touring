@@ -11,7 +11,7 @@ interface Props {
 
 const GroupCard = ({ loading = false, group }: Props) => {
 
-    if (loading) return (
+    if (loading || group === undefined) return (
         <div className={styles.skeletonCard}>
             <div className={styles.skelHeader}>
                 <div className={styles.skelPfp}></div>
@@ -26,15 +26,15 @@ const GroupCard = ({ loading = false, group }: Props) => {
     )
 
     return (
-        <Link to={`/groups/${group!.id}`} className={styles.card} >
+        <Link to={`/groups/${group.id}`} className={styles.card} >
             <div className={styles.header} >
-                <ProfileImage name={group!.name} colors={group!.colors} />
-                <h3>{group!.name}</h3>
+                <ProfileImage name={group.name} colors={group.colors} />
+                <h3>{group.name}</h3>
             </div>
             <div className={styles.tags}>
-                <Tag text={group!.gender} type='filled' />
-                <Tag text={`Gen ${group!.generation.toString()}`} />
-                <Tag text={group!.company.name} />
+                <Tag text={group.gender} type='filled' />
+                <Tag text={`Gen ${group.generation.toString()}`} />
+                <Tag text={group.company.name} />
             </div>
         </Link>
     )

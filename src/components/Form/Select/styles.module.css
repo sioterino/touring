@@ -26,6 +26,10 @@
     box-shadow: var(--hover-shadow);
 }
 
+.select:disabled {
+    box-shadow: none;
+}
+
 .select:focus    {
     border: 1px solid var(--primary);
     box-shadow: var(--primary-shadow);

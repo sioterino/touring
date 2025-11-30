@@ -1,7 +1,7 @@
 import type { Group } from '../../../types/models'
 import ProfileImage from '../../ProfileImage'
 import Tag from '../../Tag'
-import { parseGen } from '../../utils/StringUtils'
+import { parseGen } from '../../../utils/StringUtils'
 import styles from './styles.module.css'
 
 interface Props {

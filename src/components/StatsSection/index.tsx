@@ -1,7 +1,7 @@
 import styles from './styles.module.css'
 import IconCard from '../../components/Cards/IconCard';
 import { Calendar, CircleDollarSign, Percent, Ticket, Users } from 'lucide-react';
-import { formatNumber, formatPercentage, formatUSD } from '../utils/NumberUtils';
+import { formatNumber, formatPercentage, formatUSD } from '../../utils/NumberUtils';
 import type { GroupsResponseDTO } from '../../types/dtos';
 
 interface Props {

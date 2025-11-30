@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import Tag from '../../Tag'
-import { formatPrettyDate } from '../../utils/DateUtils'
-import { formatNumber, formatPercentage, formatUSD } from '../../utils/NumberUtils'
+import { formatPrettyDate } from '../../../utils/DateUtils'
+import { formatNumber, formatPercentage, formatUSD } from '../../../utils/NumberUtils'
 import styles from './styles.module.css'
 
 interface Props {

@@ -1,8 +1,8 @@
 import { MapPin } from 'lucide-react'
 import Tag from '../../Tag'
-import { formatArrayOfDates } from '../../utils/DateUtils'
+import { formatArrayOfDates } from '../../../utils/DateUtils'
 import styles from './styles.module.css'
-import { formatNumber, formatPercentage, formatUSD } from '../../utils/NumberUtils'
+import { formatNumber, formatPercentage, formatUSD } from '../../../utils/NumberUtils'
 
 interface Props {
     loading?: boolean
