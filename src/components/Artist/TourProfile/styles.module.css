@@ -15,8 +15,13 @@
     gap: 8px;
 }
 
-.heading .desc p {
+.heading .desc p,
+.groupName {
     color: var(--text-muted);
+}
+
+.groupName:hover {
+    color: var(--primary);
 }
 
 .tags span {

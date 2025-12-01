@@ -21,7 +21,7 @@ const ShowsSection = ({ className, loading, shows, heading, desc, group = false 
                 <div className={styles.shows}>
                     {
                         Array.from({ length: 6 }).map((_, i) => (
-                            <ShowCards loading key={i} tour={''} dates={[]} venue={''} continent={''} country={''} city={''} box={0} attendance={0} sold={0} shows={0} />
+                            <ShowCards loading key={i} tour={''} dates={[]} venue={''} continent={''} country={''} city={''} box={0} attendance={0} sold={0} shows={0} reported={null} />
                         ))
                     }
                 </div>
@@ -50,6 +50,7 @@ const ShowsSection = ({ className, loading, shows, heading, desc, group = false 
                             attendance={s.attendance!}
                             sold={s.sold_percentage!}
                             shows={s.nights}
+                            reported={s.reported}
                         />
                     ))
                 }

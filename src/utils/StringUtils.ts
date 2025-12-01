@@ -5,7 +5,7 @@ const sanitizeString = (str: string): string => {
 const compareValues = (value1: string, value2: string) => {
     value1 = value1.trim().toLowerCase()
     value2 = value2.trim().toLowerCase()
-    return sanitizeString(value1).includes(value2) || value1.includes(value2)
+    return sanitizeString(value1).includes(value2) || value1.includes(value2) || sanitizeString(value1).includes(value2.replaceAll(' ', ''))
 }
 
 const parseGen = (gen: number): string => {
