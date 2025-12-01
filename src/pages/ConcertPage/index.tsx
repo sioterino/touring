@@ -8,11 +8,12 @@ import ShowsSection from '../../components/ShowsSection'
 import StatsSection from '../../components/StatsSection'
 import Select from '../../components/Form/Select'
 import TourProfile from '../../components/Artist/TourProfile'
+import Switch from '../../components/Switch'
 
 const ConcertPage = () => {
 
     const { id } = useParams();
-    const { shows, tours, regions, getAllShowsByTourId, filterShowsByRegion, loading, apiError } = useShows()
+    const { shows, tours, regions, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, loading, apiError } = useShows()
     
     const [selectedRegion, setSelectedRegion] = useState("Worldwide")
 
@@ -33,6 +34,10 @@ const ConcertPage = () => {
                 <div className={styles.top}>
                     <TourProfile loading tour={tours[0]} />
                     <div className={styles.select}>
+                        <div className={styles.switch}>
+                            <label>Show Only Reported Shows</label>
+                            <Switch disabled size='lg' />
+                        </div>
                         <Select
                             label='overview' handleChange={handleRegionChange} disable value={selectedRegion}
                             options={regions.length === 0 ? [ { text: 'Worldwide', value: 'Worldwide' }, ] : regions}
@@ -59,6 +64,14 @@ const ConcertPage = () => {
                 <div className={styles.top}>
                     <TourProfile tour={tours[0]} />
                     <div className={styles.select}>
+                        <div className={styles.switch}>
+                            <label>Show Only Reported Shows</label>
+                            <Switch
+                                size='lg'
+                                onChange={ filterOnlyReportedShows }
+                                disabled={ shows.filter(s => s.box_score !== null).length === 0 }
+                            />
+                        </div>
                         <Select
                             label='overview'
                             options={regions}

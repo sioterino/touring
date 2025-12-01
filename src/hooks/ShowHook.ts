@@ -247,7 +247,16 @@ const useShows = () => {
 
     }
 
-    return { shows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, loading, apiError }
+    const filterOnlyReportedShows = (filter: boolean) => {
+
+        if (filter) {
+            const filtered = allShows.filter(s => s.box_score !== null)
+            setShows(filtered)
+        } else setShows(allShows)
+
+    }
+
+    return { shows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, loading, apiError }
 
 }
 

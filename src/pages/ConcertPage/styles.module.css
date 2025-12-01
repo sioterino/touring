@@ -10,9 +10,25 @@
     grid-template-columns: repeat(3, minmax(160px, 1fr));
 }
 
+.switch {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.switch label {
+    font-size: 16px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
 .container .select {
     grid-column: span 1;
     align-self: end;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 @media (max-width: 603px) {

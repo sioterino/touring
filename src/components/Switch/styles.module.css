@@ -1,0 +1,106 @@
+.switch {
+  all: unset;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: opacity .15 ease-in-out;
+}
+
+.slider {
+  position: relative;
+  display: inline-block;
+  background: var(--text-muted);
+  border-radius: 9999px;
+  transition: background-color .15 ease-in-out;
+}
+
+.thumb {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: white;
+  border-radius: 9999px;
+  transition: transform .15 cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sm .slider {
+  width: 32px;
+  height: 18.1px;
+}
+
+.sm .thumb {
+  width: 14px;
+  height: 14px;
+}
+
+.md .slider {
+  width: 44px;
+  height: 25px;
+}
+
+.md .thumb {
+  width: 20px;
+  height: 20px;
+}
+
+.lg .slider {
+  width: 62px;
+  height: 36px;
+}
+
+.lg .thumb {
+  width: 26px;
+  height: 26px;
+}
+
+.on .slider {
+  background: var(--primary);
+}
+
+.primary.on .slider {
+  background: var(--primary);
+}
+
+.success.on .slider {
+  background: #10b981;
+}
+
+.warning.on .slider {
+  background: #f59e0b;
+}
+
+.danger.on .slider {
+  background: #ef4444;
+}
+
+.purple.on .slider {
+  background: #a855f7;
+}
+
+.pink.on .slider {
+  background: #ec4899;
+}
+
+.sm.on .thumb {
+  transform: translateX(14px);
+}
+
+.md.on .thumb {
+  transform: translateX(20px);
+}
+
+.lg.on .thumb {
+  transform: translateX(26px);
+}
+
+/* Disabled state */
+.disabled {
+  opacity: 30%;
+  cursor: pointer;
+}
+
+/* Hover effects */
+.switch:not(.disabled):hover .slider {
+  opacity: 90%;
+}
