@@ -24,7 +24,7 @@ const ToursForm = ({ loading, options, handleChange }: Props) => {
 
     return (
         <form className={styles.filters}>
-            <Searchbar disable={loading} handleChange={handleChange} placeholder='Search by group name...' />
+            <Searchbar disable={loading} handleChange={handleChange} placeholder='Search by tour or group name...' />
             <Select disable={loading} label='generation' options={generations} handleChange={handleChange} />
             <Select disable={loading} label='gender' options={genders} handleChange={handleChange} />
             <Select disable={loading} label='type' options={tours} handleChange={handleChange} />

@@ -4,6 +4,7 @@ import { formatArrayOfDates } from '../../../utils/DateUtils'
 import styles from './styles.module.css'
 import { formatNumber, formatPercentage, formatUSD } from '../../../utils/NumberUtils'
 import TooltipIcon from '../../TooltipIcon'
+import type { Reported } from '../../../types/models'
 
 interface Props {
     loading?: boolean
@@ -17,9 +18,10 @@ interface Props {
     box: number | null
     sold: number | null
     shows: number
+    reported: Reported
 }
 
-const ShowCards = ({ loading, tour = null, dates, venue, country, city, attendance, box, sold, shows }: Props) => {
+const ShowCards = ({ loading, tour = null, dates, venue, country, city, attendance, box, sold, shows, reported }: Props) => {
 
     if (loading) {
         return (
@@ -69,7 +71,7 @@ const ShowCards = ({ loading, tour = null, dates, venue, country, city, attendan
                 <div className={styles.headerRight}>
                     <div className={styles.heading}>
                         <h3>{ tour? tour : venue }</h3>
-                        <TooltipIcon text='Reported by Touring Data' className={styles.tooltip} />
+                        { reported && <TooltipIcon text={`Reported by ${reported}`} className={styles.tooltip} /> }
                     </div>
                     <div className={styles.tags}>
                         <Tag text={country} type='filled'/>

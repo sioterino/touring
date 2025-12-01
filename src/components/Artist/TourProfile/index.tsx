@@ -4,6 +4,7 @@ import styles from './styles.module.css'
 import type { TourResponseDTO } from '../../../types/dtos'
 import { CalendarArrowDown, CalendarArrowUp, MapPin } from 'lucide-react'
 import { formatPrettyDate } from '../../../utils/DateUtils'
+import { Link } from 'react-router-dom'
 
 interface Props {
     loading?: boolean
@@ -42,7 +43,7 @@ const TourProfile = ({ loading, tour = null}: Props) => {
             <div className={styles.desc}>
                 <div>
                     <h1>{tour.name}</h1>
-                    <p>{tour.group.name}</p>
+                    <Link className={styles.groupName} to={`/groups/${tour.group.id}`}>{tour.group.name}</Link>
                 </div>
                 <div className={styles.tags}>
                     <span className={styles.type}><MapPin />{`${tour.tour} tour`}</span>

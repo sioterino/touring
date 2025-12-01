@@ -60,7 +60,7 @@ const useTours = () => {
 
              case 'search':
                 if (value.trim()) {
-                    const filtered = allTours.filter(t => compareValues(t.name, value) )
+                    const filtered = allTours.filter(t => compareValues(t.name, value) || compareValues(t.group.name, value) )
                     setTours(filtered)
                 } else setTours(allTours)
                 break

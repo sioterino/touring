@@ -70,6 +70,9 @@ interface Show {
     attendance: number | null
     sold_percentage: number | null
     box_score: number | null
+    reported: Reported
 }
 
-export type { Group, Gender, Generation, Company, Tour, Continent, Country, City, Venue, Show }
+type Reported = null | 'touring data' | 'touring asia' | 'touring kpop' | 'pollstar'
+
+export type { Group, Gender, Generation, Company, Tour, Continent, Country, City, Venue, Show, Reported }
