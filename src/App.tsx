@@ -6,7 +6,6 @@ import GroupsPage from './pages/GroupsPage'
 import ArtistPage from './pages/ArtistPage'
 import ErrorPage from './pages/ErrorPage'
 import DashboardPage from './pages/DashboardPage'
-import { GroupsProvider } from './context/GroupsContext'
 import CompaniesPage from './pages/CompaniesPage'
 import VenuesPage from './pages/VenuesPage'
 import ToursPage from './pages/ToursPage'
@@ -57,9 +56,7 @@ const App = () => {
 
   return (
     <HashRouter>
-      <GroupsProvider>
-        <AppRoutes />
-      </GroupsProvider>
+      <AppRoutes />
     </HashRouter>
   )
 
