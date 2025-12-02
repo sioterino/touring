@@ -24,27 +24,6 @@
     color: var(--primary);
 }
 
-.tags span {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    text-transform: capitalize;
-    padding: 4px 8px;
-    border: 1px solid var(--dark);
-    border-radius: 4px;
-    user-select: none;
-
-}
-
-.type {
-    background-color: var(--dark);
-}
-
-.tags span *:first-child {
-    height: 16px;
-    width: 16px;
-}
-
 .tags,
 .dates,
 .skelDates {
@@ -92,15 +71,6 @@
 
 .skelTags {
     animation: pulse 1.4s infinite ease-in-out;
-}
-
-.skelType,
-.skelDates span {
-    display: inline-block;
-    background-color: var(--dark);
-    border-radius: 4px;  
-    animation: pulse 1.4s infinite ease-in-out;
-    height: 28px;
 }
 
 .skelType {

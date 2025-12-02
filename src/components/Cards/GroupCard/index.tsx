@@ -4,6 +4,7 @@ import type { Group } from "../../../types/models"
 import { parseGen } from "../../../utils/StringUtils"
 import ProfileImage from "../../ProfileImage"
 import { ArrowUp, Building2, Circle, Mars, Venus } from "lucide-react"
+import Tag from "../../Tag"
 
 interface Props {
   group?: Group
@@ -35,15 +36,13 @@ const GroupCard = ({ loading = false, group }: Props) => {
         <h3 className={styles.title}>{group.name}</h3>
         <p className={styles.company}><Building2 className={styles.icon} />{group.company.name}</p>
         <div className={styles.tags}>
-            <span className={styles.type}>
-                {
-                    group.gender === 'female' ? <Venus className={styles.icon} />
-                    : group.gender === 'male' ? <Mars className={styles.icon} />
-                        : <Circle className={styles.icon} />
-                }
-                { group.gender }
-            </span>
-            <span><ArrowUp className={styles.icon} />{parseGen(group.generation)}</span>
+            <Tag type="filled" text={ group.gender } icon={
+              group.gender === 'female' ? <Venus className={styles.icon} />
+              : group.gender === 'male' ? <Mars className={styles.icon} />
+                  : <Circle className={styles.icon} />              
+            }  />
+            
+            <Tag text={ parseGen(group.generation) } icon={ <ArrowUp/> }  />
         </div>
       </div>
     </Link>

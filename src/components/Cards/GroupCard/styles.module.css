@@ -88,27 +88,6 @@
   flex-wrap: wrap;
 }
 
-.tags span {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    text-transform: capitalize;
-    padding: 4px 8px;
-    border: 1px solid var(--dark);
-    border-radius: 4px;
-    user-select: none;
-
-}
-
-.type {
-    background-color: var(--dark);
-}
-
-.tags span *:first-child {
-    height: 16px;
-    width: 16px;
-}
-
 .skeletonCard {
   box-shadow: none;
   animation: pulse 1.4s ease-in-out infinite;
