@@ -46,7 +46,7 @@ const ConcertPage = () => {
                 </div>
             </div>
 
-            <StatsSection loading data={tours[0]} />
+            <StatsSection loading stats={tours[0]} />
 
             <ShowsSection
                 loading
@@ -82,7 +82,7 @@ const ConcertPage = () => {
                 </div>
             </div>
 
-            <StatsSection data={tours[0]} />
+            <StatsSection stats={tours[0]} allShows={allShows} />
 
             <ShowsSection
                 heading='Shows'

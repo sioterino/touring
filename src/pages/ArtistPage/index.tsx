@@ -46,7 +46,7 @@ import ShowsSection from '../../components/ShowsSection';
                         </div>
                     </div>
 
-                    <StatsSection loading data={group} />
+                    <StatsSection loading stats={group} />
 
                     <Slide
                         loading
@@ -85,7 +85,7 @@ import ShowsSection from '../../components/ShowsSection';
                     </div>
                 </div>
 
-                <StatsSection data={group} />
+                <StatsSection stats={group} />
 
                 <Slide
                     heading='Tours'
@@ -104,7 +104,7 @@ import ShowsSection from '../../components/ShowsSection';
                                 end={t.end}
                                 reported={t.reported_nights}
                                 total={t.total_nights}
-                                attendance={t.attendance}
+                                attendance={t.attendance!}
                                 box={t.box_score}
                                 sold={t.sum_sold / t.sum_venues}
                                 price={t.sum_price / t.sum_venues}

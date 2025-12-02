@@ -42,13 +42,13 @@ const useShows = () => {
                 if (s.box_score) {
                     performedVenues += 1
                     totalBox += s.box_score
-                    totalAttendance += s.attendance || 0
+                    totalAttendance += s.attendance!
                     reportedNights += s.nights
-                    sumSold += s.sold_percentage || 0
-                    sumPrice += s.attendance ? s.box_score / s.attendance : 0
+                    sumSold += s.sold_percentage!
+                    sumPrice += s.box_score / s.attendance!
                 }
 
-                map.set(t.id, {
+               map.set(t.id, {
                     id: t.id,
                     name: t.name,
                     begin: t.begin,
@@ -57,13 +57,19 @@ const useShows = () => {
                     tour: t.tour,
                     continents: [continent],
 
+                    attendance: totalAttendance || 0,
+                    avg_sold: sumSold / performedVenues || 0,
                     box_score: totalBox,
-                    attendance: totalAttendance,
-                    total_nights: s.nights,
+
+                    avg_box: totalBox / performedVenues || 0,
+                    avg_ticket: sumPrice / performedVenues || 0,
+
                     reported_nights: reportedNights,
+                    total_nights: s.nights,
+
                     sum_venues: performedVenues,
                     sum_sold: sumSold,
-                    sum_price: sumPrice
+                    sum_price: sumPrice,
                 })
                 continue
             }
@@ -77,11 +83,17 @@ const useShows = () => {
             
             if (s.box_score) {
                 dto.sum_venues += 1
+                dto.sum_sold += s.sold_percentage!
+                dto.sum_price += s.box_score / s.attendance!
+
                 dto.box_score += s.box_score
-                dto.attendance += s.attendance || 0
+                dto.attendance! += s.attendance!
+
+                dto.avg_box = dto.box_score / dto.sum_venues
+                dto.avg_ticket = dto.sum_price / dto.sum_venues
+                dto.avg_sold = dto.sum_sold / dto.sum_venues
+
                 dto.reported_nights += s.nights
-                dto.sum_sold += s.sold_percentage || 0
-                dto.sum_price += s.attendance ? s.box_score / s.attendance : 0
             }
         }
         return Array.from(map.values())
@@ -121,13 +133,14 @@ const useShows = () => {
             generation: group.generation,
             colors: group.colors,
 
+            // StatsDTO
+            avg_ticket: accTicketPrice / performedVenues || null,
             box_score: totalBox,
-            avg_sold: soldPercentage / performedVenues,
-            total_nights: totalNights,
+            avg_box: totalBox / performedVenues || null,
+            attendance: totalAttendance || null,
+            avg_sold: soldPercentage / performedVenues || null,
             reported_nights: reportedNights,
-            avg_box: totalBox / performedVenues,
-            net_att: totalAttendance,
-            avg_ticket: accTicketPrice / performedVenues,
+            total_nights: totalNights,
         }
     }
 
