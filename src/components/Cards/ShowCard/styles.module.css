@@ -11,15 +11,8 @@
 
 .container:hover {
     box-shadow: var(--box-shadow-hover);
-}
+  border-top: 1px solid var(--highlight);
 
-:global(:root.dark) .container {
-    background: var(--gradient);
-}
-
-:global(:root.dark) .container:hover {
-    background: var(--gradient-hover);
-    border-top: 1px solid var(--highlight);
 }
 
 .header {

@@ -9,8 +9,6 @@
   --text-opp: hsl(0, 0%, 95%);
   --text-muted: hsl(0, 0%, 60%);
 
-  --gradient: linear-gradient(0deg, var(--default) 95%, var(--light));
-  --gradient-hover: linear-gradient(0deg, var(--default), var(--light));
   --highlight: hsl(0, 0%, 100%);
 
   --scrollbar: hsla(0, 0%, 0%, 0.3);
@@ -54,8 +52,6 @@
   --text-opp: hsl(0, 0%, 5%);
 
   --hover-shadow: 0 0 0 2px hsla(0, 0%, 100%, 0.05);
-  --gradient: linear-gradient(0deg, var(--default) 95%, var(--dark));
-  --gradient-hover: linear-gradient(0deg, var(--default), var(--dark));
   --highlight: hsl(0, 0%, 30%);
 
   --scrollbar: hsla(0, 0%, 100%, 0.3);

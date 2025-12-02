@@ -19,6 +19,7 @@
 
 .card:hover {
   box-shadow: var(--box-shadow-hover);
+  border-top: 1px solid var(--highlight);
 }
 
 .header {
