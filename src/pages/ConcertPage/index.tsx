@@ -69,7 +69,7 @@ const ConcertPage = () => {
                             <Switch
                                 size='lg'
                                 onChange={ filterOnlyReportedShows }
-                                disabled={ shows.filter(s => s.box_score !== null).length === 0 }
+                                disabled={ shows.filter(s => s.box_score !== null).length === 0 || shows.filter(s => s.box_score === null).length === 0 }
                             />
                         </div>
                         <Select
