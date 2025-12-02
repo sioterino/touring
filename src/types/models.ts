@@ -16,12 +16,13 @@ interface Company {
     id: number
     name: string
     colors?: string[]
-    parent_company: Company | ParentCompany[] | null
+    parent_company: ParentCompany
 }
 
 interface ParentCompany {
     id: number
     name: string
+    colors?: string[]
 }
 
 interface Tour {
@@ -65,6 +66,7 @@ interface Show {
     day_3?: string
     day_4?: string
     day_5?: string
+    day_6?: string
     venue: Venue
     nights: number
     attendance: number | null
@@ -73,6 +75,6 @@ interface Show {
     reported: Reported
 }
 
-type Reported = null | 'touring data' | 'touring asia' | 'touring kpop' | 'pollstar'
+type Reported = null | string
 
 export type { Group, Gender, Generation, Company, Tour, Continent, Country, City, Venue, Show, Reported }

@@ -3,7 +3,6 @@ import supabase from "../api/supabase"
 import { useState } from "react"
 import type { Gender, Generation, Group } from "../types/models"
 import type { ApiError } from "../types/utils"
-import useCompanies from "./CompanyHook"
 import { compareValues } from "../utils/StringUtils"
 
 const useGroups = () => {
@@ -11,9 +10,6 @@ const useGroups = () => {
     const [ groups, setGroups ] = useState<Group[]>([])
     const [ allGroups, setAllGroups ] = useState<Group[]>([])
     const [ length, setLength ] = useState(0)
-    const [ group, setGroup ] = useState<Group>({
-        id: 13, name: 'Group Name', debut: '2022-11-26', company: { id: 1, name: 'Company', parent_company: null }, gender: 'coed', generation: 5, 
-    })
 
     const [ genders, setGenders ] = useState<Gender[]>([])
     const [ generations, setGenerations ] = useState<Generation[]>([])
@@ -21,9 +17,7 @@ const useGroups = () => {
     const [ loading, setLoading ] = useState(false)
     const [ apiError, setApiError ] = useState<ApiError>({ isError: false, message: '' })
 
-    const { companies, getAllCompanies } = useCompanies()
-
-    const getAllGroups = async () => {
+    const getAllGroups = async (): Promise<Group[] | void> => {
         setLoading(true)
 
         const { data, error } = await supabase
@@ -52,31 +46,11 @@ const useGroups = () => {
             generationSet.add(g.generation)
         })
 
-        getAllCompanies()
-
         setGenders([...genderSet])
         setGenerations([...generationSet])
 
         setLoading(false)
-    }
-
-    const getGroupById = async (id: number) => {
-        setLoading(true)
-        const { data, error } = await supabase
-            .from('groups')
-            .select('*, company:companies(id, name, parent_company:parent_company(*))')
-            .eq('id', id).single()
-
-        if (error) {
-            setLoading(false)
-            setApiError({ isError: true, message: error.message })
-            console.error("[GroupHook] Error fetching the group's data: ", error)
-            toast.error("There was an error while trying to load the group's data...")
-            return
-        }
-
-        setGroup(data)
-        setLoading(false)
+        return data
     }
 
     const getGroupsByValue = async (value: string, method?: string) => {
@@ -138,19 +112,7 @@ const useGroups = () => {
         setLoading(false)
     }
 
-    return {
-        groups,
-        length,
-        group,
-        companies,
-        genders,
-        generations,
-        getAllGroups,
-        getGroupById,
-        getGroupsByValue,
-        loading,
-        apiError,
-    }
+    return { groups, length, genders, generations, getAllGroups, getGroupsByValue, loading, apiError, }
 }
 
 export default useGroups

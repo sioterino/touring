@@ -134,7 +134,7 @@ const useShows = () => {
     const tours = useMemo(() => buildToursFromShows(shows), [shows])
     const group = useMemo(() => buildGroupFromShow(shows), [shows])
 
-    const getAllShowsByGroupId = async (id: number): Promise<void> => {
+    const getAllShowsByGroupId = async (id: number): Promise<Show[] | void> => {
         setLoading(true)
 
         const { data, error } = await supabase
@@ -157,9 +157,10 @@ const useShows = () => {
         await getRegionOptions(data)
 
         setLoading(false)
+        return data
     }
 
-    const getAllShowsByTourId = async (id: number): Promise<void> => {
+    const getAllShowsByTourId = async (id: number): Promise<Show[] | void> => {
         setLoading(true)
 
         const { data, error } = await supabase
@@ -182,6 +183,7 @@ const useShows = () => {
         await getRegionOptions(data)
 
         setLoading(false)
+        return data
     }
 
     const getRegionOptions = async (data: Show[]): Promise<void> => {
@@ -256,7 +258,7 @@ const useShows = () => {
 
     }
 
-    return { shows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, loading, apiError }
+    return { shows, allShows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, loading, apiError }
 
 }
 

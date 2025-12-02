@@ -17,7 +17,7 @@ const useTours = () => {
     const [ genders, setGenders ] = useState<Gender[]>([])
     const [ generations, setGenerations ] = useState<Generation[]>([])
 
-    const getAllTours = async (): Promise<void> => {
+    const getAllTours = async (): Promise<Tour[] | void> => {
 
         setLoading(true)
 
@@ -52,6 +52,7 @@ const useTours = () => {
         setGenerations([...generationSet])
 
         setLoading(false)
+        return data
     }
 
     const getToursByValue = async (value: string, method?: string): Promise<void> => {
