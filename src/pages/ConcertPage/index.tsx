@@ -13,7 +13,7 @@ import Switch from '../../components/Switch'
 const ConcertPage = () => {
 
     const { id } = useParams();
-    const { shows, tours, regions, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, loading, apiError } = useShows()
+    const { shows, allShows, tours, regions, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, loading, apiError } = useShows()
     
     const [selectedRegion, setSelectedRegion] = useState("Worldwide")
 
@@ -69,7 +69,7 @@ const ConcertPage = () => {
                             <Switch
                                 size='lg'
                                 onChange={ filterOnlyReportedShows }
-                                disabled={ shows.filter(s => s.box_score !== null).length === 0 || shows.filter(s => s.box_score === null).length === 0 }
+                                disabled={ shows.filter(s => s.box_score !== null).length === 0 || allShows.filter(s => s.box_score === null).length === 0 }
                             />
                         </div>
                         <Select

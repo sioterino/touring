@@ -258,7 +258,7 @@ const useShows = () => {
 
     }
 
-    return { shows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, loading, apiError }
+    return { shows, allShows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, loading, apiError }
 
 }
 
