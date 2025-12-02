@@ -5,13 +5,13 @@ import type { Group } from '../../types/models'
 import styles from './styles.module.css'
 import ErrorPage from '../ErrorPage'
 import GroupsForm from '../../components/Form/GroupsForm'
-import { useGroupsContext } from '../../context/GroupsContext'
 import EmptyArray from '../../components/EmptyArray'
 import useCompanies from '../../hooks/CompanyHook'
+import useGroups from '../../hooks/GroupHook'
 
 const GroupsPage = () => {
 
-    const { groups, length, genders, generations, getAllGroups, getGroupsByValue, loading: gLoading, apiError: gError } = useGroupsContext()
+    const { groups, length, genders, generations, getAllGroups, getGroupsByValue, loading: gLoading, apiError: gError } = useGroups()
     const { companies, getAllCompanies, loading: cLoading, apiError: cError } = useCompanies()
 
     useEffect(() => {
