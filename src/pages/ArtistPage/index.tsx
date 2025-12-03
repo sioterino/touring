@@ -61,6 +61,7 @@ import ShowsSection from '../../components/ShowsSection';
 
                     <ShowsSection
                         loading
+                        page='group'
                         heading='Recent Shows'
                         desc='Latest updated performances'
                     />
@@ -101,7 +102,7 @@ import ShowsSection from '../../components/ShowsSection';
                     heading='Recent Shows'
                     desc='Latest updated performances'
                     shows={ shows.filter(s => s.box_score !== null).slice(0, 6) }
-                    group
+                    page='group'
                 />
 
             </div>

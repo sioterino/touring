@@ -8,10 +8,10 @@ interface Props {
     shows?: Show[]
     heading: string
     desc?: string
-    group?: boolean
+    page: 'group' | 'tour' | 'venue'
 }
 
-const ShowsSection = ({ className, loading, shows, heading, desc, group = false }: Props) => {
+const ShowsSection = ({ className, loading, shows, heading, desc, page = 'group' }: Props) => {
 
     if (loading || !shows) return (
         <div className={`${styles.container} ${className}`}>
@@ -21,7 +21,7 @@ const ShowsSection = ({ className, loading, shows, heading, desc, group = false 
                 <div className={styles.shows}>
                     {
                         Array.from({ length: 6 }).map((_, i) => (
-                            <ShowCards loading key={i} tour={''} />
+                            <ShowCards loading key={i} />
                         ))
                     }
                 </div>
@@ -40,7 +40,7 @@ const ShowsSection = ({ className, loading, shows, heading, desc, group = false 
                     shows.map((s: Show, key) => (
                         <ShowCards
                             key={ key }
-                            tour={ group ? s.tour.name : null }
+                            page={ page }
                             show={ s }
                         />
                     ))
