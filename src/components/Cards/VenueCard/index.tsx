@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import styles from "./styles.module.css"
 import type { Venue } from "../../../types/models"
-import { MapPin } from "lucide-react"
+import { MapPin, Users, Calendar } from "lucide-react"
 import Tag from "../../Tag"
 
 interface Props {
@@ -16,8 +16,8 @@ const VenueCard = ({ loading = false, venue }: Props) => {
         <div className={styles.skelImage}></div>
         <div className={styles.skelContent}>
           <div className={styles.skelTitle}></div>
-          <div className={styles.skelSubtitle}></div>
           <div className={styles.skelTagRow}>
+            <div className={styles.skelTag}></div>
             <div className={styles.skelTag}></div>
             <div className={styles.skelTag}></div>
           </div>
@@ -36,6 +36,10 @@ const VenueCard = ({ loading = false, venue }: Props) => {
             <Tag text={ venue.city.country.continent.name } />
             <Tag text={ venue.city.country.name } />
             <Tag text={ venue.city.name } />
+        </div>
+        <div className={styles.info}>
+          <span><Users />7 Groups</span>
+          <span><Calendar />20 shows</span>
         </div>
       </div>
     </Link>

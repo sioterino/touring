@@ -6,11 +6,13 @@ import ErrorPage from '../ErrorPage'
 import { useEffect } from 'react'
 import type { Venue } from '../../types/models'
 import VenueCard from '../../components/Cards/VenueCard'
+import VenuesForm from '../../components/Form/VenuesForm'
 
 const VenuesPage = () => {
 
-    const { venues, allVenues, getAllVenues, loading, apiError } = useVenues()
+    const { venues, allVenues, cities, countries, continents, getAllVenues, filterVenuesByValue, loading, apiError } = useVenues()
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => { getAllVenues() }, [])
 
     if (apiError.isError) return <ErrorPage message={apiError.message} />
@@ -18,8 +20,12 @@ const VenuesPage = () => {
     return (
         <div className={styles.container}>
             <Heading title='Venues' desc='Explore venues and see which artists performed there' />
+            <VenuesForm
+                options={[cities, countries, continents]}
+                handleChange={ filterVenuesByValue }
+            />
 
-            <p className={styles.info}>Showing {venues?.length} out of {allVenues?.length} venues</p>
+            <p className={styles.info}>Showing {venues.length} out of {allVenues.length} venues</p>
             <div className={loading ? styles.gradient : ''}>
                 <div className={styles.cards}>
                     {
