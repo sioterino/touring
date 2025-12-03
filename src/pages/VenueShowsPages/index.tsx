@@ -10,7 +10,9 @@ import useVenues from '../../hooks/VenueHoook';
 import IconCard from '../../components/Cards/IconCard';
 import { Users, Calendar } from 'lucide-react';
 import { formatNumber } from '../../utils/NumberUtils';
-import type { Show } from '../../types/models';
+import type { Group, Show } from '../../types/models';
+import useGroups from '../../hooks/GroupHook';
+import GroupCard from '../../components/Cards/GroupCard';
 
 const VenueShowsPage = () => {
 
@@ -18,14 +20,16 @@ const VenueShowsPage = () => {
 
     const { shows, getShowsByVenueId, loading: sLoading, apiError: sError }  = useShows()
     const { venue, getVenueById, loading: vLoading, apiError: vError }  = useVenues()
+    const { groups, getGroupsByVenueId, loading: gLoading, apiError: gError } = useGroups()
 
-    const loading = vLoading || sLoading
-    const apiError = vError.isError || sError.isError
-    const message = vError.message || sError.message
+    const loading = vLoading || sLoading || gLoading
+    const apiError = vError.isError || sError.isError || gError.isError
+    const message = vError.message || sError.message || gError.message
 
     useEffect(() => {
         getVenueById(Number(id))
         getShowsByVenueId(Number(id))
+        getGroupsByVenueId(Number(id))
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -41,6 +45,18 @@ const VenueShowsPage = () => {
 
                 <div className={styles.general}>
                     { Array.from({ length: 3 }).map((_, i) => <IconCard key={i} loading />) }
+                </div>
+            
+                <div className={styles.groups}>
+                    <h2>Performing Groups</h2>
+                    <p className={styles.hint}>Groups who have performed in this venue</p>
+                    <div className={styles.gradient}>
+                        <div className={styles.cards}>
+                            {
+                                Array.from({ length: 6 }).map((_, i) => <GroupCard loading />)
+                            }
+                        </div>
+                    </div>
                 </div>
 
                 <ShowsSection
@@ -66,7 +82,24 @@ const VenueShowsPage = () => {
                 <IconCard heading='Performing Groups' icon={<Users />} text={ String(venue?.groups) } />
 
                 <IconCard heading='Total Attendance' icon={<Users />} text={ formatNumber( shows.reduce((acc: number, s: Show) => { return acc += s.attendance || 0 }, 0) ) } />
-                
+            </div>
+
+            <div className={styles.groups}>
+                <h2>Performing Groups</h2>
+                <p className={styles.hint}>Groups who have performed in this venue</p>
+                <div className={styles.cards}>
+                    {
+                        groups.map((g: Group, i: number) => (
+                            <GroupCard
+                                key={ i }
+                                group={ g }
+                                page='venue'
+                                attendance={ shows.filter(s => s.group.id === g.id).reduce((acc, s) => { return acc += s.attendance || 0 }, 0) }
+                                nights={ shows.filter(s => s.group.id === g.id).reduce((acc, s) => { return s.box_score ? acc += s.nights : 0 }, 0) }
+                            />
+                        ))
+                    }
+                </div>
             </div>
 
             <ShowsSection

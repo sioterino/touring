@@ -62,7 +62,9 @@ const ShowCards = ({ loading, page = 'group', show }: Props) => {
             <div className={styles.header}>
                 <div className={styles.headerRight}>
                     <div className={styles.heading}>
-                        {page !== 'tour' ? <h3>{show.tour.name}</h3> : <Link to={`/venues/${show.venue.id}`}><h3>{show.venue.name}</h3> </Link> }
+                        {page !== 'tour' ?
+                            <Link to={`/tours/${show.tour.id}`}><h3>{show.tour.name}</h3></Link>
+                        : <Link to={`/venues/${show.venue.id}`}><h3>{show.venue.name}</h3> </Link> }
                         { show.reported && <TooltipIcon text={`Reported by ${show.reported}`} className={styles.tooltip} /> }
                     </div>
                     { page === 'venue' && <Link to={`/groups/${show.group.id}`} className={styles.venue}><Users className={styles.icon} /><p>{show.group.name}</p></Link> }
@@ -72,7 +74,7 @@ const ShowCards = ({ loading, page = 'group', show }: Props) => {
                             <Tag text={show.venue.city.name} />
                         </div>
                     }
-                    { page !== 'tour' && <Link to={`/venues/${show.venue.id}`} className={styles.venue}><MapPin className={styles.icon} /><p>{show.venue.name}</p></Link> }
+                    { page === 'group' && <Link to={`/venues/${show.venue.id}`} className={styles.venue}><MapPin className={styles.icon} /><p>{show.venue.name}</p></Link> }
 
                 </div>
                 <p className={styles.showNights}>{`${show.nights} ${show.nights === 1 ? 'night' : 'nights'}`}</p>

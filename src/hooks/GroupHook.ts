@@ -53,6 +53,40 @@ const useGroups = () => {
         return data
     }
 
+    const getGroupsByVenueId = async (id: number): Promise<void> => {
+
+        setLoading(true)
+
+        const { error, data } = await supabase.rpc('get_groups_by_venue', { venue_id: id })
+        
+        if (error) {
+            setLoading(false)
+            setApiError({ isError: true, message: error.message })
+            console.error('[GroupHook] Error fetching groups data: ', error)
+            toast.error('There was an error while loading the groups...')
+            return   
+        }
+
+        const companyIds = data.map((d: { company: any }) => d.company)
+
+        const { error: compError, data: companies } =  await supabase.from('companies').select('*, parent_company:companies(id, name)').in('id', companyIds)
+        
+        if (compError) {
+            setLoading(false)
+            setApiError({ isError: true, message: compError.message })
+            console.error('[GroupHook] Error fetching groups data: ', compError)
+            toast.error('There was an error while loading the groups...')
+            return   
+        }
+
+        const parsed = data.map((d: { company: any }) => ({...d, company: companies.find(c => c.id === d.company)}))
+
+        setGroups(parsed)
+        setAllGroups(data)
+
+        setLoading(false)
+    }
+
     const getGroupsByValue = async (value: string, method?: string) => {
         switch (method) {
 
@@ -112,7 +146,7 @@ const useGroups = () => {
         setLoading(false)
     }
 
-    return { groups, length, genders, generations, getAllGroups, getGroupsByValue, loading, apiError, }
+    return { groups, length, genders, generations, getAllGroups, getGroupsByValue, getGroupsByVenueId, loading, apiError, }
 }
 
 export default useGroups

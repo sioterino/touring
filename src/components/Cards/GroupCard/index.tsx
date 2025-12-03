@@ -3,15 +3,20 @@ import styles from "./styles.module.css"
 import type { Group } from "../../../types/models"
 import { parseGen } from "../../../utils/StringUtils"
 import ProfileImage from "../../ProfileImage"
-import { ArrowUp, Building2, Circle, Mars, Venus } from "lucide-react"
+import { ArrowUp, Building2, Calendar, Circle, CircleOff, Mars, Users, Venus } from "lucide-react"
 import Tag from "../../Tag"
+import { formatNumber } from "../../../utils/NumberUtils"
 
 interface Props {
   group?: Group
   loading?: boolean
+  page?: 'group' | 'venue'
+  nights?: number
+  attendance?: number
 }
 
-const GroupCard = ({ loading = false, group }: Props) => {
+const GroupCard = ({ loading = false, group, page = 'group', nights, attendance }: Props) => {
+
   if (loading || group === undefined)
     return (
       <div className={styles.skeletonCard}>
@@ -36,14 +41,25 @@ const GroupCard = ({ loading = false, group }: Props) => {
         <h3 className={styles.title}>{group.name}</h3>
         <p className={styles.company}><Building2 className={styles.icon} />{group.company.name}</p>
         <div className={styles.tags}>
-            <Tag type="filled" text={ group.gender } icon={
-              group.gender === 'female' ? <Venus className={styles.icon} />
-              : group.gender === 'male' ? <Mars className={styles.icon} />
-                  : <Circle className={styles.icon} />              
-            }  />
-            
-            <Tag text={ parseGen(group.generation) } icon={ <ArrowUp/> }  />
-        </div>
+        {
+          page === 'group'
+          ? <>
+              <Tag type="filled" text={ group.gender } icon={
+                group.gender === 'female' ? <Venus className={styles.icon} />
+                : group.gender === 'male' ? <Mars className={styles.icon} />
+                    : <Circle className={styles.icon} />              
+              }  />
+              
+              <Tag text={ parseGen(group.generation) } icon={ <ArrowUp/> }  />
+            </>
+            : attendance === 0 && nights === 0 ? <Tag text='Not reported' icon={<CircleOff />} />
+              : <>
+                <Tag icon={<Calendar />} text={`${nights} ${ nights !== 1 ? 'nights' : 'night' }`} />
+                <Tag icon={<Users />} text={`${formatNumber(attendance!)} attendance`} />
+              </>
+          }
+          </div>
+        
       </div>
     </Link>
   )
