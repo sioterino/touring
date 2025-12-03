@@ -1,0 +1,149 @@
+.card,
+.skeletonCard {
+  display: flex;
+  flex-direction: row;
+
+  background-color: var(--light);
+  border: 1px solid var(--dark);
+  box-shadow: var(--box-shadow);
+  
+  overflow: hidden;
+  
+  border-radius: 8px;
+  min-height: 133px;
+}
+
+.card {
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: var(--box-shadow-hover);
+  border-top: 1px solid var(--highlight);
+}
+
+@keyframes slideIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.imageContainer {
+  position: relative;
+  width: 125px;
+  min-width: 125px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.imageContainer > * {
+  width: 60px;
+  height: 60px;
+  
+  color: rgb(99, 101, 241);
+  opacity: 50%;
+}
+
+.content {
+  min-width: 0;
+  flex: 1;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  gap: 8px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.company {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon {
+  height: 16px;
+  width: 16px;
+}
+
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.skeletonCard {
+  box-shadow: none;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.skelImage {
+  width: 125px;
+  min-width: 125px;
+
+  background: var(--dark);
+}
+
+.skelContent {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+.skelTitle,
+.skelSubtitle,
+.skelTag {
+  background: var(--dark);
+  border-radius: 4px;
+
+}
+
+.skelTitle {
+  width: 60%;
+  height: 22px;
+}
+
+.skelSubtitle {
+  width: 45%;
+  height: 19px;
+}
+
+.skelTagRow {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.skelTag {
+  width: 70px;
+  height: 30px;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
