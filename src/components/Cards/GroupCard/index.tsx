@@ -33,7 +33,7 @@ const GroupCard = ({ loading = false, group, page = 'group', nights, attendance 
     )
 
   return (
-    <Link to={`/groups/${group.id}`} className={styles.card}>
+    <Link to={`/groups/${group.id}`} className={`${styles.card} ${ page === 'venue' && styles.venueTouring }`}>
       <div className={styles.imageContainer}>
         <ProfileImage name={group.name} colors={group.colors} size={80} font={20}/>
       </div>

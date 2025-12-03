@@ -53,7 +53,7 @@ const VenueShowsPage = () => {
                     <div className={styles.gradient}>
                         <div className={styles.cards}>
                             {
-                                Array.from({ length: 6 }).map((_, i) => <GroupCard loading />)
+                                Array.from({ length: 6 }).map((_, i) => <GroupCard key={ i } loading />)
                             }
                         </div>
                     </div>

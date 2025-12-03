@@ -12,6 +12,10 @@
   border-radius: 8px;
 }
 
+.card.venueTouring {
+  min-height: 170px;
+}
+
 .card {
   cursor: pointer;
 }
@@ -54,6 +58,10 @@
   flex-direction: column;
   justify-content: center;
   gap: 8px;
+}
+
+.card.venueTouring .tags {
+  margin-top: auto;
 }
 
 .title {
