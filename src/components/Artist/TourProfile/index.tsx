@@ -5,6 +5,7 @@ import type { TourResponseDTO } from '../../../types/dtos'
 import { CalendarArrowDown, CalendarArrowUp, MapPin } from 'lucide-react'
 import { formatPrettyDate } from '../../../utils/DateUtils'
 import { Link } from 'react-router-dom'
+import Tag from '../../Tag'
 
 interface Props {
     loading?: boolean
@@ -24,10 +25,10 @@ const TourProfile = ({ loading, tour = null}: Props) => {
                 </div>
                 
                 <div className={styles.tags}>
-                    <span className={styles.skelType}></span>
+                    <Tag type='loading' text='' />
                     <div className={styles.skelDates}>
-                        <span></span>
-                        <span></span>
+                        <Tag type='loading' text='' />
+                        <Tag type='loading' text='' />
                     </div>
                 </div>
             </span>
@@ -46,10 +47,10 @@ const TourProfile = ({ loading, tour = null}: Props) => {
                     <Link className={styles.groupName} to={`/groups/${tour.group.id}`}>{tour.group.name}</Link>
                 </div>
                 <div className={styles.tags}>
-                    <span className={styles.type}><MapPin />{`${tour.tour} tour`}</span>
+                    <Tag type='filled' text={`${tour.tour} tour`} icon={ <MapPin /> } />
                     <div className={styles.dates}>
-                        <span><CalendarArrowUp />{formatPrettyDate(tour.begin)}</span>
-                        <span><CalendarArrowDown />{formatPrettyDate(tour.end)}</span>
+                        <Tag text={ formatPrettyDate(tour.begin) } icon={ <CalendarArrowUp /> } />
+                        <Tag text={ formatPrettyDate(tour.end) } icon={ <CalendarArrowDown /> } />
                     </div>
                 </div>
             </div>

@@ -46,7 +46,7 @@ import ShowsSection from '../../components/ShowsSection';
                         </div>
                     </div>
 
-                    <StatsSection loading data={group} />
+                    <StatsSection loading stats={group} />
 
                     <Slide
                         loading
@@ -54,7 +54,7 @@ import ShowsSection from '../../components/ShowsSection';
                         hint
                         children={
                             Array.from({ length: 4 }).map((_, i) => (
-                                <TourCard loading key={i} id={0} name={''} level={''} continents={[]} start={''} end={''} reported={0} total={0} attendance={0} box={0} sold={0} price={0} />
+                                <TourCard loading key={ i } />
                             ))
                         }
                     />
@@ -85,7 +85,7 @@ import ShowsSection from '../../components/ShowsSection';
                     </div>
                 </div>
 
-                <StatsSection data={group} />
+                <StatsSection stats={group} />
 
                 <Slide
                     heading='Tours'
@@ -93,23 +93,7 @@ import ShowsSection from '../../components/ShowsSection';
                     children={
                         tours
                         .filter(t => t.box_score !== 0)
-                        .map((t, key) => (
-                            <TourCard
-                                key={key}
-                                id={t.id}
-                                name={t.name}
-                                level={t.tour}
-                                continents={t.continents}
-                                start={t.begin}
-                                end={t.end}
-                                reported={t.reported_nights}
-                                total={t.total_nights}
-                                attendance={t.attendance}
-                                box={t.box_score}
-                                sold={t.sum_sold / t.sum_venues}
-                                price={t.sum_price / t.sum_venues}
-                            />
-                        ))
+                        .map((t, key) =>  <TourCard key={ key } tour={ t } /> )
                     }
                 />
 

@@ -15,6 +15,17 @@
 
 }
 
+.container a,
+.container a h3 {
+  transition: all 0s;
+  width: fit-content;
+}
+
+.container a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
 .header {
     display: flex;
     justify-content: space-between;

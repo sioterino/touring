@@ -17,9 +17,9 @@
   --box-shadow: 0px 3px 6px hsla(0, 0%, 0%, .07);
   --box-shadow-hover: 0px 6px 9px hsla(0, 0%, 0%, .09);
 
-  --primary: #0000ff;
-  --primary-dark: #350897;
-  --primary-light: #4088e8;
+  --primary: #6A4CFF;
+  --primary-dark: #4B2AB8;
+  --primary-light: #A99CFF;
 
   --primary-shadow: 0 0 0 3px hsla(240, 100%, 50%, .1);
   --hover-shadow: 0 0 0 2px hsla(0, 0%, 0%, .05);

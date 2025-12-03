@@ -31,24 +31,24 @@ const useShows = () => {
             const continent = s.venue.city.country.continent.name
 
             if (!map.has(t.id)) {
-
-                let performedVenues = 0
-                let totalBox = 0
-                let totalAttendance = 0
+                
+                const totalNights = s.nights
                 let reportedNights = 0
-                let sumSold = 0
-                let sumPrice = 0
+                
+                let available = 0;
+                let totalAttendance = 0
+                let totalBox = 0
 
                 if (s.box_score) {
-                    performedVenues += 1
-                    totalBox += s.box_score
-                    totalAttendance += s.attendance || 0
                     reportedNights += s.nights
-                    sumSold += s.sold_percentage || 0
-                    sumPrice += s.attendance ? s.box_score / s.attendance : 0
+                    
+                    available += s.attendance && s.sold_percentage ? s.attendance / s.sold_percentage : 0
+                    totalAttendance += s.attendance || 0
+                    totalBox += s.box_score
+
                 }
 
-                map.set(t.id, {
+               map.set(t.id, {
                     id: t.id,
                     name: t.name,
                     begin: t.begin,
@@ -57,13 +57,17 @@ const useShows = () => {
                     tour: t.tour,
                     continents: [continent],
 
-                    box_score: totalBox,
-                    attendance: totalAttendance,
-                    total_nights: s.nights,
+                    total_nights: totalNights,
                     reported_nights: reportedNights,
-                    sum_venues: performedVenues,
-                    sum_sold: sumSold,
-                    sum_price: sumPrice
+
+                    available: available,
+                    attendance: totalAttendance,
+                    box_score: totalBox,
+
+                    avg_ticket: totalBox / totalAttendance,
+                    avg_sold: totalAttendance / available,
+                    avg_box: totalBox / reportedNights,
+
                 })
                 continue
             }
@@ -76,39 +80,51 @@ const useShows = () => {
             dto.total_nights += s.nights
             
             if (s.box_score) {
-                dto.sum_venues += 1
-                dto.box_score += s.box_score
-                dto.attendance += s.attendance || 0
                 dto.reported_nights += s.nights
-                dto.sum_sold += s.sold_percentage || 0
-                dto.sum_price += s.attendance ? s.box_score / s.attendance : 0
+
+                if (s.attendance && s.sold_percentage) {
+                    const available = s.attendance / s.sold_percentage
+                    dto.available! += available
+                }
+
+                dto.box_score += s.box_score
+                dto.attendance! += s.attendance!
+
+                dto.avg_ticket = dto.box_score / dto.attendance!
+                dto.avg_sold = dto.attendance! / dto.available!
+                dto.avg_box = dto.box_score / dto.reported_nights
             }
+
         }
         return Array.from(map.values())
     }
 
     const buildGroupFromShow = (shows: Show[]): GroupsResponseDTO | null => {
         if (shows.length === 0) return null
+
         const group = shows[0].group
 
-        let totalBox = 0
-        let totalAttendance = 0
         let totalNights = 0
         let reportedNights = 0
-        let soldPercentage = 0
-        let performedVenues = 0
-        let accTicketPrice = 0
+
+        let totalAvailable = 0
+        let totalAttendance = 0
+        let totalBox = 0
 
         shows.forEach(s => {
             totalBox += s.box_score || 0
             totalNights += s.nights || 0
-            
-            if (s.box_score && s.attendance) {
-                reportedNights += s.nights
-                soldPercentage += s.sold_percentage || 0
+
+            if (s.box_score) {
+                const nights = s.nights || 1
+
+                reportedNights += nights
                 totalAttendance += s.attendance || 0
-                performedVenues += 1
-                accTicketPrice += s.box_score / s.attendance
+
+                if (s.attendance && s.sold_percentage) {
+                    const available = s.attendance / s.sold_percentage
+                    totalAvailable += available
+                }
             }
         })
 
@@ -121,13 +137,16 @@ const useShows = () => {
             generation: group.generation,
             colors: group.colors,
 
-            box_score: totalBox,
-            avg_sold: soldPercentage / performedVenues,
             total_nights: totalNights,
             reported_nights: reportedNights,
-            avg_box: totalBox / performedVenues,
-            net_att: totalAttendance,
-            avg_ticket: accTicketPrice / performedVenues,
+            
+            available: totalAvailable,
+            attendance: totalAttendance || null,
+            box_score: totalBox,
+
+            avg_ticket: totalAttendance > 0 ? totalBox / totalAttendance : null,
+            avg_sold: totalAvailable > 0 ? totalAttendance / totalAvailable : null,
+            avg_box: reportedNights > 0 ? totalBox / reportedNights : null,
         }
     }
 
@@ -258,7 +277,33 @@ const useShows = () => {
 
     }
 
-    return { shows, allShows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, loading, apiError }
+    const getShowsByVenueId = async (id: number): Promise<void> => {
+        setLoading(true)
+
+        const { data, error } = await supabase
+            .from('shows')
+            .select("*, tour:tour(*, group:groups(*, company:company(*, parent_company:parent_company(*)))), group:group(*, company:company(*, parent_company:parent_company(*))), venue:venue(*, city:city(*, country:country(*, continent:continent(*))))")
+            .eq('venue', id)
+            .order('attendance', { ascending: false })
+            .order('attendance', { ascending: false, foreignTable: undefined })  
+
+        if (error || data.length === 0) {
+            setLoading(false)
+            setApiError({ isError: true, message: error ? error.message : 'No data available' })
+            console.error("[ShowsHook] Error fetching tour's concert shows: ", error || 'No data available for the selected tour')
+            toast.error('There was an error while trying to load the concert shows...')
+            return
+        }
+        
+        setShows(data)
+        setAllShows(data)
+
+        await getRegionOptions(data)
+
+        setLoading(false)
+    }
+
+    return { shows, allShows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, getShowsByVenueId, loading, apiError }
 
 }
 

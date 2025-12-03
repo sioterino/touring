@@ -4,25 +4,15 @@ import Tag from "../../Tag"
 import { formatPrettyDate } from "../../../utils/DateUtils"
 import { formatNumber, formatPercentage, formatUSD } from "../../../utils/NumberUtils"
 import { Link } from "react-router-dom"
+import type { TourResponseDTO } from "../../../types/dtos"
 
 interface Props {
   loading?: boolean
-  id: number
-  name: string
-  level: string
-  continents: string[]
-  start: string
-  end: string
-  total: number
-  reported: number
-  attendance: number
-  box: number
-  sold: number
-  price: number
+  tour?: TourResponseDTO
 }
 
-const TourCard = ({ loading, id, name, level, continents, start, end, total, reported, attendance, box, sold, price, }: Props) => {
-  if (loading)
+const TourCard = ({ loading, tour }: Props) => {
+  if (loading || !tour)
     return (
       <div className={styles.loadingCard}>
         <div className={styles.loadingHeader}>
@@ -46,19 +36,19 @@ const TourCard = ({ loading, id, name, level, continents, start, end, total, rep
     )
 
   return (
-    <Link to={`/tours/${id}`} className={styles.card}>
+    <Link to={`/tours/${tour.id}`} className={styles.card}>
       <div className={styles.header}>
-        <h3 className={styles.title}>{name}</h3>
+        <h3 className={styles.title}>{tour.name}</h3>
 
         <div className={styles.tags}>
-          <Tag text={`${level} Tour`} type="filled" />
-          {continents
+          <Tag text={`${ tour.tour } Tour`} type="filled" />
+          {tour.continents
             .sort()
             .slice(0, 2)
             .map((c, i) => (
               <Tag text={c} key={i} />
             ))}
-          {continents.length > 2 && <Tag text="..." />}
+          {tour.continents.length > 2 && <Tag text="..." />}
         </div>
       </div>
 
@@ -68,7 +58,7 @@ const TourCard = ({ loading, id, name, level, continents, start, end, total, rep
             <CalendarArrowUp className={styles.icon} />
             <span>Start Date</span>
           </div>
-          <p className={styles.value}>{formatPrettyDate(start)}</p>
+          <p className={styles.value}>{formatPrettyDate(tour.begin)}</p>
         </div>
 
         <div className={styles.stat}>
@@ -76,7 +66,7 @@ const TourCard = ({ loading, id, name, level, continents, start, end, total, rep
             <CalendarArrowDown className={styles.icon} />
             <span>End Date</span>
           </div>
-          <p className={styles.value}>{formatPrettyDate(end)}</p>
+          <p className={styles.value}>{formatPrettyDate(tour.end)}</p>
         </div>
 
         <div className={styles.stat}>
@@ -84,7 +74,7 @@ const TourCard = ({ loading, id, name, level, continents, start, end, total, rep
             <Calendar className={styles.icon} />
             <span>Reported Shows</span>
           </div>
-          <p className={styles.value}>{`${reported}/${total}`}</p>
+          <p className={styles.value}>{`${tour.reported_nights}/${tour.total_nights}`}</p>
         </div>
 
         <div className={styles.stat}>
@@ -93,8 +83,8 @@ const TourCard = ({ loading, id, name, level, continents, start, end, total, rep
             <span>Attendance</span>
           </div>
           <p className={styles.value}>
-            {formatNumber(attendance)}
-            {sold > 0 && <span className={styles.subValue}>({formatPercentage(sold)})</span>}
+            { tour.attendance ? formatNumber(tour.attendance) : 'Not Reported' }
+            { tour.avg_sold && <span className={styles.subValue}>({formatPercentage(tour.avg_sold)})</span>}
           </p>
         </div>
 
@@ -103,7 +93,7 @@ const TourCard = ({ loading, id, name, level, continents, start, end, total, rep
             <CircleDollarSign className={styles.icon} />
             <span>Box Score</span>
           </div>
-          <p className={styles.value}>{formatUSD(box)}</p>
+          <p className={styles.value}>{ tour.box_score > 0 ? formatUSD(tour.box_score) : 'Not Reported' }</p>
         </div>
 
         <div className={styles.stat}>
@@ -111,7 +101,7 @@ const TourCard = ({ loading, id, name, level, continents, start, end, total, rep
             <Ticket className={styles.icon} />
             <span>Avg Price</span>
           </div>
-          <p className={styles.value}>{formatUSD(price)}</p>
+          <p className={styles.value}>{ tour.avg_ticket ? formatUSD(tour.avg_ticket) : 'Not Reported' }</p>
         </div>
       </div>
     </Link>

@@ -55,6 +55,8 @@ interface Venue {
     id: number
     name: string
     city: City
+    groups?: number
+    shows?: number
 }
 
 interface Show {

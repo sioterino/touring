@@ -4,26 +4,18 @@ import { formatArrayOfDates } from '../../../utils/DateUtils'
 import styles from './styles.module.css'
 import { formatNumber, formatPercentage, formatUSD } from '../../../utils/NumberUtils'
 import TooltipIcon from '../../TooltipIcon'
-import type { Reported } from '../../../types/models'
+import type { Show } from '../../../types/models'
+import { Link } from 'react-router-dom'
 
 interface Props {
     loading?: boolean
     tour?: string | null
-    dates: string[]
-    venue: string
-    continent: string
-    country: string
-    city: string
-    attendance: number | null
-    box: number | null
-    sold: number | null
-    shows: number
-    reported: Reported
+    show?: Show
 }
 
-const ShowCards = ({ loading, tour = null, dates, venue, country, city, attendance, box, sold, shows, reported }: Props) => {
+const ShowCards = ({ loading, tour = null, show }: Props) => {
 
-    if (loading) {
+    if (loading || !show) {
         return (
             <div className={styles.skelContainer}>
                 <div className={styles.header}>
@@ -70,21 +62,23 @@ const ShowCards = ({ loading, tour = null, dates, venue, country, city, attendan
             <div className={styles.header}>
                 <div className={styles.headerRight}>
                     <div className={styles.heading}>
-                        <h3>{ tour? tour : venue }</h3>
-                        { reported && <TooltipIcon text={`Reported by ${reported}`} className={styles.tooltip} /> }
+                        {tour ? <h3>{tour}</h3> : <Link to={`/venues/${show.venue.id}`}><h3>{show.venue.name}</h3> </Link> }
+                        { show.reported && <TooltipIcon text={`Reported by ${show.reported}`} className={styles.tooltip} /> }
                     </div>
                     <div className={styles.tags}>
-                        <Tag text={country} type='filled'/>
-                        <Tag text={city} />
+                        <Tag text={show.venue.city.country.name} type='filled'/>
+                        <Tag text={show.venue.city.name} />
                     </div>
-                    { tour && <div className={styles.venue}><MapPin className={styles.icon} /><p>{venue}</p></div> }
+                    { tour && <Link to={`/venues/${show.venue.id}`} className={styles.venue}><MapPin className={styles.icon} /><p>{show.venue.name}</p></Link> }
                 </div>
-                <p className={styles.showNights}>{`${shows} ${shows === 1 ? 'night' : 'nights'}`}</p>
+                <p className={styles.showNights}>{`${show.nights} ${show.nights === 1 ? 'night' : 'nights'}`}</p>
             </div>
 
             <div className={styles.date}>
                 <Calendar className={styles.icon} />
-                <p>{ formatArrayOfDates(dates) }</p>
+                <p>{ formatArrayOfDates(
+                    [ show.day_1, show.day_2, show.day_3, show.day_4, show.day_5 ].filter(Boolean) as string[]
+                ) }</p>
             </div>
 
             <div className={styles.data}>
@@ -94,7 +88,7 @@ const ShowCards = ({ loading, tour = null, dates, venue, country, city, attendan
                         <Users className={styles.icon} />
                         <span>Attendance</span>
                     </div>
-                    <p className={styles.value}>{attendance ? formatNumber(attendance) : 'Not Reported'}</p>
+                    <p className={styles.value}>{show.attendance ? formatNumber(show.attendance) : 'Not Reported'}</p>
                 </div>
 
                 <div className={styles.stat}>
@@ -102,7 +96,7 @@ const ShowCards = ({ loading, tour = null, dates, venue, country, city, attendan
                         <Percent className={styles.icon} />
                         <span>Sold</span>
                     </div>
-                    <p className={styles.value}>{sold ? formatPercentage(sold) : 'Not Reported'}</p>
+                    <p className={styles.value}>{show.sold_percentage ? formatPercentage(show.sold_percentage) : 'Not Reported'}</p>
                 </div>
 
                 <div className={styles.stat}>
@@ -110,7 +104,7 @@ const ShowCards = ({ loading, tour = null, dates, venue, country, city, attendan
                         <CircleDollarSign className={styles.icon} />
                         <span>Box Score</span>
                     </div>
-                    <p className={styles.value}>{box ? formatUSD(box) : 'Not Reported'}</p>
+                    <p className={styles.value}>{show.box_score ? formatUSD(show.box_score) : 'Not Reported'}</p>
                 </div>
 
                 <div className={styles.stat}>
@@ -118,7 +112,7 @@ const ShowCards = ({ loading, tour = null, dates, venue, country, city, attendan
                         <Ticket className={styles.icon} />
                         <span>Avg Price</span>
                     </div>
-                    <p className={styles.value}>{attendance && box ? formatUSD(box / attendance) : 'Not Reported'}</p>
+                    <p className={styles.value}>{show.attendance && show.box_score ? formatUSD(show.box_score / show.attendance) : 'Not Reported'}</p>
                 </div>
 
             </div>

@@ -1,13 +1,11 @@
 .tag {
-
-    padding: 3px 12px;
-    border-radius: 4px;
-
-    white-space: nowrap;
-    flex-shrink: 0;
-    
-    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
     border: 1px solid var(--dark);
+    border-radius: 4px;
+    user-select: none;
 }
 
 .tag.capitalize {
@@ -19,6 +17,11 @@
 }
 
 .tag.loading {
-    height: 25px;
-    width: 60px;
+    height: 30px;
+    width: 80px;
+}
+
+.tag.icon *:first-child {
+    height: 16px;
+    width: 16px;
 }

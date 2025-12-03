@@ -33,18 +33,16 @@ const ArtistProfile = ({ loading, group = null}: Props) => {
             <div className={styles.desc}>
                 <h1>{group.name}</h1>          
                 <div className={styles.tags}>
-                    <span>
-                        {
-                            group.gender === 'female' ? <Venus />
-                            : group.gender === 'male' ? <Mars />
-                                : <Circle />
-                        }
-                        { group.gender }
-                    </span>
-                    <span><CalendarArrowUp />{formatPrettyDate(group.debut)}</span>
-                    <span><ArrowUp />{parseGen(group.generation)}</span>
-                    { group.company.parent_company && <span><Building2 />{Array.isArray(group.company.parent_company) ? group.company.parent_company[0].name : group.company.parent_company.name}</span> }
-                    <span><Building2 />{group.company.name}</span>
+                    <Tag type='filled' text={ formatPrettyDate(group.debut) } icon={ <CalendarArrowUp /> } />
+                    <Tag text={ group.gender } icon={
+                        group.gender === 'female' ? <Venus />
+                        : group.gender === 'male' ? <Mars />
+                            : <Circle />
+                    } />
+                    <Tag text={ parseGen(group.generation) } icon={ <ArrowUp /> } />
+                    { group.company.parent_company && <Tag text={ group.company.parent_company.name } icon={ <Building2 /> } /> }
+                    <Tag text={ group.company.name } icon={ <Building2 /> } />
+                    
                 </div>
 
 

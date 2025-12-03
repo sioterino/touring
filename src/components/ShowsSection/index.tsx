@@ -21,7 +21,7 @@ const ShowsSection = ({ className, loading, shows, heading, desc, group = false 
                 <div className={styles.shows}>
                     {
                         Array.from({ length: 6 }).map((_, i) => (
-                            <ShowCards loading key={i} tour={''} dates={[]} venue={''} continent={''} country={''} city={''} box={0} attendance={0} sold={0} shows={0} reported={null} />
+                            <ShowCards loading key={i} tour={''} />
                         ))
                     }
                 </div>
@@ -39,18 +39,9 @@ const ShowsSection = ({ className, loading, shows, heading, desc, group = false 
                 {
                     shows.map((s: Show, key) => (
                         <ShowCards
-                            key={key}
+                            key={ key }
                             tour={ group ? s.tour.name : null }
-                            dates={[ s.day_1, s.day_2, s.day_3, s.day_4, s.day_5 ].filter(Boolean) as string[]}
-                            venue={s.venue.name}
-                            continent={s.venue.city.country.continent.name}
-                            country={s.venue.city.country.name}
-                            city={s.venue.city.name}
-                            box={s.box_score!}
-                            attendance={s.attendance!}
-                            sold={s.sold_percentage!}
-                            shows={s.nights}
-                            reported={s.reported}
+                            show={ s }
                         />
                     ))
                 }
