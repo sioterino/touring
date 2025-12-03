@@ -52,6 +52,7 @@ const ConcertPage = () => {
                 loading
                 heading='Shows'
                 shows={shows}
+                page='tour'
             />
 
         </div>
@@ -87,6 +88,7 @@ const ConcertPage = () => {
             <ShowsSection
                 heading='Shows'
                 shows={shows}
+                page='tour'
             />
 
         </div>

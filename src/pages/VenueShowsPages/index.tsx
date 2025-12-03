@@ -47,6 +47,7 @@ const VenueShowsPage = () => {
                     loading
                     heading='Recent Shows'
                     desc='Latest updated performances'
+                    page='venue'
                 />
 
             </div>
@@ -78,7 +79,7 @@ const VenueShowsPage = () => {
                         return b.attendance! - a.attendance!
                     })
                 }
-                group
+                page='venue'
             />
 
         </div>

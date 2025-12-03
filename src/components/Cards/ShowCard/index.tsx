@@ -9,11 +9,11 @@ import { Link } from 'react-router-dom'
 
 interface Props {
     loading?: boolean
-    tour?: string | null
+    page?: 'group' | 'tour' | 'venue'
     show?: Show
 }
 
-const ShowCards = ({ loading, tour = null, show }: Props) => {
+const ShowCards = ({ loading, page = 'group', show }: Props) => {
 
     if (loading || !show) {
         return (
@@ -62,14 +62,18 @@ const ShowCards = ({ loading, tour = null, show }: Props) => {
             <div className={styles.header}>
                 <div className={styles.headerRight}>
                     <div className={styles.heading}>
-                        {tour ? <h3>{tour}</h3> : <Link to={`/venues/${show.venue.id}`}><h3>{show.venue.name}</h3> </Link> }
+                        {page !== 'tour' ? <h3>{show.tour.name}</h3> : <Link to={`/venues/${show.venue.id}`}><h3>{show.venue.name}</h3> </Link> }
                         { show.reported && <TooltipIcon text={`Reported by ${show.reported}`} className={styles.tooltip} /> }
                     </div>
-                    <div className={styles.tags}>
-                        <Tag text={show.venue.city.country.name} type='filled'/>
-                        <Tag text={show.venue.city.name} />
-                    </div>
-                    { tour && <Link to={`/venues/${show.venue.id}`} className={styles.venue}><MapPin className={styles.icon} /><p>{show.venue.name}</p></Link> }
+                    { page === 'venue' && <Link to={`/groups/${show.group.id}`} className={styles.venue}><Users className={styles.icon} /><p>{show.group.name}</p></Link> }
+                    { page !== 'venue' &&
+                        <div className={styles.tags}>
+                            <Tag text={show.venue.city.country.name} type='filled'/>
+                            <Tag text={show.venue.city.name} />
+                        </div>
+                    }
+                    { page !== 'tour' && <Link to={`/venues/${show.venue.id}`} className={styles.venue}><MapPin className={styles.icon} /><p>{show.venue.name}</p></Link> }
+
                 </div>
                 <p className={styles.showNights}>{`${show.nights} ${show.nights === 1 ? 'night' : 'nights'}`}</p>
             </div>
