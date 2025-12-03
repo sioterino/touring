@@ -277,7 +277,31 @@ const useShows = () => {
 
     }
 
-    return { shows, allShows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, loading, apiError }
+    const getAmountOfGroupShowsPerVenue = async (venueId: number): Promise<{ groups: number, shows: number } | null> => {
+
+        const { error, data } = await supabase
+            .from('shows')
+            .select("id, group, venue")
+            .eq('venue', venueId)
+
+        if (error) {
+            toast.error('ERROR')
+            return null
+        }
+
+
+        const groupsMap = new Map<number, boolean>()
+        const showsMap = new Map<number, boolean>()
+
+        data.forEach((s) => {
+            groupsMap.set(s.group, true)
+            showsMap.set(s.id, true)
+        });
+
+        return { groups: groupsMap.size, shows: showsMap.size }
+    }
+
+    return { shows, allShows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, getAmountOfGroupShowsPerVenue, loading, apiError }
 
 }
 

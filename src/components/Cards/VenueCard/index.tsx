@@ -38,8 +38,8 @@ const VenueCard = ({ loading = false, venue }: Props) => {
             <Tag text={ venue.city.name } />
         </div>
         <div className={styles.info}>
-          <span><Users />7 Groups</span>
-          <span><Calendar />20 shows</span>
+          <span><Users />{venue.groups} Groups</span>
+          <span><Calendar />{venue.shows} shows</span>
         </div>
       </div>
     </Link>

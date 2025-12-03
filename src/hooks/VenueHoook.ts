@@ -4,7 +4,7 @@ import type { ApiError } from "../types/utils"
 import supabase from "../api/supabase"
 import { toast } from "sonner"
 import { compareValues } from "../utils/StringUtils"
-
+import useShows from "./ShowHook"
 
 const useVenues = () => {
 
@@ -18,6 +18,7 @@ const useVenues = () => {
     const [ loading, setLoading ] = useState(false)
     const [ apiError, setApiError ] = useState<ApiError>({ isError: false, message: '' })
 
+
     const getAllVenues = async (): Promise<void> => {
         
         setLoading(true)
@@ -25,7 +26,8 @@ const useVenues = () => {
         const { data, error } = await supabase
             .from('venues')
             .select('*, city:cities(id, name, country:countries(id, name, continent:continents(id, name)))')
-            .order('name', { ascending: true })
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .order('name', { ascending: true }) as { data: Venue[], error: any }
         
         if (error) {
             setLoading(false)
@@ -35,27 +37,46 @@ const useVenues = () => {
             return
         }
 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { data: stats, error: statsError } = await supabase.rpc("get_venue_show_stats")  as { data: { venue_id: number, shows: number, groups: number }[], error: any }
+        
+        if (statsError) {
+            setLoading(false)
+            setApiError({ isError: true, message: statsError.message })
+            console.error("[VenuesHook] Couldn't fetch venues from database: ", statsError.message)
+            toast.error('An error happened while trying to fetch venues from the database')
+            return
+        }
+
+        const statsMap = new Map(stats.map(s => [s.venue_id, s]))
+
         const citySet = new Map<number, City>()
         const countrySet = new Map<number, Country>()
         const continentSet = new Map<number, Continent>()
 
-        data.forEach(d => {
+        const parsed = data.map((d) => {
+            const stat = statsMap.get(d.id)
+
+            const groups = stat?.groups ?? 0
+            const shows = stat?.shows ?? 0
+
             const city = d.city
-            const country = d.city.country
-            const continent = d.city.country.continent
+            const country = city.country
+            const continent = country.continent
 
             citySet.set(city.id, city)
             countrySet.set(country.id, country)
             continentSet.set(continent.id, continent)
+
+            return { ...d, groups, shows }
         })
 
         setCities([...citySet.values()])
         setCountries([...countrySet.values()])
         setContinents([...continentSet.values()])
 
-
-        setVenues(data)
-        setAllVenues(data)
+        setVenues(parsed)
+        setAllVenues(parsed)
         
         setLoading(false)
     }
