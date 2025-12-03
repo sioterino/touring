@@ -75,6 +75,8 @@ const useVenues = () => {
         setCountries([...countrySet.values()])
         setContinents([...continentSet.values()])
 
+        parsed.sort((a, b) => b.shows - a.shows)
+
         setVenues(parsed)
         setAllVenues(parsed)
         
