@@ -8,6 +8,7 @@ import { compareValues } from "../utils/StringUtils"
 const useVenues = () => {
 
     const [ venues, setVenues ] = useState<Venue[]>([])
+    const [ venue, setVenue ] = useState<Venue | null>(null)
     const [ allVenues, setAllVenues ] = useState<Venue[]>([])
     
     const [ cities, setCities ] = useState<City[]>([])
@@ -80,6 +81,48 @@ const useVenues = () => {
         setLoading(false)
     }
 
+    const getVenueById = async (id: number): Promise<void> => {
+        setLoading(true)
+        
+        const { data, error } = await supabase
+            .from('venues')
+            .select('*, city:cities(id, name, country:countries(id, name, continent:continents(id, name)))')
+            .eq('id', id)
+        
+        if (error) {
+            setLoading(false)
+            setApiError({ isError: true, message: error.message })
+            console.error("[VenuesHook] Couldn't fetch venues from database: ", error.message)
+            toast.error('An error happened while trying to fetch venues from the database')
+            return
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { data: stats, error: statsError } = await supabase.rpc("get_venue_show_stats")  as { data: { venue_id: number, shows: number, groups: number }[], error: any }
+        
+        if (statsError) {
+            setLoading(false)
+            setApiError({ isError: true, message: statsError.message })
+            console.error("[VenuesHook] Couldn't fetch venues from database: ", statsError.message)
+            toast.error('An error happened while trying to fetch venues from the database')
+            return
+        }
+
+        const statsMap = new Map(stats.map(s => [s.venue_id, s]))
+
+        const parsed = data.map((d) => {
+            const stat = statsMap.get(d.id)
+
+            const groups = stat?.groups ?? 0
+            const shows = stat?.shows ?? 0
+
+            return { ...d, groups, shows }
+        })
+
+        setVenue(parsed[0])
+        setLoading(false)
+    }
+
     const filterVenuesByValue = async (value: string, method?: string): Promise<void> => {
         
         if (value === 'all' && method !== 'search') {
@@ -120,7 +163,7 @@ const useVenues = () => {
         }
     }
 
-    return { venues, allVenues, cities, countries, continents, getAllVenues, filterVenuesByValue, loading, apiError }
+    return { venues, venue, allVenues, cities, countries, continents, getAllVenues, filterVenuesByValue, getVenueById, loading, apiError }
 
 }
 

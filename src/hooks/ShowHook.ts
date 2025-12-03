@@ -277,31 +277,33 @@ const useShows = () => {
 
     }
 
-    const getAmountOfGroupShowsPerVenue = async (venueId: number): Promise<{ groups: number, shows: number } | null> => {
+    const getShowsByVenueId = async (id: number): Promise<void> => {
+        setLoading(true)
 
-        const { error, data } = await supabase
+        const { data, error } = await supabase
             .from('shows')
-            .select("id, group, venue")
-            .eq('venue', venueId)
+            .select("*, tour:tour(*, group:groups(*, company:company(*, parent_company:parent_company(*)))), group:group(*, company:company(*, parent_company:parent_company(*))), venue:venue(*, city:city(*, country:country(*, continent:continent(*))))")
+            .eq('venue', id)
+            .order('attendance', { ascending: false })
+            .order('attendance', { ascending: false, foreignTable: undefined })  
 
-        if (error) {
-            toast.error('ERROR')
-            return null
+        if (error || data.length === 0) {
+            setLoading(false)
+            setApiError({ isError: true, message: error ? error.message : 'No data available' })
+            console.error("[ShowsHook] Error fetching tour's concert shows: ", error || 'No data available for the selected tour')
+            toast.error('There was an error while trying to load the concert shows...')
+            return
         }
+        
+        setShows(data)
+        setAllShows(data)
 
+        await getRegionOptions(data)
 
-        const groupsMap = new Map<number, boolean>()
-        const showsMap = new Map<number, boolean>()
-
-        data.forEach((s) => {
-            groupsMap.set(s.group, true)
-            showsMap.set(s.id, true)
-        });
-
-        return { groups: groupsMap.size, shows: showsMap.size }
+        setLoading(false)
     }
 
-    return { shows, allShows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, getAmountOfGroupShowsPerVenue, loading, apiError }
+    return { shows, allShows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, getShowsByVenueId, loading, apiError }
 
 }
 

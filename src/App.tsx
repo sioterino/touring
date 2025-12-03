@@ -13,6 +13,7 @@ import ConcertPage from './pages/ConcertPage'
 import ComparePage from './pages/ComparePage'
 import ScrollToTop from './ScrollToTop'
 import AboutPage from './pages/AboutPage'
+import VenueShowsPage from './pages/VenueShowsPages'
 
 const AppRoutes = () => {
 
@@ -41,6 +42,7 @@ const AppRoutes = () => {
 
           <Route path='/groups/:id' element={ <ArtistPage /> } />
           <Route path='/tours/:id' element={ <ConcertPage /> } />
+          <Route path='/venues/:id' element={ <VenueShowsPage /> } />
 
           <Route path='*' element={ <ErrorPage message='Status 404 Page Not Found' /> } />
           

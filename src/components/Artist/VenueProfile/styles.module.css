@@ -1,0 +1,92 @@
+.heading {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.heading .pfp {
+    width: 90px;
+}
+
+.pfpIcon {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mappin {
+    height: 60px;
+    width: 60px;
+    color: rgb(99, 101, 241);
+  opacity: 50%;
+}
+
+.heading .desc {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.heading .desc p,
+.groupName {
+    color: var(--text-muted);
+}
+
+.groupName:hover {
+    color: var(--primary);
+}
+
+.tags,
+.place {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap-reverse;
+}
+
+.place {
+    align-items: center;
+    flex-wrap: none;
+    gap: 4px;
+    font-size: 16px;
+}
+
+.place .icon {
+    width: 18px;
+    height: 18px;
+}
+
+.skelInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skelHeading {
+    display: inline-block;
+    width: 180px;
+    height: 25px;
+    background-color: var(--dark);
+    border-radius: 4px;
+    animation: pulse 1.4s infinite ease-in-out;
+}
+
+.skelPfp {
+    width: 90px;
+    height: 90px;
+    background-color: var(--dark);
+    border-radius: 50%;
+    animation: pulse 1.4s infinite ease-in-out;
+}
+
+.skelTags {
+    animation: pulse 1.4s infinite ease-in-out;
+}
+
+.skelType {
+    width: 100px;
+}
