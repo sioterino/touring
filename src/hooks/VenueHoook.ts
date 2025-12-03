@@ -4,7 +4,6 @@ import type { ApiError } from "../types/utils"
 import supabase from "../api/supabase"
 import { toast } from "sonner"
 import { compareValues } from "../utils/StringUtils"
-import useShows from "./ShowHook"
 
 const useVenues = () => {
 

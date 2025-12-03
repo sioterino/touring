@@ -14,8 +14,6 @@ interface Props {
 
 const StatsSection = ({ className, loading, stats, allShows = null }: Props) => {
 
-    console.log(stats)
-
     if (loading || !stats) return (
         <div className={styles.general}>
             { Array.from({ length: 6 }).map((_, i) => <IconCard key={i} loading />) }

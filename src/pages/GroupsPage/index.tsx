@@ -14,28 +14,32 @@ const GroupsPage = () => {
     const { groups, length, genders, generations, getAllGroups, getGroupsByValue, loading: gLoading, apiError: gError } = useGroups()
     const { companies, getAllCompanies, loading: cLoading, apiError: cError } = useCompanies()
 
+    const loading = cLoading || gLoading
+    const error = cError.isError || gError.isError
+    const message = gError.message + cError.message
+
     useEffect(() => {
         getAllGroups()
         getAllCompanies()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    if (cError.isError || gError.isError) return <ErrorPage message={gError.isError ? gError.message : cError.message} />;
+    if (error) return <ErrorPage message={message} />;
 
     return (
         <div className={`${styles.container}`}>
             <Heading title='Groups' desc='Browse and filter K-pop groups' />
             <GroupsForm
-                loading={gLoading || cLoading}
+                loading={loading}
                 options={[genders, generations, companies]}
                 handleChange={getGroupsByValue}
             />
 
             <p className={styles.info}>Showing {groups.length} out of {length} groups</p>
-            <div className={gLoading || cLoading ? styles.gradient : ''}>
+            <div className={loading ? styles.gradient : ''}>
                 <div className={styles.cards}>
                     { 
-                        !gLoading || !cLoading ?
+                        !loading ?
                             groups.length !== 0 ? groups.map((gp: Group, key: number) => <GroupCard group={gp} key={key} /> )
                             : <div className={styles.span}>
                                 <EmptyArray title='Hmm… nothing matched' desc="We couldn't find any items that match your search or filter criteria. Maybe try different options?" />
