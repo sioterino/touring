@@ -1,13 +1,16 @@
 import type { Company, Gender, Generation, Group } from "./models"
 
 interface StatsDTO {
-    avg_ticket: number | null
-    box_score: number
-    avg_box: number | null
-    attendance: number | null
-    avg_sold: number | null
-    reported_nights: number
     total_nights: number
+    reported_nights: number
+
+    available: number | null
+    attendance: number | null
+    box_score: number
+    
+    avg_ticket: number | null
+    avg_sold: number | null
+    avg_box: number | null
 }
 
 interface TourResponseDTO extends StatsDTO {
@@ -18,10 +21,6 @@ interface TourResponseDTO extends StatsDTO {
     group: Group
     tour: string
     continents: string[]
-
-    sum_venues: number
-    sum_sold: number
-    sum_price: number
 }
 
 interface GroupsResponseDTO extends StatsDTO {
