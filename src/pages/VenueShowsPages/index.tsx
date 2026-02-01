@@ -8,8 +8,8 @@ import useShows from '../../hooks/ShowHook';
 import VenueProfile from '../../components/Artist/VenueProfile';
 import useVenues from '../../hooks/VenueHoook';
 import IconCard from '../../components/Cards/IconCard';
-import { Users, Calendar } from 'lucide-react';
-import { formatNumber } from '../../utils/NumberUtils';
+import { Users, Calendar, MicVocal, Percent, CircleDollarSign, UserStar } from 'lucide-react';
+import { formatNumber, formatUSD } from '../../utils/NumberUtils';
 import type { Group, Show } from '../../types/models';
 import GroupCard from '../../components/Cards/GroupCard';
 import useGroups from '../../hooks/GroupHook';
@@ -21,6 +21,11 @@ const VenueShowsPage = () => {
     const { shows, getShowsByVenueId, loading: sLoading, apiError: sError }  = useShows()
     const { venue, getVenueById, loading: vLoading, apiError: vError }  = useVenues()
     const { groups, getGroupsByVenueId, loading: gLoading, apiError: gError } = useGroups()
+
+    const attendance = shows.reduce((acc: number, s: Show) => { return acc += s.attendance || 0 }, 0)
+    const nights = shows.reduce((acc: number, s: Show) => { return acc += s.nights || 0 }, 0)
+    const reported = shows.reduce((acc: number, s: Show) => { return s.attendance ? acc += s.nights : 0 }, 0)
+    const box = shows.reduce((acc: number, s: Show) => { return acc + (s.box_score ?? 0) }, 0)
 
     const loading = vLoading || sLoading || gLoading
     const apiError = vError.isError || sError.isError || gError.isError
@@ -76,12 +81,12 @@ const VenueShowsPage = () => {
             </div>
 
             <div className={styles.general}>
-                <IconCard heading='Total Shows' icon={<Calendar />} text={ String(venue?.shows) } />
-
-                <IconCard heading='Performing Groups' icon={<Users />} text={ String(venue?.groups) } />
-
-                <IconCard heading='Total Attendance' icon={<Users />} text={ formatNumber( shows.reduce((acc: number, s: Show) => { return acc += s.attendance || 0 }, 0) ) } />
-                
+                <IconCard heading='Concerts' icon={<MicVocal />} text={ String(venue?.shows) } />
+                <IconCard heading='Performing Groups' icon={<UserStar />} text={ String(venue?.groups) } />
+                <IconCard heading='Total Attendance' icon={<Users />} text={ formatNumber(attendance) } />
+                <IconCard heading='Total Shows' icon={<Calendar />} text={ String(nights) } />
+                <IconCard heading='Avg Box' icon={<CircleDollarSign />} text={ formatUSD( box / reported ) } />
+                <IconCard heading='Avg Capacity' icon={<Percent />} text={ formatNumber( attendance / reported ) } />
             </div>
 
             <div className={styles.groups}>
@@ -95,7 +100,7 @@ const VenueShowsPage = () => {
                                 group={ g }
                                 page='venue'
                                 attendance={ shows.filter(s => s.group.id === g.id).reduce((acc, s) => { return acc += s.attendance || 0 }, 0) }
-                                nights={ shows.filter(s => s.group.id === g.id).reduce((acc, s) => { return s.box_score ? acc += s.nights : 0 }, 0) }
+                                nights={ shows.filter(s => s.group.id === g.id).reduce((acc, s) => { return s.attendance ? acc += s.nights : 0 }, 0) }
                             />
                         ))
                     }
