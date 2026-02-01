@@ -39,7 +39,7 @@ const VenueCard = ({ loading = false, venue }: Props) => {
         </div>
         <div className={styles.info}>
           <span><Users />{venue.groups} Groups</span>
-          <span><Calendar />{venue.shows} shows</span>
+          <span><Calendar />{venue.shows} Concerts</span>
         </div>
       </div>
     </Link>
