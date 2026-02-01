@@ -8,11 +8,11 @@ import useShows from '../../hooks/ShowHook';
 import VenueProfile from '../../components/Artist/VenueProfile';
 import useVenues from '../../hooks/VenueHoook';
 import IconCard from '../../components/Cards/IconCard';
-import { Users, Calendar, MicVocal, Percent, CircleDollarSign, UserStar } from 'lucide-react';
+import { Users, Calendar, CircleDollarSign, MicVocal, Percent, UserStar } from 'lucide-react';
 import { formatNumber, formatUSD } from '../../utils/NumberUtils';
 import type { Group, Show } from '../../types/models';
-import GroupCard from '../../components/Cards/GroupCard';
 import useGroups from '../../hooks/GroupHook';
+import GroupCard from '../../components/Cards/GroupCard';
 
 const VenueShowsPage = () => {
 
@@ -51,6 +51,18 @@ const VenueShowsPage = () => {
                 <div className={styles.general}>
                     { Array.from({ length: 3 }).map((_, i) => <IconCard key={i} loading />) }
                 </div>
+            
+                <div className={styles.groups}>
+                    <h2>Performing Groups</h2>
+                    <p className={styles.hint}>Groups who have performed in this venue</p>
+                    <div className={styles.gradient}>
+                        <div className={styles.cards}>
+                            {
+                                Array.from({ length: 6 }).map((_, i) => <GroupCard key={ i } loading />)
+                            }
+                        </div>
+                    </div>
+                </div>
 
                 <div className={styles.groups}>
                     <h2>Performing Groups</h2>
@@ -68,6 +80,7 @@ const VenueShowsPage = () => {
                     loading
                     heading='Recent Shows'
                     desc='Latest updated performances'
+                    page='venue'
                 />
 
             </div>
@@ -117,7 +130,7 @@ const VenueShowsPage = () => {
                         return b.attendance! - a.attendance!
                     })
                 }
-                group
+                page='venue'
             />
 
         </div>
