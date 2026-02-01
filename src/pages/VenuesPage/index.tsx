@@ -8,12 +8,40 @@ import type { Venue } from '../../types/models'
 import VenueCard from '../../components/Cards/VenueCard'
 import VenuesForm from '../../components/Form/VenuesForm'
 
+import { useSearchParams } from 'react-router-dom'
+
 const VenuesPage = () => {
 
     const { venues, allVenues, cities, countries, continents, getAllVenues, filterVenuesByValue, loading, apiError } = useVenues()
 
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const activeFilter = (() => {
+        const entries = Array.from(searchParams.entries())
+        if (entries.length === 0) return null
+
+        const [method, value] = entries[0]
+        return { method, value }
+    })()
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => { getAllVenues() }, [])
+
+    useEffect(() => {
+        if (!allVenues.length) return
+
+        const entries = Array.from(searchParams.entries())
+
+        if (entries.length === 0) {
+            filterVenuesByValue('all')
+            return
+        }
+
+        const [method, value] = entries[0]
+        filterVenuesByValue(value, method)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchParams, allVenues])
 
     if (apiError.isError) return <ErrorPage message={apiError.message} />
 
@@ -22,8 +50,18 @@ const VenuesPage = () => {
             <Heading title='Venues' desc='Explore venues and see which artists performed there' />
             <VenuesForm
                 options={[cities, countries, continents]}
-                handleChange={ filterVenuesByValue }
-            />
+                activeFilter={activeFilter}
+                handleChange={ async (value, method) => {
+                    if (!method) return
+
+                    if (value === 'all') {
+                        setSearchParams({})
+                        return
+                    }
+
+                    setSearchParams({ [method]: value })
+                }}
+/>
 
             <p className={styles.info}>Showing {venues.length} out of {allVenues.length} venues</p>
             <div className={loading ? styles.gradient : ''}>
