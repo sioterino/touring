@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from "sonner"
 import supabase from "../api/supabase"
 import { useState } from "react"
@@ -146,7 +147,7 @@ const useGroups = () => {
         setLoading(false)
     }
 
-    return { groups, length, genders, generations, getAllGroups, getGroupsByValue, getGroupsByVenueId, loading, apiError, }
+    return { groups, length, genders, generations, getAllGroups, getGroupsByVenueId, getGroupsByValue, loading, apiError, }
 }
 
 export default useGroups

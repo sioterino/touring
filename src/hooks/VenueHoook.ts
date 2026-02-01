@@ -127,7 +127,7 @@ const useVenues = () => {
 
     const filterVenuesByValue = async (value: string, method?: string): Promise<void> => {
         
-        if (value === 'all' && method !== 'search') {
+        if (value === 'all') {
             setVenues(allVenues)
             return
         }

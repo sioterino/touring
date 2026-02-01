@@ -6,12 +6,13 @@ interface Props {
     placeholder?: string
     disable?: boolean
     handleChange: (value: string, method: string) => Promise<void>
+    activeValue?: string
 }
 
-const Searchbar = ({ placeholder = 'Seatch...', disable = false, handleChange }: Props) => {
+const Searchbar = ({ placeholder = 'Search...', disable = false, handleChange, activeValue = '' }: Props) => {
 
     const [ showDelete, setShowDelete ] = useState(false)
-    const [ value, setValue ] = useState('')
+    const [ value, setValue ] = useState(activeValue)
 
     const handleInputChange = (e: ChangeEvent): void => {
         e.preventDefault()

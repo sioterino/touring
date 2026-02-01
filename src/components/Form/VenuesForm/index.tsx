@@ -8,9 +8,10 @@ interface Props {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     options?: any[]
     handleChange: (value: string, method: string | undefined) => Promise<void>
+    activeFilter?: { method: string; value: string } | null
 }
 
-const VenuesForm = ({ loading = false, options, handleChange }: Props) => {
+const VenuesForm = ({ loading = false, options, handleChange, activeFilter }: Props) => {
 
     const continents = [ { text: 'All Continents', value: 'all', group: '_nogroup_' }, ]
     const countries = [ { text: 'All Country', value: 'all', group: '_nogroup_' }, ]
@@ -24,10 +25,10 @@ const VenuesForm = ({ loading = false, options, handleChange }: Props) => {
 
     return (
         <form className={styles.filters}>
-            <Searchbar disable={loading} handleChange={handleChange} placeholder='Search by group name...' />
-            <Select disable={loading} label='continent' options={continents} handleChange={handleChange} />
-            <Select disable={loading} label='country' options={countries} handleChange={handleChange} />
-            <Select disable={loading} label='city' options={cities} handleChange={handleChange} />
+            <Searchbar disable={loading} handleChange={handleChange} placeholder='Search by venue name...' activeValue={activeFilter?.method === 'search' ? activeFilter.value : ''} />
+            <Select disable={loading} label='continent' options={continents} handleChange={handleChange} value={activeFilter?.method === 'continent' ? activeFilter.value : ''} />
+            <Select disable={loading} label='country' options={countries} handleChange={handleChange} value={activeFilter?.method === 'country' ? activeFilter.value : ''} />
+            <Select disable={loading} label='city' options={cities} handleChange={handleChange} value={activeFilter?.method === 'city' ? activeFilter.value : ''} />
         </form>
     )
 
