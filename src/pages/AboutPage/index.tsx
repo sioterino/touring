@@ -1,5 +1,6 @@
-import AccordionGroup from "../../components/Accordion/AccordionGroup"
-import AccordionItem from "../../components/Accordion/AccordionItem"
+// import AccordionGroup from "../../components/Accordion/AccordionGroup"
+// import AccordionItem from "../../components/Accordion/AccordionItem"
+import EmptyArray from "../../components/EmptyArray"
 import Heading from "../../components/Heading"
 
 const AboutPage = () => {
@@ -7,9 +8,9 @@ const AboutPage = () => {
     return (
         <div>
            <Heading title='About K-Pop Touring Data' desc='Your comprehensive source for K-pop touring statistics, analytics, and insights.' />
-           {/* <EmptyArray /> */}
+            <EmptyArray />
 
-            <p style={{ color: "hsl(0 0% 45%)", marginBottom: 32, lineHeight: 1.6, }} >
+            {/* <p style={{ color: "hsl(0 0% 45%)", marginBottom: 32, lineHeight: 1.6, }} >
                 Only one item can be open at a time in this section.
             </p>
 
@@ -63,7 +64,7 @@ const AboutPage = () => {
                         - Office hours: Mon-Fri, 9 AM - 5 PM CET`}
                     </AccordionItem>
 
-            </AccordionGroup>
+            </AccordionGroup> */}
         </div>
     )
 

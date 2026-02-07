@@ -3,9 +3,14 @@ import type { Company, Gender, Generation, Group } from "./models"
 interface StatsDTO {
     total_nights: number
     reported_nights: number
+    box_reported_nights: number
+    sold_reported_nights: number
+    
+    attendance: number | null
+    sold_attendance: number | null
+    box_attendance: number | null
 
     available: number | null
-    attendance: number | null
     box_score: number
     
     avg_ticket: number | null
