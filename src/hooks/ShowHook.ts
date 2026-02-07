@@ -21,137 +21,164 @@ const useShows = () => {
 
     const [ regions, setRegions ] = useState<RegionOption[]>([])
 
-    const buildToursFromShows = (shows: Show[]): TourResponseDTO[] => {
-        if (shows.length === 0) return []
+const buildToursFromShows = (shows: Show[]): TourResponseDTO[] => {
+  if (shows.length === 0) return []
 
-        const map = new Map<number, TourResponseDTO>()
+  const map = new Map<number, TourResponseDTO>()
 
-        for (const s of shows) {
-            const t = s.tour
-            const continent = s.venue.city.country.continent.name
+  for (const s of shows) {
+    const t = s.tour
+    const continent = s.venue.city.country.continent.name
+    const nights = s.nights || 0
+    const attendance = s.attendance || 0
 
-            if (!map.has(t.id)) {
-                
-                const totalNights = s.nights
-                let reportedNights = 0
-                
-                let available = 0;
-                let totalAttendance = 0
-                let totalBox = 0
+    if (!map.has(t.id)) {
+      map.set(t.id, {
+        id: t.id,
+        name: t.name,
+        begin: t.begin,
+        end: t.end,
+        group: t.group,
+        tour: t.tour,
+        continents: [continent],
 
-                if (s.box_score) {
-                    reportedNights += s.nights
-                    
-                    available += s.attendance && s.sold_percentage ? s.attendance / s.sold_percentage : 0
-                    totalAttendance += s.attendance || 0
-                    totalBox += s.box_score
+        total_nights: 0,
+        reported_nights: 0,
 
-                }
+        sold_reported_nights: 0,
+        box_reported_nights: 0,
 
-               map.set(t.id, {
-                    id: t.id,
-                    name: t.name,
-                    begin: t.begin,
-                    end: t.end,
-                    group: t.group,
-                    tour: t.tour,
-                    continents: [continent],
+        attendance: 0,
+        sold_attendance: 0,
+        box_attendance: 0,
 
-                    total_nights: totalNights,
-                    reported_nights: reportedNights,
+        available: 0,
+        box_score: 0,
 
-                    available: available,
-                    attendance: totalAttendance,
-                    box_score: totalBox,
-
-                    avg_ticket: totalBox / totalAttendance,
-                    avg_sold: totalAttendance / available,
-                    avg_box: totalBox / reportedNights,
-
-                })
-                continue
-            }
-
-            const dto = map.get(t.id)!
-
-            if (!dto.continents.includes(continent))
-                dto.continents.push(continent)
-
-            dto.total_nights += s.nights
-            
-            if (s.box_score) {
-                dto.reported_nights += s.nights
-
-                if (s.attendance && s.sold_percentage) {
-                    const available = s.attendance / s.sold_percentage
-                    dto.available! += available
-                }
-
-                dto.box_score += s.box_score
-                dto.attendance! += s.attendance!
-
-                dto.avg_ticket = dto.box_score / dto.attendance!
-                dto.avg_sold = dto.attendance! / dto.available!
-                dto.avg_box = dto.box_score / dto.reported_nights
-            }
-
-        }
-        return Array.from(map.values())
+        avg_ticket: null,
+        avg_sold: null,
+        avg_box: null,
+      })
     }
 
-    const buildGroupFromShow = (shows: Show[]): GroupsResponseDTO | null => {
-        if (shows.length === 0) return null
+    const dto = map.get(t.id)!
 
-        const group = shows[0].group
+    if (!dto.continents.includes(continent))
+      dto.continents.push(continent)
 
-        let totalNights = 0
-        let reportedNights = 0
 
-        let totalAvailable = 0
-        let totalAttendance = 0
-        let totalBox = 0
+    dto.total_nights += nights
+    dto.attendance! += attendance
 
-        shows.forEach(s => {
-            totalBox += s.box_score || 0
-            totalNights += s.nights || 0
+    // ---------- Sold-based ----------
+    if (attendance && s.sold_percentage) {
+      const perNightAttendance = attendance / nights
+      const perNightCapacity = perNightAttendance / s.sold_percentage
+      const totalCapacity = perNightCapacity * nights
 
-            if (s.box_score) {
-                const nights = s.nights || 1
-
-                reportedNights += nights
-                totalAttendance += s.attendance || 0
-
-                if (s.attendance && s.sold_percentage) {
-                    const available = s.attendance / s.sold_percentage
-                    totalAvailable += available
-                }
-            }
-        })
-
-        return {
-            id: group.id,
-            name: group.name,
-            debut: group.debut,
-            company: group.company,
-            gender: group.gender,
-            generation: group.generation,
-            colors: group.colors,
-
-            total_nights: totalNights,
-            reported_nights: reportedNights,
-            
-            available: totalAvailable,
-            attendance: totalAttendance || null,
-            box_score: totalBox,
-
-            avg_ticket: totalAttendance > 0 ? totalBox / totalAttendance : null,
-            avg_sold: totalAvailable > 0 ? totalAttendance / totalAvailable : null,
-            avg_box: reportedNights > 0 ? totalBox / reportedNights : null,
-        }
+      dto.sold_attendance! += attendance
+      dto.available! += totalCapacity
+      dto.sold_reported_nights += nights
     }
+
+    // ---------- Box-based ----------
+    if (s.box_score) {
+      dto.box_attendance! += attendance
+      dto.box_score += s.box_score
+      dto.box_reported_nights += nights
+    }
+
+    if (s.box_score || s.attendance)
+        dto.reported_nights += nights
+
+    // ---------- Averages ----------
+    dto.avg_ticket = dto.box_attendance! > 0 ? dto.box_score / dto.box_attendance! : null
+    dto.avg_sold = dto.available! > 0 ? Math.min(dto.sold_attendance! / dto.available!, 1) : null
+    dto.avg_box = dto.box_reported_nights > 0 ? dto.box_score / dto.box_reported_nights : null
+  }
+
+  return Array.from(map.values())
+}
+
+
+const buildGroupFromShows = (shows: Show[]): GroupsResponseDTO | null => {
+  if (shows.length === 0) return null
+
+  const group = shows[0].group
+
+  let totalNights = 0
+  let reportedNights = 0
+
+  let soldReportedNights = 0
+  let boxReportedNights = 0
+
+  let totalAttendance = 0
+  let soldAttendance = 0
+  let boxAttendance = 0
+
+  let totalAvailable = 0
+  let totalBox = 0
+
+  shows.forEach(s => {
+    const nights = s.nights || 0
+    const attendance = s.attendance || 0
+
+    totalNights += nights
+    totalAttendance += attendance
+
+    // ---------- Sold-based ----------
+    if (attendance && s.sold_percentage) {
+      const perNightAttendance = attendance / nights
+      const perNightCapacity = perNightAttendance / s.sold_percentage
+      const totalCapacity = perNightCapacity * nights
+
+      soldAttendance += attendance
+      totalAvailable += totalCapacity
+      soldReportedNights += nights
+    }
+
+    // ---------- Box-based ----------
+    if (s.box_score) {
+      boxAttendance += attendance
+      totalBox += s.box_score
+      boxReportedNights += nights
+    }
+
+    if (s.box_score || s.attendance)
+        reportedNights += nights
+  })
+
+  return {
+    id: group.id,
+    name: group.name,
+    debut: group.debut,
+    company: group.company,
+    gender: group.gender,
+    generation: group.generation,
+    colors: group.colors,
+
+    total_nights: totalNights,
+    reported_nights: reportedNights,
+
+    sold_reported_nights: soldReportedNights,
+    box_reported_nights: boxReportedNights,
+
+    attendance: totalAttendance || null,
+    sold_attendance: soldAttendance || null,
+    box_attendance: boxAttendance || null,
+
+    available: totalAvailable,
+    box_score: totalBox,
+
+    avg_ticket: boxAttendance > 0 ? totalBox / boxAttendance : null,
+    avg_sold: totalAvailable > 0 ? Math.min(soldAttendance / totalAvailable, 1) : null,
+    avg_box: boxReportedNights > 0 ? totalBox / boxReportedNights : null,
+  }
+}
+
 
     const tours = useMemo(() => buildToursFromShows(shows), [shows])
-    const group = useMemo(() => buildGroupFromShow(shows), [shows])
+    const group = useMemo(() => buildGroupFromShows(shows), [shows])
 
     const getAllShowsByGroupId = async (id: number): Promise<Show[] | void> => {
         setLoading(true)

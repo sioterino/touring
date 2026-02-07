@@ -1,0 +1,217 @@
+/* ── Single item ── */
+.accordionItem {
+    background-color: var(--light);
+    border-radius: 4px;
+}
+
+/* ── Header / trigger ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+  width: 100%;
+  padding: 32px 40px;
+
+  text-align: left;
+  border: none;
+  background: none;
+  
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  
+  transition: all .15s ease-in-out;
+}
+
+.header:hover {
+  color: var(--primary);
+}
+
+.title {
+  font-weight: 700;
+  font-size: 1.3rem;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Plus / minus icon ── */
+.icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.iconBar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: currentColor;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* horizontal bar – always visible */
+.iconBarHorizontal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: currentColor;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate(-50%, -50%);
+}
+
+/* vertical bar – rotates to 0 when open */
+.iconBarVertical {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: currentColor;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.iconBarVerticalOpen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: currentColor;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate(-50%, -50%) rotate(0deg);
+  opacity: 0;
+}
+
+/* ── Collapsible panel ── */
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.panelOpen {
+  grid-template-rows: 1fr;
+}
+
+.panelInner {
+  overflow: hidden;
+}
+
+.content {
+  padding: 0px 40px 32px;
+  color: var(--text-muted);
+}
+
+/* ── Nested accordion indent ── */
+.content [data-accordion-group] {
+  margin-left: 24px;
+}
+
+.content .accordionItem {
+  border-bottom: 2px solid var(--default);
+}
+
+.content .accordionItem:last-child {
+  padding-bottom: 16px;
+    border: none;
+}
+
+.content .accordionItem .header {
+    padding: 16px 24px;
+    color: var(--text);
+}
+
+.content .accordionItem .header:hover {
+  color: var(--primary);
+}
+
+.content .accordionItem .content {
+    padding-bottom: 16px;
+}
+
+.content .accordionItem:last-child .content {
+    padding-bottom: 0px;
+}
+
+/* ── Simple markdown-ish styles ── */
+.content p {
+  margin: 0 0 8px;
+}
+
+.content p:last-child {
+  margin-bottom: 0;
+}
+
+.content ul {
+  margin: 0 0 8px;
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.content ul ul {
+  list-style: circle;
+  margin-bottom: 0;
+}
+
+.content li {
+  margin-bottom: 4px;
+}
+
+.content li:last-child {
+  margin-bottom: 0;
+}
+
+.content strong {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.content em {
+  font-style: italic;
+}
+
+.content code {
+  font-family: monospace;
+  font-size: 0.875em;
+  background: var(--default);
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .header {
+    padding: 14px 2px;
+  }
+
+  .title {
+    font-size: 1.15rem;
+  }
+
+  .content {
+    font-size: 0.875rem;
+    padding-bottom: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content {
+    font-size: 1rem;
+  }
+}
