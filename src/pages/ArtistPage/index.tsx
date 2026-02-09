@@ -93,7 +93,7 @@ import ShowsSection from '../../components/ShowsSection';
                     hint
                     children={
                         tours
-                        .filter(t => t.box_score !== 0)
+                        .filter(t => t.attendance !== 0)
                         .map((t, key) =>  <TourCard key={ key } tour={ t } /> )
                     }
                 />
