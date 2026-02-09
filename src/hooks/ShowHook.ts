@@ -298,7 +298,7 @@ const buildGroupFromShows = (shows: Show[]): GroupsResponseDTO | null => {
     const filterOnlyReportedShows = (filter: boolean) => {
 
         if (filter) {
-            const filtered = allShows.filter(s => s.box_score !== null)
+            const filtered = allShows.filter(s => s.attendance !== null)
             setShows(filtered)
         } else setShows(allShows)
 
