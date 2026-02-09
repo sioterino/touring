@@ -1,9 +1,9 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import GoBack from '../../components/GoBack'
 import styles from './styles.module.css'
 import useShows from '../../hooks/ShowHook'
 import ErrorPage from '../ErrorPage'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import ShowsSection from '../../components/ShowsSection'
 import StatsSection from '../../components/StatsSection'
 import Select from '../../components/Form/Select'
@@ -15,16 +15,44 @@ const ConcertPage = () => {
     const { id } = useParams();
     const { shows, allShows, tours, regions, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, loading, apiError } = useShows()
     
-    const [selectedRegion, setSelectedRegion] = useState("Worldwide")
+    const [ searchParams, setSearchParams ] = useSearchParams()
 
-    const handleRegionChange = async (value: string) => {
-        setSelectedRegion(value)
-        await filterShowsByRegion(value)
+    const activeFilter = (() => {
+        const entries = Array.from(searchParams.entries())
+        if (entries.length === 0) return null
+
+        const [ method, value ] = entries[0]
+        return { method, value }
+    })()
+
+    const handleSelectChange = async (value: string, method: string | undefined) => {
+        if (!method) return
+
+        if (value === 'Worldwide') {
+            setSearchParams({})
+            return
+        }
+
+        setSearchParams({ [method!]: value })
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => { getAllShowsByTourId(Number(id)) }, [])
     
+    useEffect(() => {
+        if (!allShows.length) return
+
+        const entries = Array.from(searchParams.entries())
+
+        if (entries.length === 0) {
+            filterShowsByRegion('Worldwide')
+            return
+        }
+
+        const [ method, value ] = entries[0]
+        filterShowsByRegion(value, method)
+    }, [searchParams, allShows])
+
     if (apiError.isError) return <ErrorPage message={apiError.message} />
 
     if (loading) return (
@@ -39,7 +67,7 @@ const ConcertPage = () => {
                             <Switch disabled size='lg' />
                         </div>
                         <Select
-                            label='overview' handleChange={handleRegionChange} disable value={selectedRegion}
+                            label='overview' handleChange={handleSelectChange} disable value={activeFilter?.method === 'region' ? activeFilter.value : ''}
                             options={regions.length === 0 ? [ { text: 'Worldwide', value: 'Worldwide' }, ] : regions}
                         />
                     </div>
@@ -74,10 +102,10 @@ const ConcertPage = () => {
                             />
                         </div>
                         <Select
-                            label='overview'
+                            label='region'
                             options={regions}
-                            value={selectedRegion}
-                            handleChange={handleRegionChange}
+                            value={activeFilter?.method === 'region' ? activeFilter.value : ''}
+                            handleChange={handleSelectChange}
                         />
                     </div>
                 </div>
