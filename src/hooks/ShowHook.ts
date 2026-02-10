@@ -21,160 +21,160 @@ const useShows = () => {
 
     const [ regions, setRegions ] = useState<RegionOption[]>([])
 
-const buildToursFromShows = (shows: Show[]): TourResponseDTO[] => {
-  if (shows.length === 0) return []
+    const buildToursFromShows = (shows: Show[]): TourResponseDTO[] => {
+    if (shows.length === 0) return []
 
-  const map = new Map<number, TourResponseDTO>()
+    const map = new Map<number, TourResponseDTO>()
 
-  for (const s of shows) {
-    const t = s.tour
-    const continent = s.venue.city.country.continent.name
-    const nights = s.nights || 0
-    const attendance = s.attendance || 0
+    for (const s of shows) {
+        const t = s.tour
+        const continent = s.venue.city.country.continent.name
+        const nights = s.nights || 0
+        const attendance = s.attendance || 0
 
-    if (!map.has(t.id)) {
-      map.set(t.id, {
-        id: t.id,
-        name: t.name,
-        begin: t.begin,
-        end: t.end,
-        group: t.group,
-        tour: t.tour,
-        continents: [continent],
+        if (!map.has(t.id)) {
+        map.set(t.id, {
+            id: t.id,
+            name: t.name,
+            begin: t.begin,
+            end: t.end,
+            group: t.group,
+            tour: t.tour,
+            continents: [continent],
 
-        total_nights: 0,
-        reported_nights: 0,
+            total_nights: 0,
+            reported_nights: 0,
 
-        sold_reported_nights: 0,
-        box_reported_nights: 0,
+            sold_reported_nights: 0,
+            box_reported_nights: 0,
 
-        attendance: 0,
-        sold_attendance: 0,
-        box_attendance: 0,
+            attendance: 0,
+            sold_attendance: 0,
+            box_attendance: 0,
 
-        available: 0,
-        box_score: 0,
+            available: 0,
+            box_score: 0,
 
-        avg_ticket: null,
-        avg_sold: null,
-        avg_box: null,
-      })
+            avg_ticket: null,
+            avg_sold: null,
+            avg_box: null,
+        })
+        }
+
+        const dto = map.get(t.id)!
+
+        if (!dto.continents.includes(continent))
+        dto.continents.push(continent)
+
+
+        dto.total_nights += nights
+        dto.attendance! += attendance
+
+        // ---------- Sold-based ----------
+        if (attendance && s.sold_percentage) {
+        const perNightAttendance = attendance / nights
+        const perNightCapacity = perNightAttendance / s.sold_percentage
+        const totalCapacity = perNightCapacity * nights
+
+        dto.sold_attendance! += attendance
+        dto.available! += totalCapacity
+        dto.sold_reported_nights += nights
+        }
+
+        // ---------- Box-based ----------
+        if (s.box_score) {
+        dto.box_attendance! += attendance
+        dto.box_score += s.box_score
+        dto.box_reported_nights += nights
+        }
+
+        if (s.box_score || s.attendance)
+            dto.reported_nights += nights
+
+        // ---------- Averages ----------
+        dto.avg_ticket = dto.box_attendance! > 0 ? dto.box_score / dto.box_attendance! : null
+        dto.avg_sold = dto.available! > 0 ? Math.min(dto.sold_attendance! / dto.available!, 1) : null
+        dto.avg_box = dto.box_reported_nights > 0 ? dto.box_score / dto.box_reported_nights : null
     }
 
-    const dto = map.get(t.id)!
-
-    if (!dto.continents.includes(continent))
-      dto.continents.push(continent)
-
-
-    dto.total_nights += nights
-    dto.attendance! += attendance
-
-    // ---------- Sold-based ----------
-    if (attendance && s.sold_percentage) {
-      const perNightAttendance = attendance / nights
-      const perNightCapacity = perNightAttendance / s.sold_percentage
-      const totalCapacity = perNightCapacity * nights
-
-      dto.sold_attendance! += attendance
-      dto.available! += totalCapacity
-      dto.sold_reported_nights += nights
+    return Array.from(map.values())
     }
 
-    // ---------- Box-based ----------
-    if (s.box_score) {
-      dto.box_attendance! += attendance
-      dto.box_score += s.box_score
-      dto.box_reported_nights += nights
+
+    const buildGroupFromShows = (shows: Show[]): GroupsResponseDTO | null => {
+    if (shows.length === 0) return null
+
+    const group = shows[0].group
+
+    let totalNights = 0
+    let reportedNights = 0
+
+    let soldReportedNights = 0
+    let boxReportedNights = 0
+
+    let totalAttendance = 0
+    let soldAttendance = 0
+    let boxAttendance = 0
+
+    let totalAvailable = 0
+    let totalBox = 0
+
+    shows.forEach(s => {
+        const nights = s.nights || 0
+        const attendance = s.attendance || 0
+
+        totalNights += nights
+        totalAttendance += attendance
+
+        // ---------- Sold-based ----------
+        if (attendance && s.sold_percentage) {
+        const perNightAttendance = attendance / nights
+        const perNightCapacity = perNightAttendance / s.sold_percentage
+        const totalCapacity = perNightCapacity * nights
+
+        soldAttendance += attendance
+        totalAvailable += totalCapacity
+        soldReportedNights += nights
+        }
+
+        // ---------- Box-based ----------
+        if (s.box_score) {
+        boxAttendance += attendance
+        totalBox += s.box_score
+        boxReportedNights += nights
+        }
+
+        if (s.box_score || s.attendance)
+            reportedNights += nights
+    })
+
+    return {
+        id: group.id,
+        name: group.name,
+        debut: group.debut,
+        company: group.company,
+        gender: group.gender,
+        generation: group.generation,
+        colors: group.colors,
+
+        total_nights: totalNights,
+        reported_nights: reportedNights,
+
+        sold_reported_nights: soldReportedNights,
+        box_reported_nights: boxReportedNights,
+
+        attendance: totalAttendance || null,
+        sold_attendance: soldAttendance || null,
+        box_attendance: boxAttendance || null,
+
+        available: totalAvailable,
+        box_score: totalBox,
+
+        avg_ticket: boxAttendance > 0 ? totalBox / boxAttendance : null,
+        avg_sold: totalAvailable > 0 ? Math.min(soldAttendance / totalAvailable, 1) : null,
+        avg_box: boxReportedNights > 0 ? totalBox / boxReportedNights : null,
     }
-
-    if (s.box_score || s.attendance)
-        dto.reported_nights += nights
-
-    // ---------- Averages ----------
-    dto.avg_ticket = dto.box_attendance! > 0 ? dto.box_score / dto.box_attendance! : null
-    dto.avg_sold = dto.available! > 0 ? Math.min(dto.sold_attendance! / dto.available!, 1) : null
-    dto.avg_box = dto.box_reported_nights > 0 ? dto.box_score / dto.box_reported_nights : null
-  }
-
-  return Array.from(map.values())
-}
-
-
-const buildGroupFromShows = (shows: Show[]): GroupsResponseDTO | null => {
-  if (shows.length === 0) return null
-
-  const group = shows[0].group
-
-  let totalNights = 0
-  let reportedNights = 0
-
-  let soldReportedNights = 0
-  let boxReportedNights = 0
-
-  let totalAttendance = 0
-  let soldAttendance = 0
-  let boxAttendance = 0
-
-  let totalAvailable = 0
-  let totalBox = 0
-
-  shows.forEach(s => {
-    const nights = s.nights || 0
-    const attendance = s.attendance || 0
-
-    totalNights += nights
-    totalAttendance += attendance
-
-    // ---------- Sold-based ----------
-    if (attendance && s.sold_percentage) {
-      const perNightAttendance = attendance / nights
-      const perNightCapacity = perNightAttendance / s.sold_percentage
-      const totalCapacity = perNightCapacity * nights
-
-      soldAttendance += attendance
-      totalAvailable += totalCapacity
-      soldReportedNights += nights
     }
-
-    // ---------- Box-based ----------
-    if (s.box_score) {
-      boxAttendance += attendance
-      totalBox += s.box_score
-      boxReportedNights += nights
-    }
-
-    if (s.box_score || s.attendance)
-        reportedNights += nights
-  })
-
-  return {
-    id: group.id,
-    name: group.name,
-    debut: group.debut,
-    company: group.company,
-    gender: group.gender,
-    generation: group.generation,
-    colors: group.colors,
-
-    total_nights: totalNights,
-    reported_nights: reportedNights,
-
-    sold_reported_nights: soldReportedNights,
-    box_reported_nights: boxReportedNights,
-
-    attendance: totalAttendance || null,
-    sold_attendance: soldAttendance || null,
-    box_attendance: boxAttendance || null,
-
-    available: totalAvailable,
-    box_score: totalBox,
-
-    avg_ticket: boxAttendance > 0 ? totalBox / boxAttendance : null,
-    avg_sold: totalAvailable > 0 ? Math.min(soldAttendance / totalAvailable, 1) : null,
-    avg_box: boxReportedNights > 0 ? totalBox / boxReportedNights : null,
-  }
-}
 
 
     const tours = useMemo(() => buildToursFromShows(shows), [shows])
@@ -259,8 +259,11 @@ const buildGroupFromShows = (shows: Show[]): GroupsResponseDTO | null => {
         setRegions(Array.from(aux.values()))
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const filterShowsByRegion = async (value: string, _method?: string): Promise<void> => {
+    const filterShowsByRegion = async (value: string, _method?: string, showOnlyReported?: boolean): Promise<void> => {
+
+        console.log(`[Showhook] _method: [${_method}], value: [${value}], reported: [${showOnlyReported}]`)
+
+        if (_method !== 'region') return
 
         setLoading(true)
 
@@ -279,28 +282,30 @@ const buildGroupFromShows = (shows: Show[]): GroupsResponseDTO | null => {
         const countries = countriesObj.map(d => d.name)
         const continents = continentsObj.map(d => d.name)
 
-        if (value === 'Worldwide') setShows(allShows)
-
-        else if (countries.includes(value)) {
-            const filtered = allShows.filter(s => s.venue.city.country.name === value)
-            setShows(filtered)
         
-        } else if (continents?.includes(value)) {
-            const filtered = allShows.filter(s => s.venue.city.country.continent.name === value)
-            setShows(filtered)
+        if (value === 'Worldwide') {
+            setShows(allShows)
+            setLoading(false)
+            return
+        }
+        
+        let filtered;
 
+        if (countries.includes(value)) {
+            filtered = allShows.filter(s => s.venue.city.country.name === value)
+            
+        } else if (continents?.includes(value)) {
+            filtered = allShows.filter(s => s.venue.city.country.continent.name === value)
+            
         } else toast.error("There was an error filtering the group's shows...")
+        
+        if (showOnlyReported) {
+            filtered = filtered?.filter(s => s.attendance)
+        }
+            
+        setShows(filtered ?? allShows)
 
         setLoading(false)
-
-    }
-
-    const filterOnlyReportedShows = (filter: boolean) => {
-
-        if (filter) {
-            const filtered = allShows.filter(s => s.attendance !== null)
-            setShows(filtered)
-        } else setShows(allShows)
 
     }
 
@@ -330,7 +335,7 @@ const buildGroupFromShows = (shows: Show[]): GroupsResponseDTO | null => {
         setLoading(false)
     }
 
-    return { shows, allShows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, getShowsByVenueId, loading, apiError }
+    return { shows, allShows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, getShowsByVenueId, loading, apiError }
 
 }
 

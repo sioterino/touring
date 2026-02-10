@@ -9,10 +9,10 @@ interface Props {
     className?: string
     loading?: boolean
     stats: StatsDTO | TourResponseDTO | GroupsResponseDTO | null
-    allShows?: Show[] | null
+    filteredShows?: Show[] | null
 }
 
-const StatsSection = ({ className, loading, stats, allShows = null }: Props) => {
+const StatsSection = ({ className, loading, stats, filteredShows = null }: Props) => {
 
     if (loading || !stats) return (
         <div className={styles.general}>
@@ -41,7 +41,7 @@ const StatsSection = ({ className, loading, stats, allShows = null }: Props) => 
             } />
 
             <IconCard heading='Reported Shows' icon={<Calendar />} text={
-                `${stats.reported_nights}/${allShows ? allShows.reduce((acc: number, s: Show) => { return acc + s.nights; }, 0) : stats.total_nights}`
+                `${stats.reported_nights}/${filteredShows ? filteredShows.reduce((acc: number, s: Show) => { return acc + s.nights; }, 0) : stats.total_nights}`
             } />
             
         </div>

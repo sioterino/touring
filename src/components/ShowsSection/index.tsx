@@ -15,8 +15,8 @@ const ShowsSection = ({ className, loading, shows, heading, desc, page = 'group'
 
     if (loading || !shows) return (
         <div className={`${styles.container} ${className}`}>
-            <h2>Recent Shows</h2>
-            <p className={styles.hint}>Most recent reported shows</p>
+            <h2>{heading}</h2>
+            { desc && <p className={styles.hint}>{desc}</p> }
             <div className={styles.gradient}>
                 <div className={styles.shows}>
                     {

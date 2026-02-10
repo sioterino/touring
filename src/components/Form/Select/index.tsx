@@ -16,6 +16,8 @@ const Select = ({ placeholder = '', options, disable = false, label, handleChang
     const onChange = (e: ChangeEvent) => {
         const target = e.target as HTMLSelectElement
         
+        console.log(`${label} : ${target.value}`)
+
         handleChange(target.value, label)
     }
 

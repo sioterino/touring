@@ -13,9 +13,18 @@ import Switch from '../../components/Switch'
 const ConcertPage = () => {
 
     const { id } = useParams();
-    const { shows, allShows, tours, regions, getAllShowsByTourId, filterShowsByRegion, filterOnlyReportedShows, loading, apiError } = useShows()
+    const { shows, allShows, tours, regions, getAllShowsByTourId, filterShowsByRegion, loading, apiError } = useShows()
     
     const [ searchParams, setSearchParams ] = useSearchParams()
+    const region = searchParams.get('region')
+    const reportedOnly = searchParams.get('reported') === 'true'
+
+    const showsDescription = (() => {
+        if (!region)
+            return reportedOnly ? 'Showing all reported concerts' : 'Showing all concerts'
+
+        return reportedOnly ? `Showing only reported concerts in ${region}` : `Showing concerts in ${region}`
+    })()
 
     const activeFilter = (() => {
         const entries = Array.from(searchParams.entries())
@@ -28,12 +37,25 @@ const ConcertPage = () => {
     const handleSelectChange = async (value: string, method: string | undefined) => {
         if (!method) return
 
+        const params = Object.fromEntries(searchParams.entries())
+
         if (value === 'Worldwide') {
-            setSearchParams({})
+            delete params[method]
+            setSearchParams(params)
             return
         }
 
-        setSearchParams({ [method!]: value })
+        params[method] = value
+        setSearchParams(params)
+    }
+
+    const handleReportedToggle = (checked: boolean) => {
+        const params = Object.fromEntries(searchParams.entries())
+
+        if (checked) params.reported = 'true'
+        else delete params.reported
+
+        setSearchParams(params)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,16 +64,12 @@ const ConcertPage = () => {
     useEffect(() => {
         if (!allShows.length) return
 
-        const entries = Array.from(searchParams.entries())
+        const region = searchParams.get('region') ?? 'Worldwide'
+        const reported = searchParams.get('reported') === 'true'
 
-        if (entries.length === 0) {
-            filterShowsByRegion('Worldwide')
-            return
-        }
-
-        const [ method, value ] = entries[0]
-        filterShowsByRegion(value, method)
+        filterShowsByRegion(region, 'region', reported)
     }, [searchParams, allShows])
+
 
     if (apiError.isError) return <ErrorPage message={apiError.message} />
 
@@ -64,7 +82,7 @@ const ConcertPage = () => {
                     <div className={styles.select}>
                         <div className={styles.switch}>
                             <label>Show Only Reported Shows</label>
-                            <Switch disabled size='lg' />
+                            <Switch disabled checked={reportedOnly} size='lg' />
                         </div>
                         <Select
                             label='overview' handleChange={handleSelectChange} disable value={activeFilter?.method === 'region' ? activeFilter.value : ''}
@@ -75,13 +93,7 @@ const ConcertPage = () => {
             </div>
 
             <StatsSection loading stats={tours[0]} />
-
-            <ShowsSection
-                loading
-                heading='Shows'
-                shows={shows}
-                page='tour'
-            />
+            <ShowsSection loading heading='Shows' desc={showsDescription} shows={shows} page='tour' />
 
         </div>
     )
@@ -97,7 +109,8 @@ const ConcertPage = () => {
                             <label>Show Only Reported Shows</label>
                             <Switch
                                 size='lg'
-                                onChange={ filterOnlyReportedShows }
+                                checked={reportedOnly}
+                                onChange={handleReportedToggle}
                                 disabled={ shows.filter(s => s.attendance !== null).length === 0 || allShows.filter(s => s.attendance === null).length === 0 }
                             />
                         </div>
@@ -111,13 +124,8 @@ const ConcertPage = () => {
                 </div>
             </div>
 
-            <StatsSection stats={tours[0]} allShows={allShows} />
-
-            <ShowsSection
-                heading='Shows'
-                shows={shows}
-                page='tour'
-            />
+            <StatsSection stats={tours[0]} filteredShows={shows} />
+            <ShowsSection heading='Shows' desc={showsDescription} shows={shows} page='tour' />
 
         </div>
     )
