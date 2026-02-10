@@ -13,7 +13,7 @@ import Switch from '../../components/Switch'
 const ConcertPage = () => {
 
     const { id } = useParams();
-    const { shows, allShows, tours, regions, getAllShowsByTourId, filterShowsByRegion, loading, apiError } = useShows()
+    const { shows, unreportedShows, allShows, tours, regions, getAllShowsByTourId, filterShowsByRegion, loading, apiError } = useShows()
     
     const [ searchParams, setSearchParams ] = useSearchParams()
     const region = searchParams.get('region')
@@ -107,12 +107,11 @@ const ConcertPage = () => {
                     <div className={styles.select}>
                         <div className={styles.switch}>
                             <label>Show Only Reported Shows</label>
-                            <Switch
-                                size='lg'
-                                checked={reportedOnly}
-                                onChange={handleReportedToggle}
-                                disabled={ shows.filter(s => s.attendance !== null).length === 0 || allShows.filter(s => s.attendance === null).length === 0 }
+                            <Switch size='lg' onChange={handleReportedToggle}
+                                checked={ shows.some(s => !Number.isInteger(s.attendance) || (s.attendance && s.attendance <= 0)) ? reportedOnly : true }
+                                disabled={ unreportedShows.length === shows.filter(s => s.attendance).length }
                             />
+
                         </div>
                         <Select
                             label='region'

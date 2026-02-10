@@ -14,6 +14,7 @@ interface RegionOption {
 const useShows = () => {
 
     const [ shows, setShows  ] = useState<Show[]>([])
+    const [ unreportedShows, setUnreportedShows  ] = useState<Show[]>([])
     const [ allShows, setAllShows  ] = useState<Show[]>([])
 
     const [ loading, setLoading ] = useState(false)
@@ -299,6 +300,8 @@ const useShows = () => {
             
         } else toast.error("There was an error filtering the group's shows...")
         
+        setUnreportedShows(filtered ?? allShows)
+
         if (showOnlyReported) {
             filtered = filtered?.filter(s => s.attendance)
         }
@@ -335,7 +338,7 @@ const useShows = () => {
         setLoading(false)
     }
 
-    return { shows, allShows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, getShowsByVenueId, loading, apiError }
+    return { shows, unreportedShows, allShows, tours, group, regions, getAllShowsByGroupId, getAllShowsByTourId, filterShowsByRegion, getShowsByVenueId, loading, apiError }
 
 }
 
