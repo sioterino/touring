@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styles from "./styles.module.css"
 
 interface Props {
-  defaultChecked?: boolean
+  checked?: boolean
   onChange?: (checked: boolean) => void
   disabled?: boolean
   size?: "sm" | "md" | "lg"
@@ -10,8 +10,21 @@ interface Props {
   className?: string
 }
 
-const Switch = ({ defaultChecked = false, onChange, disabled = false, size = "md", color = "primary", className = "", }: Props) => {
-  const [ isOn, setIsOn ] = useState(defaultChecked)
+const Switch = ({
+  checked = false,
+  onChange,
+  disabled = false,
+  size = "md",
+  color = "primary",
+  className = "",
+}: Props) => {
+
+  const [isOn, setIsOn] = useState(checked)
+
+  // 👇 SINCRONIZA COM O ESTADO EXTERNO (URL)
+  useEffect(() => {
+    setIsOn(checked)
+  }, [checked])
 
   const handleToggle = () => {
     if (disabled) return

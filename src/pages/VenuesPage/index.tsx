@@ -14,7 +14,7 @@ const VenuesPage = () => {
 
     const { venues, allVenues, cities, countries, continents, getAllVenues, filterVenuesByValue, loading, apiError } = useVenues()
 
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [ searchParams, setSearchParams ] = useSearchParams()
 
     const activeFilter = (() => {
         const entries = Array.from(searchParams.entries())
@@ -49,6 +49,7 @@ const VenuesPage = () => {
         <div className={styles.container}>
             <Heading title='Venues' desc='Explore venues and see which artists performed there' />
             <VenuesForm
+                loading={loading}
                 options={[cities, countries, continents]}
                 activeFilter={activeFilter}
                 handleChange={ async (value, method) => {
@@ -61,7 +62,7 @@ const VenuesPage = () => {
 
                     setSearchParams({ [method]: value })
                 }}
-/>
+            />
 
             <p className={styles.info}>Showing {venues.length} out of {allVenues.length} venues</p>
             <div className={loading ? styles.gradient : ''}>
