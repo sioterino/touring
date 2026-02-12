@@ -18,9 +18,14 @@ const VenuesForm = ({ loading = false, options, handleChange, activeFilter }: Pr
     const cities = [ { text: 'All Cities', value: 'all', group: '_nogroup_' }, ]
 
     if (options) {
-        options[0].forEach((c: City) => cities.push({ text: c.name, value: c.id.toString(), group: c.country.name }))
-        options[1].forEach((c: Country) => countries.push({ text: c.name, value: c.id.toString(), group: c.continent.name }))
-        options[2].forEach((c: Continent) => continents.push({ text: c.name, value: c.id.toString(), group: '_nogroup_' }))
+
+        const sortedContinentsRaw = [...options[2]].sort((a: Continent, b: Continent) => a.name.localeCompare(b.name))
+        const sortedCountriesRaw = [...options[1]].sort((a: Country, b: Country) => a.continent.name.localeCompare(b.continent.name) || a.name.localeCompare(b.name))
+        const sortedCitiesRaw = [...options[0]].sort((a: City, b: City) => a.country.continent.name.localeCompare(b.country.continent.name) || a.country.name.localeCompare(b.country.name) || a.name.localeCompare(b.name))
+
+        sortedContinentsRaw.forEach((c: Continent) => continents.push({ text: c.name, value: c.id.toString(), group: '_nogroup_' }))
+        sortedCountriesRaw.forEach((c: Country) => countries.push({ text: c.name, value: c.id.toString(), group: c.continent.name }))
+        sortedCitiesRaw.forEach((c: City) => cities.push({ text: c.name, value: c.id.toString(), group: c.country.name }))
     }
 
     return (
