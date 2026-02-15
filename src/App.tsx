@@ -20,13 +20,13 @@ const AppRoutes = () => {
   const MEDIA_QEURY = 900
 
   const [theme, setTheme] = useState<"light" | "dark">(() => {
-    const savedTheme = localStorage.getItem("sioterino.encore:theme")
+    const savedTheme = localStorage.getItem("sioterino.encoredata:theme")
     return savedTheme === "dark" ? "dark" : "light"
   })
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark")
-    localStorage.setItem("sioterino.encore:theme", theme)
+    localStorage.setItem("sioterino.encoredata:theme", theme)
   }, [theme])
 
   return (

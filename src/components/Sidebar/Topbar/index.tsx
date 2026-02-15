@@ -15,7 +15,7 @@ const Topbar = ({ theme, setTheme, onMenuClick }: Props) => {
 
             <div className={styles.logo}>
                 <Menu className={styles.menuIcon} onClick={onMenuClick} />
-                <p>Encore</p>
+                <p>Encore Data</p>
             </div>
 
             <ThemeButton theme={theme} setTheme={setTheme} hideLabel={true}/>
