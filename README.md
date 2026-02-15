@@ -4,6 +4,8 @@ K-Pop Touring Data is a web application focused on tracking and analyzing tourin
 
 The goal of the platform is to provide structured, accessible data about artists, tours, venues, and companies involved in live performances worldwide.
 
+---
+
 ## Current Features
 
 The application currently allows users to:
@@ -13,6 +15,10 @@ The application currently allows users to:
 * View venues and associated shows
 * Compare selected data points across artists or tours
 
+---
+
 ## Project Status
 
 This project is under active development. Data coverage and features are expanding over time, and improvements to performance, UI, and analytics are ongoing.
+
+---
