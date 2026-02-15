@@ -17,12 +17,16 @@ import VenueShowsPage from './pages/VenueShowsPages'
 
 const AppRoutes = () => {
 
-  const [theme, setTheme] = useState<"light" | "dark">("light")
-
   const MEDIA_QEURY = 900
+
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    const savedTheme = localStorage.getItem("sioterino[touring]:theme")
+    return savedTheme === "dark" ? "dark" : "light"
+  })
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark")
+    localStorage.setItem("sioterino[touring]:theme", theme)
   }, [theme])
 
   return (
