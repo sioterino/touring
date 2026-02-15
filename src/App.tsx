@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import Layout from './components/Layout'
 import { useEffect, useState } from 'react'
 import { Toaster } from 'sonner'
@@ -20,13 +20,13 @@ const AppRoutes = () => {
   const MEDIA_QEURY = 900
 
   const [theme, setTheme] = useState<"light" | "dark">(() => {
-    const savedTheme = localStorage.getItem("sioterino[touring]:theme")
+    const savedTheme = localStorage.getItem("sioterino.encore:theme")
     return savedTheme === "dark" ? "dark" : "light"
   })
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark")
-    localStorage.setItem("sioterino[touring]:theme", theme)
+    localStorage.setItem("sioterino.encore:theme", theme)
   }, [theme])
 
   return (
@@ -61,9 +61,9 @@ const AppRoutes = () => {
 const App = () => {
 
   return (
-    <HashRouter>
+    <BrowserRouter >
       <AppRoutes />
-    </HashRouter>
+    </BrowserRouter>
   )
 
 }

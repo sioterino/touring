@@ -7,7 +7,7 @@ const AboutPage = () => {
 
     return (
         <div>
-           <Heading title='About K-Pop Touring Data' desc='Your comprehensive source for K-pop touring statistics, analytics, and insights.' />
+           <Heading title='About Encore Data' desc='Your comprehensive source for K-pop touring statistics, analytics, and insights.' />
             <EmptyArray />
 
             {/* <p style={{ color: "hsl(0 0% 45%)", marginBottom: 32, lineHeight: 1.6, }} >

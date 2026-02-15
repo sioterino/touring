@@ -29,7 +29,7 @@ const Sidebar = ({ path = [''], theme, setTheme, closeSidebar, isMobile, open }:
         <aside className={className}>
             <div className={styles.logo}>
                 <Ticket />
-                <p>Touring K-POP</p>
+                <p>Encore</p>
                 {isMobile && <X className={styles.closeIcon} onClick={closeSidebar} />}
             </div>
 
