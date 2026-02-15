@@ -24,8 +24,9 @@ import ShowsSection from '../../components/ShowsSection';
         }, [])
 
         const handleRegionChange = async (value: string) => {
+            console.log('value: ', value)
             setSelectedRegion(value)
-            await filterShowsByRegion(value)
+            await filterShowsByRegion(value, 'region')
         }
 
         if (apiError.isError) return <ErrorPage message={apiError.message} />

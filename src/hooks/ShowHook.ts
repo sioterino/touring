@@ -23,84 +23,83 @@ const useShows = () => {
     const [ regions, setRegions ] = useState<RegionOption[]>([])
 
     const buildToursFromShows = (shows: Show[]): TourResponseDTO[] => {
-    if (shows.length === 0) return []
+        if (shows.length === 0) return []
 
-    const map = new Map<number, TourResponseDTO>()
+        const map = new Map<number, TourResponseDTO>()
 
-    for (const s of shows) {
-        const t = s.tour
-        const continent = s.venue.city.country.continent.name
-        const nights = s.nights || 0
-        const attendance = s.attendance || 0
+        for (const s of shows) {
+            const t = s.tour
+            const continent = s.venue.city.country.continent.name
+            const nights = s.nights || 0
+            const attendance = s.attendance || 0
 
-        if (!map.has(t.id)) {
-        map.set(t.id, {
-            id: t.id,
-            name: t.name,
-            begin: t.begin,
-            end: t.end,
-            group: t.group,
-            tour: t.tour,
-            continents: [continent],
+            if (!map.has(t.id)) {
+            map.set(t.id, {
+                id: t.id,
+                name: t.name,
+                begin: t.begin,
+                end: t.end,
+                group: t.group,
+                tour: t.tour,
+                continents: [continent],
 
-            total_nights: 0,
-            reported_nights: 0,
+                total_nights: 0,
+                reported_nights: 0,
 
-            sold_reported_nights: 0,
-            box_reported_nights: 0,
+                sold_reported_nights: 0,
+                box_reported_nights: 0,
 
-            attendance: 0,
-            sold_attendance: 0,
-            box_attendance: 0,
+                attendance: 0,
+                sold_attendance: 0,
+                box_attendance: 0,
 
-            available: 0,
-            box_score: 0,
+                available: 0,
+                box_score: 0,
 
-            avg_ticket: null,
-            avg_sold: null,
-            avg_box: null,
-        })
+                avg_ticket: null,
+                avg_sold: null,
+                avg_box: null,
+            })
+            }
+
+            const dto = map.get(t.id)!
+
+            if (!dto.continents.includes(continent))
+            dto.continents.push(continent)
+
+
+            dto.total_nights += nights
+            dto.attendance! += attendance
+
+            // ---------- Sold-based ----------
+            if (attendance && s.sold_percentage) {
+            const perNightAttendance = attendance / nights
+            const perNightCapacity = perNightAttendance / s.sold_percentage
+            const totalCapacity = perNightCapacity * nights
+
+            dto.sold_attendance! += attendance
+            dto.available! += totalCapacity
+            dto.sold_reported_nights += nights
+            }
+
+            // ---------- Box-based ----------
+            if (s.box_score) {
+            dto.box_attendance! += attendance
+            dto.box_score += s.box_score
+            dto.box_reported_nights += nights
+            }
+
+            if (s.box_score || s.attendance)
+                dto.reported_nights += nights
+
+            // ---------- Averages ----------
+            dto.avg_ticket = dto.box_attendance! > 0 ? dto.box_score / dto.box_attendance! : null
+            dto.avg_sold = dto.available! > 0 ? Math.min(dto.sold_attendance! / dto.available!, 1) : null
+            dto.avg_box = dto.box_reported_nights > 0 ? dto.box_score / dto.box_reported_nights : null
         }
 
-        const dto = map.get(t.id)!
-
-        if (!dto.continents.includes(continent))
-        dto.continents.push(continent)
-
-
-        dto.total_nights += nights
-        dto.attendance! += attendance
-
-        // ---------- Sold-based ----------
-        if (attendance && s.sold_percentage) {
-        const perNightAttendance = attendance / nights
-        const perNightCapacity = perNightAttendance / s.sold_percentage
-        const totalCapacity = perNightCapacity * nights
-
-        dto.sold_attendance! += attendance
-        dto.available! += totalCapacity
-        dto.sold_reported_nights += nights
-        }
-
-        // ---------- Box-based ----------
-        if (s.box_score) {
-        dto.box_attendance! += attendance
-        dto.box_score += s.box_score
-        dto.box_reported_nights += nights
-        }
-
-        if (s.box_score || s.attendance)
-            dto.reported_nights += nights
-
-        // ---------- Averages ----------
-        dto.avg_ticket = dto.box_attendance! > 0 ? dto.box_score / dto.box_attendance! : null
-        dto.avg_sold = dto.available! > 0 ? Math.min(dto.sold_attendance! / dto.available!, 1) : null
-        dto.avg_box = dto.box_reported_nights > 0 ? dto.box_score / dto.box_reported_nights : null
+        return Array.from(map.values())
     }
-
-    return Array.from(map.values())
-    }
-
 
     const buildGroupFromShows = (shows: Show[]): GroupsResponseDTO | null => {
         if (shows.length === 0) return null
@@ -259,71 +258,43 @@ const useShows = () => {
         setRegions(Array.from(aux.values()))
     }
 
-const filterShowsByRegion = async (
-  value: string,
-  _method?: string,
-  showOnlyReported?: boolean
-): Promise<void> => {
+    const filterShowsByRegion = async (value: string, _method?: string, showOnlyReported?: boolean): Promise<void> => {
+        
+        if (_method !== 'region') return;
 
-  if (_method !== 'region') return;
+        setLoading(true);
 
-  setLoading(true);
+        const { data: countriesObj, error: countryError } = await supabase.from('countries').select('*').in('id', [1, 2, 3]);
+        const { data: continentsObj, error: continentError } = await supabase.from('continents').select('*');
 
-  const { data: countriesObj, error: countryError } =
-    await supabase.from('countries').select('*').in('id', [1, 2, 3]);
+        if (countryError || continentError) {
+            setLoading(false);
+            const msg = countryError?.message || continentError?.message || 'Error fetching regions';
+            setApiError({ isError: true, message: msg });
+            return;
+        }
 
-  const { data: continentsObj, error: continentError } =
-    await supabase.from('continents').select('*');
+        const countries = countriesObj.map(d => d.name);
+        const continents = continentsObj.map(d => d.name);
 
-  if (countryError || continentError) {
-    setLoading(false);
-    const msg =
-      countryError?.message ||
-      continentError?.message ||
-      'Error fetching regions';
-    setApiError({ isError: true, message: msg });
-    return;
-  }
+        let regionFiltered = allShows;
 
-  const countries = countriesObj.map(d => d.name);
-  const continents = continentsObj.map(d => d.name);
+        if (value !== 'Worldwide') {
+            if (countries.includes(value))
+                regionFiltered = allShows.filter(s => s.venue.city.country.name === value);
 
-  // STEP 1: Filter by region
-  let regionFiltered = allShows;
+            else if (continents.includes(value)) 
+                regionFiltered = allShows.filter(s => s.venue.city.country.continent.name === value);
+        }
 
-  if (value !== 'Worldwide') {
-    if (countries.includes(value)) {
-      regionFiltered = allShows.filter(
-        s => s.venue.city.country.name === value
-      );
-    } else if (continents.includes(value)) {
-      regionFiltered = allShows.filter(
-        s => s.venue.city.country.continent.name === value
-      );
-    }
-  }
+        const reportedShows = regionFiltered.filter(s => s.attendance != null && s.attendance > 0);
+        const unreported = regionFiltered.filter(s => s.attendance == null || s.attendance === 0);
 
-  // STEP 2: Split reported vs unreported
-  const reportedShows = regionFiltered.filter(
-    s => s.attendance != null && s.attendance > 0
-  );
+        setUnreportedShows(unreported);
+        setShows(showOnlyReported ? reportedShows : regionFiltered);
 
-  const unreported = regionFiltered.filter(
-    s => s.attendance == null || s.attendance === 0
-  );
-
-  // STEP 3: Update states
-  setUnreportedShows(unreported);
-
-  // STEP 4: Decide what to display
-  setShows(showOnlyReported ? reportedShows : regionFiltered);
-
-  setLoading(false);
-
-  console.log('allShows', allShows)
-  console.log('shows', shows)
-  console.log('unreportedShows', unreportedShows)
-};
+        setLoading(false);
+    };
 
 
     const getShowsByVenueId = async (id: number): Promise<void> => {
