@@ -17,9 +17,14 @@ const ToursForm = ({ loading, options, handleChange }: Props) => {
     const tours = [ { text: 'All Tours', value: 'all' }, ]
 
     if (options) {
-        options[0].forEach((g: Gender) => genders.push({ text: g, value: g }));
-        options[1].forEach((g: Generation) => generations.push({ text: g === 3 ? '3rd Gen' : g + 'th Gen', value: g.toString() }))
-        options[2].forEach((t: string) => tours.push({ text: t, value: t }))
+        const sortedGenders = [...options[0]].sort((a: string, b: string) => a.localeCompare(b))
+        sortedGenders.forEach((g: Gender) => {genders.push({ text: g, value: g })})
+
+        const sortedGenerations = [...options[1]].sort((a: number, b: number) => a - b).filter((g: number) => g > 0)
+        sortedGenerations.forEach((g: Generation) => { generations.push({ text: g === 3 ? '3rd Gen' : `${g}th Gen`, value: g.toString() })})
+
+        const sortedTours = [...options[2]].sort((a: string, b: string) => a.localeCompare(b))
+        sortedTours.forEach((t: string) => tours.push({ text: t, value: t }))
     }
 
     return (

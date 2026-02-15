@@ -64,10 +64,14 @@ const ConcertPage = () => {
     useEffect(() => {
         if (!allShows.length) return
 
-        const region = searchParams.get('region') ?? 'Worldwide'
-        const reported = searchParams.get('reported') === 'true'
+        const region = searchParams.get('region') || 'Worldwide';
+        const reported = searchParams.get('reported') === 'true';
 
-        filterShowsByRegion(region, 'region', reported)
+        const entries = Array.from(searchParams.entries())
+        console.log(entries)
+
+        filterShowsByRegion(region, 'region', reported);
+
     }, [searchParams, allShows])
 
 
@@ -108,8 +112,8 @@ const ConcertPage = () => {
                         <div className={styles.switch}>
                             <label>Show Only Reported Shows</label>
                             <Switch size='lg' onChange={handleReportedToggle}
-                                checked={ shows.some(s => !Number.isInteger(s.attendance) || (s.attendance && s.attendance <= 0)) ? reportedOnly : true }
-                                disabled={ unreportedShows.length === shows.filter(s => s.attendance).length }
+                                checked={ unreportedShows.length === 0 || reportedOnly }
+                                disabled={ unreportedShows.length === 0 }
                             />
 
                         </div>
