@@ -67,11 +67,9 @@ const ConcertPage = () => {
         const region = searchParams.get('region') || 'Worldwide';
         const reported = searchParams.get('reported') === 'true';
 
-        const entries = Array.from(searchParams.entries())
-        console.log(entries)
-
         filterShowsByRegion(region, 'region', reported);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams, allShows])
 
 
